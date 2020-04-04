@@ -30,7 +30,9 @@ Write a main function with the following specifications.
 7.	Use FileSystem API to [open](https://hadoop.apache.org/docs/r2.10.0/api/org/apache/hadoop/fs/FileSystem.html#open(org.apache.hadoop.fs.Path)) the input file and copy all its contents to the output file. Measure the total time that it takes to do this step. *Hint: Use the method [System#nanoTime()](https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#nanoTime--)*
 8.	Write a message similar to the following to the standard output.
 
-        Copied 1255 bytes from 'README' to 'README_copy' in 0.016095 seconds
+```text
+Copied 1255 bytes from 'README' to 'README_copy' in 0.016095 seconds
+```
 
 The message should show the correct size, input, output, and total time according to how the program ran.
 
@@ -48,10 +50,12 @@ Now, it is time to use your program to benchmark the performance of the local fi
 To run HDFS, you need at least one name node and one data node.
 1.	Configure Hadoop to use HDFS as the default filesystem. Add the following lines to `$HADOOP_HOME/etc/hadoop/core-site.xml`
 
-        <property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://localhost:9000</value>
-        </property>
+```xml
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://localhost:9000</value>
+</property>
+```
 
 2.	Initialize the files for HDFS by running the command `hadoop namenode -format`
 3.	Start the master node by running `hadoop namenode`

@@ -57,7 +57,7 @@ E.g., Add export PATH=$PATH:$JAVA_HOME/bin to $HOME/.bashrc or $HOME/.profile
 * Create a new directory $HOME/workspace to place all your projects.
 * Inside $HOME/workspace, run the following command
 ```console
-foo@bar:~$ mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 ```
 Replace <UCRNetID> with your UCR Net ID (not student ID).
 
@@ -220,14 +220,14 @@ Note: We will later cover how MapReduce programs are executed in more details. T
 #### Run the WordCount example from Command Line
 * At the command line, type:
 ```console
-foo@bar:~$ mvn package 
+mvn package 
 ```
 * Try to run your program as we did earlier.
 
 (Q5) Does it run? Why or why not?
 * Try to run the program using the following command: 
 ```console
-foo@bar:~$ hadoop jar target/<JARFile> edu.ucr.cs.cs167.<UCRNetId>.App input.txt output.txt
+hadoop jar target/<JARFile> edu.ucr.cs.cs167.<UCRNetId>.App input.txt output.txt
 ```
 
 #### Prepare Your Submission
@@ -252,7 +252,7 @@ foo@bar:~$ hadoop jar target/<JARFile> edu.ucr.cs.cs167.<UCRNetId>.App input.txt
 
 * Now, you can run your program using the following command.
 ```console
-foo@bar:~$ hadoop jar target/<JARFile> input.txt output.txt
+hadoop jar target/<JARFile> input.txt output.txt
 ```
 * Add a README.md file to your project home directory. In this file, write down your name, email, UCR Net ID, and Student ID.
 * Answer all the questions above in the README file. For each question, copy/paste the question first and then enter your answer in a new line.
@@ -283,7 +283,7 @@ run.sh
 
 Note: Do not include the sample file or the target directory. E.g.,
 ```console
-foo@bar:~$ tar -c src pom.xml README.md run.sh -f <UCRNetID>-Lab1.tar.gz
+tar -c src pom.xml README.md run.sh -f <UCRNetID>-Lab1.tar.gz
 ```
 
 * (S) Submit your compressed file as the lab deliverable.
