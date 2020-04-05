@@ -63,7 +63,7 @@ To run HDFS, you need at least one name node and one data node.
 
 *Note: You will need to run the name node and data node in two separate windows. Keep them open so you can see their progress as your program runs.*
 
-#### V. Use the Command-Line Interface (CLI) to Access HDFS (20 minutes)
+### V. Use the Command-Line Interface (CLI) to Access HDFS (20 minutes)
 1.	List the contents in HDFS under the root directory. `hdfs dfs -ls /`
 2.	Create a home directory for yourself if it does not exist. `hdfs dfs -mkdir -p .`
 3.	Upload a file to your home directory in HDFS. `hdfs dfs -put <filename>`
