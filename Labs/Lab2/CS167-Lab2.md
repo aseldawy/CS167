@@ -43,7 +43,7 @@ Now, it is time to use your program to benchmark the performance of the local fi
 2.	Test your program on a small file, e.g., a `README` file to make sure that it works correctly.
 3.	Now, test it on the sample file that you downloaded, `AREAWATER.csv`.
 (Q1) Verify the file size and record the running time.
-4.	Make a copy of the file using your file system command and record the time, e.g., using `time` command on Linux. (Q2) Record the running time. You can just use a stopwatch if you would like.
+4.	Make a copy of the file using your file system command and record the time, e.g., using `time` command on Linux, or using `Measure-Command {echo hi}` command on Windows. (Q2) Record the running time. You can just use a stopwatch if you would like.
 5.	(Q3) How does the two numbers compare? Explain *in your own words* why you see these results.
 
 ### IV. Configure and Run HDFS (20 minutes)
@@ -66,7 +66,7 @@ To run HDFS, you need at least one name node and one data node.
 ### V. Use the Command-Line Interface (CLI) to Access HDFS (20 minutes)
 1.	List the contents in HDFS under the root directory. `hdfs dfs -ls /`
 2.	Create a home directory for yourself if it does not exist. `hdfs dfs -mkdir -p .`
-3.	Upload a file to your home directory in HDFS. `hdfs dfs -put <filename>`
+3.	Upload a small file, e.g., a `README` file to your home directory in HDFS. `hdfs dfs -put <filename>`
 4.	List the files in your home directory. `hdfs dfs -ls`
 5.	List all available commands. `hdfs dfs`
 
