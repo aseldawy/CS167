@@ -95,7 +95,7 @@ Note: Don’t forget to remove any unnecessary test or binary files.
 3.	Make 10,000 reads from the file at random positions. Each one should read 8,192 bytes. You can discard the bytes that you read immediately after they are read.
 4.	Measure the total time needed to do the 10,000 reads.
 5.	(Q6) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?
-6. Update your `run` script to run the AppB class after the previous one. Since a JAR file cannot have two main classes, you will need to modify your running commands to explicitly specify the main class in each case.
+6. Update your `run.sh` or `run.ps1` script to run the AppB class after the previous one. Since a JAR file cannot have two main classes, you will need to modify your running commands to explicitly specify the main class in each case.
 
 ## Notes
 * Make sure to follow the naming conventions that are mentioned in Lab #1.
