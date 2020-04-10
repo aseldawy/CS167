@@ -43,8 +43,8 @@ Now, it is time to use your program to benchmark the performance of the local fi
 2.	Test your program on a small file, e.g., a `README` file to make sure that it works correctly.
 3.	Now, test it on the sample file that you downloaded, `AREAWATER.csv`.
 (Q1) Verify the file size and record the running time.
-4.	Make a copy of the file using your file system command and record the time, e.g., using `time` command on Linux, or using `Measure-Command { ... }` command on Windows PowerShell. (Q2) Record the running time. You can just use a stopwatch if you would like.
-5.	(Q3) How does the two numbers compare? Explain *in your own words* why you see these results.
+4.	Make a copy of the file using your file system command and record the time, e.g., using `time` command on Linux, or using `Measure-Command { ... }` command on Windows PowerShell. (Q2) Record the running time of the copy command.
+5.	(Q3) How do the two numbers compare? (The running times of copying the file through your program and the operating system.) Explain *in your own words* why you see these results.
 
 ### IV. Configure and Run HDFS (20 minutes)
 To run HDFS, you need at least one name node and one data node.
