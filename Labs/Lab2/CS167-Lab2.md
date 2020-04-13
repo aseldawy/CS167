@@ -80,14 +80,28 @@ To run HDFS, you need at least one name node and one data node.
 
 Note: to explicitly specify the HDFS file system, use the scheme `hdfs://`
 
-
 ### VII. Submission (15 minutes)
 1.	Add a `README.md` file and include all the answers to the questions above in the `README` file.
 Note: Don’t forget to include your information in the README file.
 2.	Add a [table](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables) that shows the running time for copying the test file in the five cases mentioned above.
 3.	Add a script `run.sh` or `run.ps1` that will compile your code and run the five cases on the input file `AREAWATER.csv`
 4.	(S) Submit your compressed file as the lab deliverable.
-Note: Don’t forget to remove any unnecessary test or binary files.
+
+* Note 1: Don’t forget to remove any unnecessary test or binary files.
+* Note 2: In your `run` script, you can access the current working directory to specify the full path correctly when you specify the copy command. Assuming that the input file `AREAWATER.csv` is in the current working directory, you can run one of the following commands.
+
+In a Linux shell script:
+
+```shell
+hadoop jar <JARFILE> file://`pwd`/AREAWATER.csv hdfs:///AREAWATER.csv
+```
+
+In a Windows PowerShell script:
+
+```PowerShell
+hadoop jar <JARFILE> file:///$pwd/AREAWATER.csv hdfs:///AREAWATER.csv
+```
+
 
 ### VIII. Bonus Task (30 minutes) +3 points
 1.	Build a separate main class `AppB` that takes one input file. The main class should do the following steps.
@@ -96,6 +110,7 @@ Note: Don’t forget to remove any unnecessary test or binary files.
 4.	Measure the total time needed to do the 10,000 reads.
 5.	(Q6) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?
 6. Update your `run.sh` or `run.ps1` script to run the AppB class after the previous one. Since a JAR file cannot have two main classes, you will need to modify your running commands to explicitly specify the main class in each case.
+Additionally, you will need to remove the main class from your `pom.xml` configuration file.
 
 ## Notes
 * Make sure to follow the naming conventions that are mentioned in Lab #1.
