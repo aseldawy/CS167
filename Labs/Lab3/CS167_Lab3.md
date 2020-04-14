@@ -136,7 +136,7 @@ Notice that we use `String#equals` rather than the operator `==` since `String` 
 7. Check the output. (Q4) How many lines do you see in the output?
 8. Compile and run your program from the command line using the `hadoop jar` command.
 
-### III. Take User Input
+### III. Take User Input For the Filter (20 minutes)
 In this part, we will customize our program by taking the desired response code from the user as a command line argument. 
 
 1. Uncomment the line `// String desiredResponse = args[2];` in the `main` function.
@@ -151,7 +151,7 @@ Note: Make sure that you run the namenode and datanode from the command line to 
 
 Note: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode.
 
-### IV. Run in Pseudo-distributed Mode
+### IV. Run in Pseudo-distributed Mode (45 minutes)
 To run your MapReduce program in pseudo-distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.
 
 1. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
@@ -251,7 +251,7 @@ public class Aggregation {
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
 4. Run your program on the output of the `Filter` operation with response code `200`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
 
-### VI. Submission
+### VI. Submission (15 minutes)
 1. Add a `README` file with all your answers.
 2. Add a `run` script that runs compiles and runs your filter operation on the sample input file with response code 200. Then, it should run the aggregation method on the same input file. The output files should be named `filter_output` and `aggregation_output` accordingly.
 
