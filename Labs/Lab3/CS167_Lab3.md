@@ -16,9 +16,10 @@
 
 1. Create a new empty project using Maven for Lab 3. See Lab 1 for more details.
 2. Import your project into IntelliJ IDEA.
-3. Download this [sample file](nasa_19950801.tsv) and place it in your project directory for testing.
-4. For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily. 
-5. In `pom.xml` add the following dependencies.
+3. Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p) and place them in your project directory for testing. Note: Decompress the second file after download.
+4. For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
+5. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`.
+6. In `pom.xml` add the following dependencies.
 
 ```xml
 <properties>
@@ -143,7 +144,10 @@ In this part, we will customize our program by taking the desired response code 
 3. In the setup function, add a code that will read the desired response code from the job configuration and store it in an instance variable in the class `TokenizerMapper`.
 4. Modify the `map` function to use the user given response code rather than the hard-coded response code that we used in Part II.
 5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a command-line argument.
-6. Run it from IntelliJ IDEA and from the command line and make sure that you get the same result as before.
+6. Run it from IntelliJ IDEA on a file in your local file system. (Q) How man files are produced in the output? (Q) Explain this number based on the input file size and default block size.
+7. Run it from the command line on a file in HDFS. (Q) How man files are produced in the output? (Q) Explain this number based on the input file size and default block size.
+
+Note: Make sure that you run the namenode and datanode from the command line to access HDFS as explained in Lab 2.
 
 Note: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode.
 
@@ -170,7 +174,7 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
 3. Start the resource manager (Master). In a new command line window, run `yarn resourcemanager`. Leave the process running on that window.
 4. Start the node manager (Slave). In a new command line window, run `yarn nodemanager`. Leave the process running on that window.
 
-Note: For Windows users, run the above two commands in an Ubuntu window rather than a regular command-line or PowerShell windows.
+Note: For Windows users, run the above two commands in an Ubuntu window rather than a regular command-line or PowerShell windows. For compatibility, run all the five processes in Ubuntu windows, that is, Resource Manager, Node Manager, Name Node, Data Node, and Driver command.
 
 5. Generate a JAR file for your program and run it using the command `yarn jar <input> <output> <code>`.
 6. If you did not do already, start HDFS as described in Lab 2 and run your program on an input file that is stored in HDFS and produce the output in HDFS.
@@ -196,34 +200,30 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 
 
-public class Aggregation
-{
-public static class TokenizerMapper
-       extends Mapper<Object, Text, IntWritable, IntWritable>{
+public class Aggregation {
+  public static class TokenizerMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
 
     private final static IntWritable one = new IntWritable(1);
     private IntWritable outKey = new IntWritable();
     private IntWritable outVal = new IntWritable();
 
-    public void map(LongWritable key, Text value, Context context
-                    ) throws IOException, InterruptedException {
-      if (key.get() != 0) {
-        int responseCode = Integer.parseInt(value.toString().split("\t")[5]);
-        int bytes = Integer.parseInt(value.toString().split("\t")[6]);
-        // TODO fill in the outKey and outVal, then write to the output
-      }
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+      if (key.get() == 0)
+        return;
+      String[] parts = value.toString().split("\t");
+      int responseCode = Integer.parseInt(parts[5]);
+      int bytes = Integer.parseInt(parts[6]);
+      // TODO write <responseCode, bytes> to the output
     }
   }
 
   public static class IntSumReducer
-       extends Reducer<IntWritable,IntWritable,IntWritable,IntWritable> {
+      extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
     private IntWritable result = new IntWritable();
 
     public void reduce(IntWritable key, Iterable<IntWritable> values,
-                       Context context
-                       ) throws IOException, InterruptedException {
-      // TODO sum all values
-      // TODO write <key, sum> to the output
+                       Context context) throws IOException, InterruptedException {
+      // TODO write <key, sum(values)> to the output
     }
   }
 
@@ -234,6 +234,8 @@ public static class TokenizerMapper
     job.setMapperClass(TokenizerMapper.class);
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
+    job.setMapOutputKeyClass(IntWritable.class);
+    job.setMapOutputValueClass(IntWritable.class);
     job.setOutputKeyClass(IntWritable.class);
     job.setOutputValueClass(IntWritable.class);
     job.setInputFormatClass(TextInputFormat.class);
@@ -242,12 +244,29 @@ public static class TokenizerMapper
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
-
+}
 ```
 2. Implement the TODO items to make the desired logic.
-3. Run your program on the sample input file.
-4. Run your program on the output of the `Filter` operation with response code `200`. (Q) How many files are produced in the output directory and how many lines do they have? Explain in your own words why the program produced this output.
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
+4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
+4. Run your program on the output of the `Filter` operation with response code `200`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
 
-VI. Submission
+### VI. Submission
 1. Add a `README` file with all your answers.
 2. Add a `run` script that runs compiles and runs your filter operation on the sample input file with response code 200. Then, it should run the aggregation method on the same input file. The output files should be named `filter_output` and `aggregation_output` accordingly.
+
+
+## Common Errors
+* Error: When I run my program on YARN, I see an error message similar to the following.
+```text
+Failing this attempt.Diagnostics: [...]Container [pid=xxx,containerID=xxx] is running beyond virtual memory limits. Current usage: xxx MB of yyy GB physical memory used; xxx TB of yyy GB virtual memory used. Killing container.
+```
+
+* Fix: Add the following configuration to your `$HADOOP_HOME/etc/yarn-site.xml`.
+```xml
+<property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+</property>
+```
+[See also](https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits)
