@@ -80,42 +80,41 @@ import java.io.IOException;
 /**
  * Filter log file by response code
  */
-public class Filter
-{
-public static class TokenizerMapper
-       extends Mapper<LongWritable, Text, NullWritable, Text>{
+public class Filter {
+    public static class TokenizerMapper
+            extends Mapper<LongWritable, Text, NullWritable, Text> {
 
-  @Override
-  protected void setup(Context context) throws IOException, InterruptedException {
-    super.setup(context);
-    // TODO add additional setup to your map task, if needed.
-  }
+        @Override
+        protected void setup(Context context) throws IOException, InterruptedException {
+            super.setup(context);
+            // TODO add additional setup to your map task, if needed.
+        }
 
-  public void map(LongWritable key, Text value, Context context) {
-      if (key.get() == 0)
-        return; // Skip header line
-      String[] parts = value.toString().split("\t");
-      String responseCode = parts[5];
-      // TODO Filter by response code
-  }
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            if (key.get() == 0)
+                return; // Skip header line
+            String[] parts = value.toString().split("\t");
+            String responseCode = parts[5];
+            // TODO Filter by response code
+        }
+    }
 
-  public static void main(String[] args) throws Exception {
-    Configuration conf = new Configuration();
-    Job job = Job.getInstance(conf, "filter");
-    job.setJarByClass(Filter.class);
-    job.setMapperClass(TokenizerMapper.class);
-    job.setNumReduceTasks(0);
-    job.setInputFormatClass(TextInputFormat.class);
-    Path input = new Path(args[0]);
-    FileInputFormat.addInputPath(job, input);
-    Path output = new Path(args[1]);
-    FileOutputFormat.setOutputPath(job, output);
-    // String desiredResponse = args[2];
-    // TODO pass the desiredResponse code to the MapReduce program 
-    System.exit(job.waitForCompletion(true) ? 0 : 1);
-  }
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "filter");
+        job.setJarByClass(Filter.class);
+        job.setMapperClass(TokenizerMapper.class);
+        job.setNumReduceTasks(0);
+        job.setInputFormatClass(TextInputFormat.class);
+        Path input = new Path(args[0]);
+        FileInputFormat.addInputPath(job, input);
+        Path output = new Path(args[1]);
+        FileOutputFormat.setOutputPath(job, output);
+        // String desiredResponse = args[2];
+        // TODO pass the desiredResponse code to the MapReduce program
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
 }
-
 ```
 4. Take some time to udnerstand the code and answer the following questions.
 
@@ -136,6 +135,10 @@ Notice that we use `String#equals` rather than the operator `==` since `String` 
 7. Check the output. (Q4) How many lines do you see in the output?
 8. Compile and run your program from the command line using the `hadoop jar` command.
 
+```console
+hadoop jar target/<*.jar> edu.ucr.cs.cs167.[NetID].Filter nasa_19950801.tsv filter_output.tsv
+```
+
 ### III. Take User Input For the Filter (20 minutes)
 In this part, we will customize our program by taking the desired response code from the user as a command line argument. 
 
@@ -144,8 +147,8 @@ In this part, we will customize our program by taking the desired response code 
 3. In the setup function, add a code that will read the desired response code from the job configuration and store it in an instance variable in the class `TokenizerMapper`.
 4. Modify the `map` function to use the user given response code rather than the hard-coded response code that we used in Part II.
 5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a command-line argument.
-6. Run it from IntelliJ IDEA on a file in your local file system. (Q) How man files are produced in the output? (Q) Explain this number based on the input file size and default block size.
-7. Run it from the command line on a file in HDFS. (Q) How man files are produced in the output? (Q) Explain this number based on the input file size and default block size.
+6. Run it from IntelliJ IDEA on a file in your local file system. (Q) How many files are produced in the output? (Q) Explain this number based on the input file size and default block size.
+7. Run it from the command line on a file in HDFS. (Q) How many files are produced in the output? (Q) Explain this number based on the input file size and default block size.
 
 Note: Make sure that you run the namenode and datanode from the command line to access HDFS as explained in Lab 2.
 
@@ -177,6 +180,10 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
 Note: For Windows users, run the above two commands in an Ubuntu window rather than a regular command-line or PowerShell windows. For compatibility, run all the five processes in Ubuntu windows, that is, Resource Manager, Node Manager, Name Node, Data Node, and Driver command.
 
 5. Generate a JAR file for your program and run it using the command `yarn jar <input> <output> <code>`.
+```console
+yarn jar target/<*.jar> 'edu.ucr.cs.cs167.[NetID].Filter$TokenizerMapper' nasa_19950801.tsv filter_output.tsv 200
+```
+
 6. If you did not do already, start HDFS as described in Lab 2 and run your program on an input file that is stored in HDFS and produce the output in HDFS.
 
 ### V. Write an Aggregate Program (30 minutes)
@@ -246,7 +253,7 @@ public class Aggregation {
   }
 }
 ```
-2. Implement the TODO items to make the desired logic.
+2. Implement the TODO items to make the desired logic. Hint: look at the WordCount example.
 3. Run your program on the file `nasa_19950801.tsv` and check the output directory. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
 4. Run your program on the output of the `Filter` operation with response code `200`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
