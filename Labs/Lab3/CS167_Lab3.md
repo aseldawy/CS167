@@ -9,6 +9,8 @@
 ## Prerequisites
 
 * Setup the development environment as explained in Lab1.
+* Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
+* For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
 
 ## Lab Work
 
@@ -16,10 +18,9 @@
 
 1. Create a new empty project using Maven for Lab 3. See Lab 1 for more details.
 2. Import your project into IntelliJ IDEA.
-3. Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p) and place them in your project directory for testing. Note: Decompress the second file after download.
-4. For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
-5. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`.
-6. In `pom.xml` add the following dependencies.
+3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
+4. Place the two sample files in your project home directory.
+5. In `pom.xml` add the following dependencies.
 
 ```xml
 <properties>
@@ -165,8 +166,9 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
     <value>yarn</value>
 </property>
 ```
+Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.xml.template` and name it `mapredi-site.xml`.
 
-2. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
+2. Edit the file `$HADOOP_HOME/etc/hadoop/yarn-site.xml` and add the following part.
 ```xml
 <property>
     <name>yarn.nodemanager.aux-services</name>
