@@ -9,6 +9,8 @@
 ## Prerequisites
 
 * Setup the development environment as explained in Lab1.
+* Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
+* For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
 
 ## Lab Work
 
@@ -16,10 +18,9 @@
 
 1. Create a new empty project using Maven for Lab 3. See Lab 1 for more details.
 2. Import your project into IntelliJ IDEA.
-3. Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p) and place them in your project directory for testing. Note: Decompress the second file after download.
-4. For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
-5. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`.
-6. In `pom.xml` add the following dependencies.
+3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
+4. Place the two sample files in your project home directory.
+5. In `pom.xml` add the following dependencies.
 
 ```xml
 <properties>
@@ -116,7 +117,7 @@ public class Filter {
     }
 }
 ```
-4. Take some time to udnerstand the code and answer the following questions.
+4. Take some time to understand the code and answer the following questions.
 
 * (Q1) What do you think the line `job.setJarByClass(Filter.class);` does?
 * (Q2) What is the effect of the line `job.setNumReduceTasks(0);`?
@@ -147,8 +148,8 @@ In this part, we will customize our program by taking the desired response code 
 3. In the setup function, add a code that will read the desired response code from the job configuration and store it in an instance variable in the class `TokenizerMapper`.
 4. Modify the `map` function to use the user given response code rather than the hard-coded response code that we used in Part II.
 5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a command-line argument.
-6. Run it from IntelliJ IDEA on a file in your local file system. (Q) How many files are produced in the output? (Q) Explain this number based on the input file size and default block size.
-7. Run it from the command line on a file in HDFS. (Q) How many files are produced in the output? (Q) Explain this number based on the input file size and default block size.
+6. Run it from IntelliJ IDEA on a file in your local file system. (Q5) How many files are produced in the output? (Q6) Explain this number based on the input file size and default block size.
+7. Run it from the command line on a file in HDFS. (Q7) How many files are produced in the output? (Q8) Explain this number based on the input file size and default block size.
 
 Note: Make sure that you run the namenode and datanode from the command line to access HDFS as explained in Lab 2.
 
@@ -165,8 +166,9 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
     <value>yarn</value>
 </property>
 ```
+Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.xml.template` and name it `mapredi-site.xml`.
 
-2. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
+2. Edit the file `$HADOOP_HOME/etc/hadoop/yarn-site.xml` and add the following part.
 ```xml
 <property>
     <name>yarn.nodemanager.aux-services</name>
@@ -254,9 +256,9 @@ public class Aggregation {
 }
 ```
 2. Implement the TODO items to make the desired logic. Hint: look at the WordCount example.
-3. Run your program on the file `nasa_19950801.tsv` and check the output directory. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
-4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
-4. Run your program on the output of the `Filter` operation with response code `200`. (Q) How many files are produced in the output directory and how many lines are there in each file? (Q) Explain these numbers based on the number of reducers and number of response codes in the input file.
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. (Q9) How many files are produced in the output directory and how many lines are there in each file? (Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.
+4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q11) How many files are produced in the output directory and how many lines are there in each file? (Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.
+4. Run your program on the output of the `Filter` operation with response code `200`. (Q13) How many files are produced in the output directory and how many lines are there in each file? (Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.
 
 ### VI. Submission (15 minutes)
 1. Add a `README` file with all your answers.
