@@ -181,7 +181,7 @@ Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.x
 
 Note: For Windows users, run the above two commands in an Ubuntu window rather than a regular command-line or PowerShell windows. For compatibility, run all the five processes in Ubuntu windows, that is, Resource Manager, Node Manager, Name Node, Data Node, and Driver command.
 
-5. Generate a JAR file for your program and run it using the command `yarn jar <input> <output> <code>`.
+5. Generate a JAR file for your program and run it using the command `yarn jar <*.jar> <input> <output> <code>`.
 ```console
 yarn jar target/<*.jar> nasa_19950801.tsv filter_output.tsv 200
 ```
