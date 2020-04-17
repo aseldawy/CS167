@@ -181,7 +181,7 @@ Note: For Windows users, run the above two commands in an Ubuntu window rather t
 
 5. Generate a JAR file for your program and run it using the command `yarn jar <input> <output> <code>`.
 ```console
-hadoop jar target/<*.jar> edu.ucr.cs.cs167.[NetID].Filter nasa_19950801.tsv filter_output.tsv 200
+yarn jar target/<*.jar> nasa_19950801.tsv filter_output.tsv 200
 ```
 
 6. If you did not do already, start HDFS as described in Lab 2 and run your program on an input file that is stored in HDFS and produce the output in HDFS.
