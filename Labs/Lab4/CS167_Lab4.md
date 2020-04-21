@@ -90,10 +90,10 @@ spark-submit --class edu.ucr.cs.cs167.[UCRNetID]].App target/[UCRNetID]_lab4-1.0
 Similar to Hadoop, we will run Spark in pseudo-distributed mode to mimc the distributed execution. If you run on Windows, you will need to run these scripts from Ubuntu using Windows Subsystem for Linux (WSL).
 1. Start the master node by running the command `$SPARK_HOME/sbin/start-master.sh --host 127.0.0.1`.
 2. Make sure that the master is running by navigating to the URL [http://localhost:8080] at your browser. You should see a page similar to the following one. Notice that there are no worker nodes since we did not start any yet.
-!(Spark master with no slave/worker nodes)[images/spark-master-no-slaves.png]
+![Spark master with no slave/worker nodes](images/spark-master-no-slaves.png)
 3. Start one worker node by running the command `$SPARK_HOME/sbin/start-slave.sh --host 127.0.0.1 spark://127.0.0.1:7077`. Notice: you can find the correct host and bind address from the web interface.
 4. Now, if you refresh the master web interface, you should be able to see one worker node.
-!(Spark master with one slave/worker node)[images/spark-master-one-slave.png]
+![Spark master with one slave/worker node](images/spark-master-one-slave.png)
 5. Now, go back to your program and run the JAR file using the same `spark-submit` command that you had earlier. (Q) Do you think it will use your local cluster? Why or why not?   
 Hint: To find out, check the [web interface](http://localhost:8080) and observe any new applications that get listed.
 6. To use the pseudo-cluster that we just started, change the following line in your code to look as follows.
