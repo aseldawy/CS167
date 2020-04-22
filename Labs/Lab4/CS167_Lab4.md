@@ -101,13 +101,13 @@ $SPARK_HOME/sbin/start-slave.sh --host 127.0.0.1 spark://127.0.0.1:7077
 Notice: you can find the correct host and bind address from the web interface.
 4. Now, if you refresh the master web interface, you should be able to see one worker node.
 ![Spark master with one slave/worker node](images/spark-master-one-slave.png)
-5. Now, go back to your program and run the JAR file using the same `spark-submit` command that you had earlier. (Q) Do you think it will use your local cluster? Why or why not?   
+5. Now, go back to your program and run the JAR file using the same `spark-submit` command that you had earlier. (Q1) Do you think it will use your local cluster? Why or why not?   
 Hint: To find out, check the [web interface](http://localhost:8080) and observe any new applications that get listed.
 6. To use the pseudo-cluster that we just started, change the following line in your code to look as follows.
 ```java
 JavaSparkContext spark = new JavaSparkContext("spark://127.0.0.1:7077", "CS167-Lab4");
 ```
-7. Now, run your program from command line as you did before. Make sure to run it from WSL. (Q) Does the application use the cluster that you started? How did you find out?
+7. Now, run your program from command line as you did before. Make sure to run it from WSL. (Q2) Does the application use the cluster that you started? How did you find out?
 
 ### V. Make the Application Portable
 We do not want to change the code every time we switch between local and cluster mode.
@@ -124,8 +124,8 @@ JavaSparkContext spark = new JavaSparkContext(conf);
 
 This code first creates a `SparkConf` instances using the default configuration. If Spark master is already configured, it will use the default configuraiton. If not, it will use the local mode.
 
-2. Run the code from IntelliJ IDEA. (Q) What is the Spark master printed on the standard output on IntelliJ IDEA?
-3. Compile the code from command line and run using `spark-submit`. (Q) What is the Spark master printed on the standard output on the terminal?
+2. Run the code from IntelliJ IDEA. (Q3) What is the Spark master printed on the standard output on IntelliJ IDEA?
+3. Compile the code from command line and run using `spark-submit`. (Q4) What is the Spark master printed on the standard output on the terminal?
 4. You can manually override the master on the `spark-submit` command. Try the following line and observe what the master is.
 
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master local[2] target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar nasa_19950801.tsv
@@ -154,7 +154,7 @@ is called lambda expression. It is a shorthand to write an anonymous inner class
 ```text
 The file 'nasa_19950801.tsv' contains 27972 lines with response code 200
 ```
-5. (Q) For the previous command that prints the number of matching lines, list all the processed input splits.  
+5. (Q5) For the previous command that prints the number of matching lines, list all the processed input splits.  
 Hint: Search for the patterm `HadoopRDD: Input split` in the output on the console. The input splits is printed as `path:start+length`.
 6. In addition to counting the lines, let us also write the matching lines to another file. Add the following part at the beginning of the `main` function.
 ```java
@@ -167,8 +167,8 @@ final String desiredCode = args[2];
 matchingLines.saveAsTextFile(outputFile);
 ```
 8. Run your program again with the following parameters `nasa_19950801.tsv filter_output 200`.
-9. (Q) For the previous command that counts the lines and prints the output, how many splits were generated?
-(Q) Compare this number to the one you got earlier.
-(Q) Explain why we get these numbers.
-10. (Q) What can you do to the current code to ensure that the file is read only once?  
+9. (Q6) For the previous command that counts the lines and prints the output, how many splits were generated?
+(Q7) Compare this number to the one you got earlier.
+(Q8) Explain why we get these numbers.
+10. (Q9) What can you do to the current code to ensure that the file is read only once?  
 Hint: Use the `cache` function in Spark.
