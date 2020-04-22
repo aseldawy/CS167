@@ -14,7 +14,7 @@
 
 ## Lab Work
 
-### I. Install Apache Spark
+### I. Install Apache Spark (10 minutes)
 Note: We recommend that you use the standard Apache Spark 2.4.5 in this lab. Other versions might come with different default configuration that make it hard to debug the problems that you might face.
 
 1. Expand the downloaded Apache Spark to your home directory.
@@ -29,7 +29,7 @@ This command estimates PI by generating random points in a unit square and compu
 
     Pi is roughly 3.144355721778609
 
-### II. Project Setup
+### II. Project Setup (10 minutes)
 1. Create a new empty project using Maven for Lab 4. See [Lab 1](../Lab1/lab1.md) for more details.
 2. Import your project into IntelliJ IDEA.
 3. Copy the file `$SPARK_HOME/conf/log4j.properties.template` to your project directory under `src/main/resources/log4j.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
@@ -53,7 +53,7 @@ This command estimates PI by generating random points in a unit square and compu
 </dependencies>
 ```
 
-### III. Sample Spark Code
+### III. Sample Spark Code (20 minutes)
 1. Edit the `App` class and add the following sample code.
 
 ```java
@@ -85,7 +85,7 @@ public class App {
 spark-submit --class edu.ucr.cs.cs167.[UCRNetID]].App target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar nasa_19950801.tsv
 ```
 
-### IV. Run in Pseudo-distributed Mode (Manual Configuration)
+### IV. Run in Pseudo-distributed Mode (Manual Configuration) (30 minutes)
 
 Similar to Hadoop, we will run Spark in pseudo-distributed mode to mimc the distributed execution. If you run on Windows, you will need to run these scripts from Ubuntu using Windows Subsystem for Linux (WSL).
 1. Start the master node by running the command:
@@ -109,7 +109,7 @@ JavaSparkContext spark = new JavaSparkContext("spark://127.0.0.1:7077", "CS167-L
 ```
 7. Now, compile and then run your program from command line as you did before. Make sure to run it from WSL (Windows users). (Q) Does the application use the cluster that you started? How did you find out?
 
-### V. Make the Application Portable
+### V. Make the Application Portable (15 minutes)
 We do not want to change the code every time we switch between local and cluster mode.
 1. To automatically set an appropriate master, change your code to look as follows.
 
@@ -132,7 +132,7 @@ This code first creates a `SparkConf` instances using the default configuration.
 
 Note: `local[2]` means that it runs on the local mode with two cores.
 
-### VI. Filter Operation
+### VI. Filter Operation (30 minutes)
 In the next part, we will extend the program to use more Spark functions. We will use the `filter` transformation to find log entries with a specific response code.
 
 1. Make a copy of the current sample class and named it `Filter`. Place it in the same package as the App class.
@@ -173,3 +173,24 @@ matchingLines.saveAsTextFile(outputFile);
 (Q) Explain why we get these numbers.
 10. (Q) What can you do to the current code to ensure that the file is read only once?  
 Hint: Use the `cache` function in Spark.
+
+### VII. Aggregation Operation (20 minutes)
+In this part, we will run an aggregation function to count number of records for each response code.
+
+1. Make a copy of of the class `App` into a new class named `Aggregation`.
+2. Create a `JavaPairRDD<String, Integer>` that contains key-value pairs. The key is the response code (as a string) and the value is 1. You will use the `mapToPair` transformation and the `Tuple2` class.
+3. To count the number of records per response code, use the action `countByKey`.
+4. Write the aggregate values to the standard output. The output should look similar to the following.
+```text
+Code '302' : number of entries 355
+Code '404' : number of entries 221
+Code 'response' : number of entries 1
+Code '304' : number of entries 2421
+Code '200' : number of entries 27972
+```
+Note: The entry with the code `response` corresponds to the header file. We can easily filter this value at the end but we will leave it like this for simplicity.
+
+### VIII. Submission (15 minutes)
+1. Add a `README` file with all your answers.
+2. Add a `run` script that compiles and runs your filter operation on the input file `nasa_19950630.22-19950728.12.tsv` with response code 302. Then, it should run the aggregation method on the same input file. The output files should be named `filter_output` and `aggregation_output` accordingly. Assume that the input is in the current working directory so your `run` sccript should just use the input file name as a parameter.
+
