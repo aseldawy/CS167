@@ -172,17 +172,10 @@ final String desiredCode = args[2];
 matchingLines.saveAsTextFile(outputFile);
 ```
 8. Run your program again with the following parameters `nasa_19950801.tsv filter_output 200`.
-<<<<<<< HEAD
 9. (Q6) For the previous command that counts the lines and prints the output, how many splits were generated?
 (Q7) Compare this number to the one you got earlier.
 (Q8) Explain why we get these numbers.
 10. (Q9) What can you do to the current code to ensure that the file is read only once?  
-Hint: Use the `cache` function in Spark.
-=======
-9. (Q) For the previous command that counts the lines and prints the output, how many splits were generated?
-(Q) Compare this number to the one you got earlier.
-(Q) Explain why we get these numbers.
-10. (Q) What can you do to the current code to ensure that the file is read only once?  
 Hint: Use the `cache` function in Spark.
 
 ### VII. Aggregation Operation (20 minutes)
@@ -204,5 +197,3 @@ Note: The entry with the code `response` corresponds to the header file. We can 
 ### VIII. Submission (15 minutes)
 1. Add a `README` file with all your answers.
 2. Add a `run` script that compiles and runs your filter operation on the input file `nasa_19950630.22-19950728.12.tsv` with response code 302. Then, it should run the aggregation method on the same input file. The output files should be named `filter_output` and `aggregation_output` accordingly. Assume that the input is in the current working directory so your `run` sccript should just use the input file name as a parameter.
-
->>>>>>> 6a9e4e21b07d4cce41a9d99a5dcbb157958565f5
