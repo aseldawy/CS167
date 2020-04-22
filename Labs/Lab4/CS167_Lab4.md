@@ -151,7 +151,7 @@ line -> line.split("\t")[5].equals(desiredCode)
 ```
 is called lambda expression. It is a shorthand to write an anonymous inner class with one function. After compilation, it will be similar to the map function that we used to write in Hadoop which was a class with one function called `map`.
 
-4. Run your program using the file `nasa_19950630.22-19950728.12.tsv`. The output should look similar to the following.
+4. Run your program using the file `nasa_19950801.tsv`. The output should look similar to the following.
 ```text
 The file 'nasa_19950801.tsv' contains 27972 lines with response code 200
 ```
@@ -167,7 +167,7 @@ final String desiredCode = args[2];
 ```java
 matchingLines.saveAsTextFile(outputFile);
 ```
-8. Run your program again with the following parameters `nasa_19950801.tsv filter_output 200`.
+8. Run your program again with the following parameters `nasa_19950630.22-19950728.12.tsv filter_output 200`.
 9. (Q) For the previous command that counts the lines and prints the output, how many splits were generated?
 (Q) Compare this number to the one you got earlier.
 (Q) Explain why we get these numbers.
