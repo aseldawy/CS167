@@ -32,7 +32,7 @@ This command estimates PI by generating random points in a unit square and compu
 ### II. Project Setup
 1. Create a new empty project using Maven for Lab 4. See [Lab 1](../Lab1/lab1.md) for more details.
 2. Import your project into IntelliJ IDEA.
-3. Copy the file `$SPARK_HOME/conf/log4j.properites.template` to your project directory under `src/main/resources/log4j.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
+3. Copy the file `$SPARK_HOME/conf/log4j.properties.template` to your project directory under `src/main/resources/log4j.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
 4. Place the two sample files in your project home directory.
 5. In `pom.xml` add the following configuration.
 
@@ -88,10 +88,17 @@ spark-submit --class edu.ucr.cs.cs167.[UCRNetID]].App target/[UCRNetID]_lab4-1.0
 ### IV. Run in Pseudo-distributed Mode (Manual Configuration)
 
 Similar to Hadoop, we will run Spark in pseudo-distributed mode to mimc the distributed execution. If you run on Windows, you will need to run these scripts from Ubuntu using Windows Subsystem for Linux (WSL).
-1. Start the master node by running the command `$SPARK_HOME/sbin/start-master.sh --host 127.0.0.1`.
-2. Make sure that the master is running by navigating to the URL [http://localhost:8080] at your browser. You should see a page similar to the following one. Notice that there are no worker nodes since we did not start any yet.
+1. Start the master node by running the command:
+```text
+$SPARK_HOME/sbin/start-master.sh --host 127.0.0.1
+```
+2. Make sure that the master is running by navigating to the [http://localhost:8080](http://localhost:8080) at your browser. You should see a page similar to the following one. Notice that there are no worker nodes since we did not start any yet.
 ![Spark master with no slave/worker nodes](images/spark-master-no-slaves.png)
-3. Start one worker node by running the command `$SPARK_HOME/sbin/start-slave.sh --host 127.0.0.1 spark://127.0.0.1:7077`. Notice: you can find the correct host and bind address from the web interface.
+3. Start one worker node by running the command 
+```text
+$SPARK_HOME/sbin/start-slave.sh --host 127.0.0.1 spark://127.0.0.1:7077 
+```
+Notice: you can find the correct host and bind address from the web interface.
 4. Now, if you refresh the master web interface, you should be able to see one worker node.
 ![Spark master with one slave/worker node](images/spark-master-one-slave.png)
 5. Now, go back to your program and run the JAR file using the same `spark-submit` command that you had earlier. (Q) Do you think it will use your local cluster? Why or why not?   
