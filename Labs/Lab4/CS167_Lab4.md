@@ -107,11 +107,7 @@ Hint: To find out, check the [web interface](http://localhost:8080) and observe 
 ```java
 JavaSparkContext spark = new JavaSparkContext("spark://127.0.0.1:7077", "CS167-Lab4");
 ```
-<<<<<<< HEAD
-7. Now, run your program from command line as you did before. Make sure to run it from WSL. (Q2) Does the application use the cluster that you started? How did you find out?
-=======
-7. Now, compile and then run your program from command line as you did before. Make sure to run it from WSL (Windows users). (Q) Does the application use the cluster that you started? How did you find out?
->>>>>>> 6a9e4e21b07d4cce41a9d99a5dcbb157958565f5
+7. Now, compile and then run your program from command line as you did before. Make sure to run it from WSL (Windows users). (Q2) Does the application use the cluster that you started? How did you find out?
 
 ### V. Make the Application Portable (15 minutes)
 We do not want to change the code every time we switch between local and cluster mode.
