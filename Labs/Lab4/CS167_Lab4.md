@@ -177,7 +177,7 @@ Hint: Use the `cache` function in Spark.
 ### VII. Aggregation Operation (20 minutes)
 In this part, we will run an aggregation function to count number of records for each response code.
 
-1. Make a copy of of the class `App` into a new class named `Aggregation`.
+1. Make a copy of the class `App` into a new class named `Aggregation`.
 2. Create a `JavaPairRDD<String, Integer>` that contains key-value pairs. The key is the response code (as a string) and the value is 1. You will use the `mapToPair` transformation and the `Tuple2` class.
 3. To count the number of records per response code, use the action `countByKey`.
 4. Write the aggregate values to the standard output. The output should look similar to the following.
