@@ -107,7 +107,7 @@ Hint: To find out, check the [web interface](http://localhost:8080) and observe 
 ```java
 JavaSparkContext spark = new JavaSparkContext("spark://127.0.0.1:7077", "CS167-Lab4");
 ```
-7. Now, run your program from command line as you did before. Make sure to run it from WSL. (Q) Does the application use the cluster that you started? How did you find out?
+7. Now, compile and then run your program from command line as you did before. Make sure to run it from WSL (Windows users). (Q) Does the application use the cluster that you started? How did you find out?
 
 ### V. Make the Application Portable
 We do not want to change the code every time we switch between local and cluster mode.
@@ -150,7 +150,8 @@ Note: the following expression in Java
 line -> line.split("\t")[5].equals(desiredCode)
 ```
 is called lambda expression. It is a shorthand to write an anonymous inner class with one function. After compilation, it will be similar to the map function that we used to write in Hadoop which was a class with one function called `map`.
-4. Run your program oan the file `nasa_19950801.tsv`. The output should look similar to the following.
+
+4. Run your program using the file `nasa_19950630.22-19950728.12.tsv`. The output should look similar to the following.
 ```text
 The file 'nasa_19950801.tsv' contains 27972 lines with response code 200
 ```
