@@ -167,7 +167,7 @@ final String desiredCode = args[2];
 ```java
 matchingLines.saveAsTextFile(outputFile);
 ```
-8. Run your program again with the following parameters `nasa_19950630.22-19950728.12.tsv filter_output 200`.
+8. Run your program again with the following parameters `nasa_19950801.tsv filter_output 200`.
 9. (Q) For the previous command that counts the lines and prints the output, how many splits were generated?
 (Q) Compare this number to the one you got earlier.
 (Q) Explain why we get these numbers.
