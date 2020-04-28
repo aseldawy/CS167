@@ -9,6 +9,7 @@
 * Setup the development environment as explained in [Lab 1](../Lab1/lab1.md).
 * Download [Apache Spark 2.4.5](https://spark.apache.org/downloads.html). Choose the package type *Pre-built for Apache Hadoop 2.7*.
 * Download these two sample files [sample file 1](../Lab3/nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download. These are the same files we used in [Lab 3](../Lab3/CS167_Lab3.md).
+* Depending on how you extract the second file, it could be named either `nasa_19950630.22-19950728.12.tsv` or `19950630.23-19950801.00.tsv`. In this lab, we will use these two names interchangeably.
 * For Windows users, install the Ubuntu app from Microsoft Store and set it up.
 * (Optional) To add Scala language support to IntelliJ, you can install the [Scala plugin](https://plugins.jetbrains.com/plugin/1347-scala). Please check the [plugin management page](https://www.jetbrains.com/help/idea/managing-plugins.html) to see the details about installing and managing plugins in Intellij.
 
@@ -79,7 +80,7 @@ Choose a number: 4:
 </plugin>
 ```
 
-## II. Initialize with Spark
+### II. Initialize with Spark (5 minutes)
 In this part, you will initialize your project with Spark.
 1. In `App` class, add the following stub code.
 ```scala
@@ -133,7 +134,7 @@ object App {
 ```
 2. Take a few minutes to check the stub code and understand what it does. It has to required command-line arguments. (Q) What are these two arguments?
 
-### III. Read and parse the input file
+### III. Read and parse the input file (15 minutes)
 1. Since most of the commands will need to split the input line and skip the first line, let us do this first.
 2. Use a filter transformation to skip the first line. For simplicity, we will detect the first line as the line that starts with `"host\tlogname"`
 3. Use the map transformation to split each line using the tab character `"\t"` as a separator.
@@ -155,20 +156,21 @@ You should change Spark version as well:
 Total count for file 'nasa_19950801.tsv' is 30970
 Total count for file '19950630.23-19950801.00.tsv' is 1891710
 ```
-Note that if you count the the lines after filtering the header, the numbers will be 1 less.
+Note that if you count the lines after filtering the header, the numbers will be 1 less.
 
 2. The `code-filter` command should count the lines that match a desired response code. The desired code is provided as a third command line argument. This method should use the `filter` transformation followed by the `count` action. Below is the expected output for the two sample files.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
 Total count for file '19950630.23-19950801.00.tsv' with response code 302 is 46573
 ```
-Hint: To make your code more readable, you can add constants for each attribute to access them by name instead of number. See the following code snippet for an example.
+* Note: For all commands in this lab, make sure that you write the output to the standard output using the `print` command and that the output looks exactly the same to the expected output. We will use a script to automatically check your answer and it will use regular expressions to match the answer. Any change in this expected output might reduce your grade for this lab.
+* Hint: To make your code more readable, you can add constants for each attribute to access them by name instead of number. See the following code snippet for an example.
 ```scala
 val ResponseCode: Int = 5
 val code: String = line.split("\\t")(ResponseCode)
 ```
 
-### V. `time-filter`
+### V. `time-filter` (10 minutes)
 1. In this part, we need to count the number of lines that have a timestmap in a given range `[start, end]`.
 2. The interval is given as two additional arguments as integers.
 3. Do not forget to use the method `String#toLong` in Scala to convert the String argument to a long integer.
@@ -179,7 +181,7 @@ Total count for file 'nasa_19950801.tsv' in time range [807274014, 807283738] is
 Total count for file '19950630.23-19950801.00.tsv' in time range [804955673, 805590159] is 554919
 ```
 
-### VI. `count-by-code`
+### VI. `count-by-code` (15 minutess)
 1. This part requires grouping the records by response code first. In Scala, this is done using a map operation that returns a tuple `(key,value)`.
 2. You can directly count each group using the function `countByKey`.
 3. To print the output on the resulting map, you can use the method `foreach` on that map. A sample output is given below.
@@ -204,7 +206,7 @@ Code,Count
 200,1701534
 ```
 
-### V. `sum-bytes-by-code` and `avg-bytes-by-code`
+### VII. `sum-bytes-by-code` and `avg-bytes-by-code` (15 minutes)
 1. This method is similar to the previous one except that it will calculate the summation of bytes for each code.
 2. To do that, you can first use the `map` function to produce only the `code` and the `bytes`. Then, you can use the mehod `reducyByKey` to compute the summation.
 3. The reduce method is Spark is different that the reduce method in Hadoop. Instead of taking all the values, it only takes two values at a time. To compute the summation, your reduce function should return the sum of the two values given to it.
@@ -256,7 +258,7 @@ Code,Avg(bytes)
 500,0.0
 ```
 
-### `top-host`
+### VIII. `top-host` (20 minutes)
 1. In this part we want to count the number of entries per host and output the one with the highest number of entries.
 2. While we could use the function `countByKey` it could be inefficient since it returns all the values to the driver node. Unlike the response codes, there could be too many distance values of `host` and we do not want to return all of them.
 3. Instead of `countByKey` we will use the method `reduceByKey` which runs as a transformation and keeps the result in an RDD.
@@ -275,7 +277,7 @@ Host: piweba3y.prodigy.com
 Number of entries: 17572
 ```
 
-### `comparison`
+### IX. `comparison` (10 minutes)
 In this part, we would like to split the input into two parts based on a timestamp and then calculate the number of lines for each response code for each part.
 1. To split the input, we will use two filter transformations. Each one will result in a different RDD.
 2. After that, we will reuse our code from the command `count-by-code` to count the number of records per response code.
@@ -303,7 +305,7 @@ Code,Count before,Count after
 200,594412,1107122
 ```
 
-### Submission (15 minutes)
+### X. Submission (15 minutes)
 1. Add a `README` file with all your answers.
 2. If you implemented the bonus task, add your explanation and code snippet to the `README` file.
 3. Add a `run` script that compiles your code and then runs the following commands with the given parameters on the file `nasa_19950630.22-19950728.12.tsv`.
@@ -318,7 +320,10 @@ Code,Count before,Count after
 | avg-bytes-by-code |                      |
 | top-host          |                      |
 | comparison        | 805383872            |
-
+4. As a test, run your script using the following command to redirect the standard output to the file `output.txt` and double check that the answers in your file are the same to the ones listed earlier in this lab for the file `nasa_19950630.22-19950728.12.tsv`.
+```shell
+./run.sh > output.txt
+```
 
 ## Further Readings
 The folllowing reading material could help you with your lab.
