@@ -63,7 +63,7 @@ Choose a number: 4:
 </dependencies>
 ```
 13. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles. Run the main function in `App` class to make sure it works.
-14. To make it easier to run your code from the JAR file, add the following part to your `pom.xml` file.
+14. To make it easier to run your code from the JAR file, add the following part to the <plugins> in your `pom.xml` file.
 ```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
@@ -144,6 +144,8 @@ object App {
 Total count for file 'nasa_19950801.tsv' is 30970
 Total count for file '19950630.23-19950801.00.tsv' is 1891710
 ```
+Note that if you count the the lines after filtering the header, the numbers will be 1 less.
+
 2. The `code-filter` command should count the lines that match a desired response code. The desired code is provided as a third command line argument. This method should use the `filter` transformation followed by the `count` action. Below is the expected output for the two sample files.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
