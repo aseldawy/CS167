@@ -147,7 +147,7 @@ You should change Spark version as well:
 ```text
 <artifactId>spark-core_2.11</artifactId>
 ```
-6. Few of commands in the next sections may require more than 2 arguments.
+6. Few commands in the next sections may require more than 2 arguments.
 
 ### IV. `count-all` and `code-filter` (15 minutes)
 1. The `count-all` command should use the method `RDD#count` which is an action. Below is the expected output for the two sample files.
