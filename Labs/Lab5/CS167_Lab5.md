@@ -137,7 +137,17 @@ object App {
 1. Since most of the commands will need to split the input line and skip the first line, let us do this first.
 2. Use a filter transformation to skip the first line. For simplicity, we will detect the first line as the line that starts with `"host\tlogname"`
 3. Use the map transformation to split each line using the tab character `"\t"` as a separator.
-3. Note that since the filter and map operations are transformations, not action, none of them will be executed until you use them.
+4. Note that since the filter and map operations are transformations, not action, none of them will be executed until you use them.
+5. If you get the error `java.lang.NoClassDefFoundError: scala/runtime/LambdaDeserialize`, go to `pom.xml` and change scala version to `2.11.11`.
+```text
+<scala.version>2.11.11</scala.version>
+<scala.compat.version>2.11</scala.compat.version>
+```
+You should change Spark version as well:
+```text
+<artifactId>spark-core_2.11</artifactId>
+```
+6. Few of commands in next section may require more than 2 arguments.
 
 ### IV. `count-all` and `code-filter` (15 minutes)
 1. The `count-all` command should use the method `RDD#count` which is an action. Below is the expected output for the two sample files.
