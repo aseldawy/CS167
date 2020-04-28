@@ -63,7 +63,7 @@ Choose a number: 4:
 </dependencies>
 ```
 13. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles. Run the main function in `App` class to make sure it works.
-14. To make it easier to run your code from the JAR file, add the following part to the <plugins> in your `pom.xml` file.
+14. To make it easier to run your code from the JAR file, add the following part to the plugins section in your `pom.xml` file.
 ```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
