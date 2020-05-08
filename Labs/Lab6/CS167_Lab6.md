@@ -55,7 +55,7 @@ object App {
 }
 ```
 
-### II. Read and parse the input file (10 minutes)
+### III. Read and parse the input file (10 minutes)
 Spark SQL is equipped with a CSV parser that can read semi-structured CSV files.
 1. Use the following code to open the sample file and print the first few lines.
 ```scala
@@ -119,7 +119,7 @@ root
 ```
 6. Comment the line `option("inferSchema", "true")` and run your program again. (Q) What is the type of the attributes `time` and `bytes` this time? Why?
 
-### III. Query the Dataframe using Dataframe Operators (60 minutes)
+### IV. Query the Dataframe using Dataframe Operators (60 minutes)
 In this part, we will run some relational operators through the Dataframe API. The logic of these queries is similar to what we did in Lab 5. This will allow you to compare and contrast the two APIs.
 1. Add the following code (similar to Lab 5) to run a user-provided operation.
 ```scala
@@ -290,7 +290,7 @@ Comparison of the number of lines per code before and after 805383872 on file 19
 ```
 Hint: By default, the name of the column that results from the `count` function is named `count`. You can rename this column in each Datafame separately using the method `withColumnRenamed`, for example, for the count-before dataframe, the stament will be `withColumnRenamed("count", "count_before")`.
 
-### Submission (15 minutes)
+### V. Submission (15 minutes)
 1. Add a `README` file with all your answers.
 2. If you implemented the bonus task, add your explanation and code snippet to the `README` file.
 3. Add a `run` script that compiles your code and then runs the following commands with the given parameters on the file `nasa_19950630.22-19950728.12.tsv`.
