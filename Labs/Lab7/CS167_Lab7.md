@@ -74,7 +74,7 @@ object App {
 ```
 
 ### III. Explore the data (15 minutes)
-Check out the [dashboard](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5cd6-ry5g) provided by the City of Chicago to explore how the data can be used. (Q) What are the top five crime types?
+Check out the [dashboard](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5cd6-ry5g) provided by the City of Chicago to explore how the data can be used. (Q1) What are the top five crime types?
 
 
 ### IV. Load the input file (15 minutes)
@@ -85,7 +85,7 @@ The first step is to load the input file. In this lab, we will work with two typ
 ### V. Convert a CSV file to Parquet (20 minutes)
 To see the difference between processing the CSV file and processing Parquet, the first step is to convert the CSV file to Parquet.
 1. Implement the command `write-parquet` which writes the input as a Parquet file. The output filename is passed in `args(2)`.
-2. (Q) Compare the sizes of the CSV file and the resulting Parquet file? What do you notice? Explain.
+2. (Q2) Compare the sizes of the CSV file and the resulting Parquet file? What do you notice? Explain.
 
 Note: You will be able to see the inferred schema of the Parquet file at the output. It will look similar to the following snippet:
 ```text
@@ -98,13 +98,13 @@ message spark_schema {
   ...
 ```
 
-3. (Q) How many times do you see the schema the output? How does this relate to the number of files in the output directory? What do you make of that?
+3. (Q3) How many times do you see the schema the output? How does this relate to the number of files in the output directory? What do you make of that?
 
 ### VI. Create a partitioned Parquet file (10 minutes)
 SparkSQL allows you to write a partitioned file to speed up filters on specific attributes. Consider this a cheap and poor index that might sometimes help.
 1. Implement the operation `write-parquet-partitioned` that writes the input to a parquet file after partitioning it by `District`.
 2. The code will look like the following but you will need to specify the partitioning attribute and the output file name `input.write.partitionBy().parquet`.
-3. (Q) How does the output look like? How many files were generated?
+3. (Q4) How does the output look like? How many files were generated?
 
 ### VII. Create a view to run SQL queries (20 miutes)
 1. For this lab, you need to implement all analysis queries using SQL. To do so, you first need to create a temporary view out of your input and run the SQL query on it.
@@ -122,7 +122,7 @@ Note: For each operation from this point on, you should run it three times, on t
 
 ### VI. Find a record (10 minutes)
 1. Add a operation `filter` that locates a crime record by `Case-Number` and writes the entire record.
-2. (Q) Explain an efficient way to run this query on a column store.
+2. (Q5) Explain an efficient way to run this query on a column store.
 3. Try your code with the Case Number `HY413923` on the three file variations.
 
 ### VII. Stats (10 minutes)
@@ -133,7 +133,7 @@ Hint: In SparkSQL, when you write the result to a file, you can automatically ov
 
 ### VIII. Stats for one district (20 minutes)
 1. Similar to the previous operation, this operation will compute the same statistics but for only one district. The district ID is given as a command line argument `args(2)`.
-2. (Q) Which of the three input files you think will be processed faster using this operation?
+2. (Q6) Which of the three input files you think will be processed faster using this operation?
 3. Test your command with District ID 8.
 
 ### IX. Submission (30 minutes)
