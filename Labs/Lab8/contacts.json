@@ -1,0 +1,190 @@
+[
+  {
+    "Name": "Craft Parks",
+    "Address": {
+      "StreetNumber": 397,
+      "streetName": "Hudson Avenue",
+      "city": "Glenbrook",
+      "state": "UT",
+      "ZIPCode": 96867
+    },
+    "Friends": [
+      "Love Short",
+      "Dickerson Brock",
+      "Berg Levy",
+      "Lottie Pickett"
+    ],
+    "Active": false,
+    "DOB": "Tue May 21 1996 13:17:58 GMT+0000 (UTC)",
+    "Age": 42
+  },
+  {
+    "Name": "Aguirre Fox",
+    "Address": {
+      "StreetNumber": 540,
+      "streetName": "High Street",
+      "city": "Bloomington",
+      "state": "SC",
+      "ZIPCode": 29823
+    },
+    "Friends": [
+      "Glenn Mcbride",
+      "Marlene Macias",
+      "Constance Arnold",
+      "Beard Dotson",
+      "Hester Lowe"
+    ],
+    "Active": true,
+    "DOB": "Sat Mar 15 2014 06:04:01 GMT+0000 (UTC)",
+    "Age": 49
+  },
+  {
+    "Name": "Sandy Oneil",
+    "Address": {
+      "StreetNumber": 819,
+      "streetName": "Pierrepont Place",
+      "city": "Gibsonia",
+      "state": "AR",
+      "ZIPCode": 10032
+    },
+    "Friends": [
+      "Lorraine Berry",
+      "Ola Brewer",
+      "Sharlene Franklin",
+      "Melanie Lynn",
+      "Chandra Gilliam"
+    ],
+    "Active": false,
+    "DOB": "Thu Aug 07 1980 05:30:31 GMT+0000 (UTC)",
+    "Age": 41
+  },
+  {
+    "Name": "Cooke Schroeder",
+    "Address": {
+      "StreetNumber": 246,
+      "streetName": "Huntington Street",
+      "city": "Allendale",
+      "state": "NH",
+      "ZIPCode": 64947
+    },
+    "Friends": [
+      "Rebekah Winters",
+      "Grace Lewis",
+      "Stephanie Hyde"
+    ],
+    "Active": false,
+    "DOB": "Wed Oct 19 2016 15:38:31 GMT+0000 (UTC)",
+    "Age": 32
+  },
+  {
+    "Name": "Patrick Thornton",
+    "Address": {
+      "StreetNumber": 152,
+      "streetName": "Newkirk Avenue",
+      "city": "Summertown",
+      "state": "ID",
+      "ZIPCode": 95160
+    },
+    "Friends": [
+      "Small Barlow",
+      "Carson Cherry",
+      "Leah Sherman",
+      "Joyner Buckner"
+    ],
+    "Active": true,
+    "DOB": "Sat Jan 12 2002 19:11:20 GMT+0000 (UTC)",
+    "Age": 25
+  },
+  {
+    "Name": "Workman Holloway",
+    "Address": {
+      "StreetNumber": 955,
+      "streetName": "Covert Street",
+      "city": "Sylvanite",
+      "state": "GA",
+      "ZIPCode": 95335
+    },
+    "Friends": [
+      "Sullivan Blackwell",
+      "Ratliff Mccray"
+    ],
+    "Active": false,
+    "DOB": "Thu Nov 12 1981 05:06:00 GMT+0000 (UTC)",
+    "Age": 29
+  },
+  {
+    "Name": "Susan Graham",
+    "Address": {
+      "StreetNumber": 797,
+      "streetName": "Doone Court",
+      "city": "Frierson",
+      "state": "IL",
+      "ZIPCode": 15612
+    },
+    "Friends": [
+      "Clark Sharpe",
+      "Guerra Goodman",
+      "Vinson Jones",
+      "Swanson Avery",
+      "Socorro Morse"
+    ],
+    "Active": false,
+    "DOB": "Fri Mar 17 1972 15:42:29 GMT+0000 (UTC)",
+    "Age": 41
+  },
+  {
+    "Name": "Levine Johnston",
+    "Address": {
+      "StreetNumber": 737,
+      "streetName": "McKinley Avenue",
+      "city": "Helen",
+      "state": "DE",
+      "ZIPCode": 48935
+    },
+    "Friends": [
+      "Willis Morrow",
+      "Sutton Massey",
+      "Gibson Herrera"
+    ],
+    "Active": false,
+    "DOB": "Sat Jan 09 1988 00:04:53 GMT+0000 (UTC)",
+    "Age": 44
+  },
+  {
+    "Name": "Aimee Mcintosh",
+    "Address": {
+      "StreetNumber": 145,
+      "streetName": "Boardwalk ",
+      "city": "Mahtowa",
+      "state": "MA",
+      "ZIPCode": 35051
+    },
+    "Friends": [
+      "Chase Wyatt",
+      "Kelly Hewitt",
+      "Michael Rodriguez"
+    ],
+    "Active": false,
+    "DOB": "Sun Mar 10 1996 19:54:41 GMT+0000 (UTC)",
+    "Age": 38
+  },
+  {
+    "Name": "Hayes Weaver",
+    "Address": {
+      "StreetNumber": 722,
+      "streetName": "Diamond Street",
+      "city": "Belva",
+      "state": "OH",
+      "ZIPCode": 90952
+    },
+    "Friends": [
+      "Cecilia Oneill",
+      "Trujillo Wilkins",
+      "Clara Day",
+      "Briana Ellis"
+    ],
+    "Active": true,
+    "DOB": "Thu Sep 21 2000 06:45:36 GMT+0000 (UTC)",
+    "Age": 44
+  }
+]
