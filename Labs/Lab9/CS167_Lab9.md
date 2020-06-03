@@ -77,7 +77,7 @@ object App {
         System.exit(1)
       }
       val t2 = System.nanoTime
-      println(s"Appliet algorithm $method on input $inputfile in ${(t2 - t1) * 1E-9} seconds")
+      println(s"Applied algorithm $method on input $inputfile in ${(t2 - t1) * 1E-9} seconds")
     } finally {
       spark.stop
     }
