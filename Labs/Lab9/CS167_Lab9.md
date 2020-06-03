@@ -12,7 +12,7 @@
 
 ### I. Project Setup (20 minutes)
 In this lab, we will use Scala as a programming language.
-1. Follow the project setup part in [Lab 5](../Lab5/CS17_Lab5.md).
+1. Follow the project setup part in [Lab 5](https://github.com/aseldawy/CS167/blob/master/Labs/Lab5/CS167_Lab5.md).
 2. Add the following dependencies to your `pom.xml` file.
 ```xml
 <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
