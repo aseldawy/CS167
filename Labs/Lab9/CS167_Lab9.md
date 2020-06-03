@@ -266,7 +266,7 @@ root
 | hashingTF.numFeatures | Array(10, 100, 1000) |
 | logisticRegression.regParam | Array(0.01, 0.1, 0.3, 0.8) |
 
-10. Working with this dataset will take more time because it is bigger and more complex. To speed up the validation set, we will use a [`TrainValidationSplit`](http://spark.apache.org/docs/latest/ml-tuning.html#train-validation-split) validator. We will create and configure it as below:
+10. Working with this dataset will take more time because it is bigger and more complex. To speed up the training process, we will use a [`TrainValidationSplit`](http://spark.apache.org/docs/latest/ml-tuning.html#train-validation-split) validator. We will create and configure it as below:
 ```scala
 val cv = new TrainValidationSplit()
   .setEstimator(pipeline)
