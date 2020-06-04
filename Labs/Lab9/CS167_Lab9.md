@@ -330,7 +330,7 @@ val accuracy = binaryClassificationEvaluator.evaluate(predictions)
 println(s"Accuracy of the test set is $accuracy")
 ```
 
-### Submission (15 minutes)
+### V. Submission (15 minutes)
 1. Add a README that contains your information.
 2. Add a run script file that compiles your code and runs both examples on the two input files.
 2. Package your `README` file, run script, and code (without test files or binary files) and submit as a compressed file.
