@@ -86,7 +86,7 @@ object App {
 ```
 
 ### III. Regression model on house pirces (60 minutes)
-In the first case study, we will run a regression model on the house prices dataset to build a model that estimates house prices based on some house features. To active this part of the code, set the command line arguments to: `kc_house_data.csv` `regression`
+In the first case study, we will run a regression model on the house prices dataset to build a model that estimates house prices based on some house features. To activate this part of the code, set the command line arguments to: `kc_house_data.csv` `regression`
 1. Open the file `kc_house_data.csv` in a spreadsheet file to get familiar with the attributes in the file and their values. The first few lines are included here for your reference.
 
 
@@ -197,7 +197,7 @@ Array("sqft_living", "sqft_lot", "sqft_above", "sqft_basement", "sqft_living15",
 Array("bedrooms", "bathrooms", "condition", "waterfront", "view", "sqft_living", "sqft_lot", "sqft_above", "sqft_basement", "sqft_living15", "sqft_lot15"),
 ```
 ### IV. Logistic model on sentimate data (60 minutes)
-In this second task, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To active this part of the code, set the command line arguments to: `sentiment.csv` `classification`
+In this second task, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To activate this part of the code, set the command line arguments to: `sentiment.csv` `classification`
 1. Open the file `sentiment.csv` in a text editor and go through it to see some examples of the data. For your reference, the first few lines are included below.
 
 |                text|sentiment|
