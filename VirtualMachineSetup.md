@@ -152,3 +152,6 @@ esac
 
 **Solution** Follow the instructions for your computer manufacturer: https://2nwiki.2n.cz/pages/viewpage.action?pageId=75202968
 
+2. Kernel Driver not found (MacOS)
+<img width="639" alt="image" src="https://user-images.githubusercontent.com/7341082/114073012-ae5f7400-9857-11eb-8e9c-160e68a0253b.png">
+**Solution** Follow the instructions here: https://www.howtogeek.com/658047/how-to-fix-virtualboxs-“kernel-driver-not-installed-rc-1908-error/
