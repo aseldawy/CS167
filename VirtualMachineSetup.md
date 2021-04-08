@@ -22,7 +22,7 @@
 
 
 4. Copy the following script in the `setup.sh` in home directory
-```
+```bash
 #! /bin/bash
  
 # Change to the home dir and setup the required vars
