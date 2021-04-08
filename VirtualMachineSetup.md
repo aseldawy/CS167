@@ -145,6 +145,7 @@ esac
 ----------------------------
 
 1. Virtualization not enabled in BIOS
+
 ![image](https://user-images.githubusercontent.com/7341082/114065712-d054f880-984f-11eb-93d2-afe6eb9c7436.png)
 
 **Solution** Follow the instructions for your computer manufacturer: https://2nwiki.2n.cz/pages/viewpage.action?pageId=75202968
