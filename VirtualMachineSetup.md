@@ -14,6 +14,7 @@
 (a) Click on "File", then "Import Appliance...", and select the cs167.ova file. Import it, accepting all defaults.
 ![image](https://user-images.githubusercontent.com/7341082/114063974-05f8e200-984e-11eb-945f-4522d5175e8a.png)
 ![image](https://user-images.githubusercontent.com/7341082/114064122-2b85eb80-984e-11eb-9bbe-30fd4270fad8.png)
+![image](https://user-images.githubusercontent.com/7341082/114065493-92f06b00-984f-11eb-9711-17ffd2de847e.png)
 
 (b) After the appliance is imported, the new VM will show up. Select it, then press the large green arrow in the interface that says "Start". The virtual machine will boot up.
 
@@ -142,4 +143,9 @@ esac
 
 ## Troubleshooting
 ----------------------------
+
+1. Virtualization not enabled in BIOS
+![image](https://user-images.githubusercontent.com/7341082/114065712-d054f880-984f-11eb-93d2-afe6eb9c7436.png)
+
+**Solution** Follow the instructions for your computer manufacturer: https://2nwiki.2n.cz/pages/viewpage.action?pageId=75202968
 
