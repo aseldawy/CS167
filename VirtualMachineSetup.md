@@ -1,12 +1,26 @@
 ## CS167 Virtual Machine
 ---------------------------------------------------------------
 
-1. Download the given .ova file
+1. Download the given .ova file 
+(https://coursefiles.cs.ucr.edu/cs167.ova)
+**Note:** The download is 2.7 GB. 
 
-2. Download and install VirtualBox 
+2. Download and install VirtualBox. There are versions for 
 (https://www.virtualbox.org/wiki/Downloads)
+**Warning:** If you have VirtualBox installed already, please make sure you uninstall it and install version 6.1.18. Older versions of VirtualBox have known errors that can cause issues.
 
-3. Copy the following script in the `setup.sh` in home directory
+3. Create a Virtual Machine by importing the given .ova file:
+
+(a) Click on "File", then "Import Appliance...", and select the cs167.ova file. Import it, accepting all defaults.
+![image](https://user-images.githubusercontent.com/7341082/114063974-05f8e200-984e-11eb-945f-4522d5175e8a.png)
+![image](https://user-images.githubusercontent.com/7341082/114064122-2b85eb80-984e-11eb-9bbe-30fd4270fad8.png)
+
+(b) After the appliance is imported, the new VM will show up. Select it, then press the large green arrow in the interface that says "Start". The virtual machine will boot up.
+
+(c) Once it is booted up, log in to it with the username `cs167` and password `ChangeThisPassword!`. A terminal can be opened by clicking on the "LXTerminal" icon on the desktop. 
+
+
+4. Copy the following script in the `setup.sh` in home directory
 ```
 #! /bin/bash
  
@@ -122,6 +136,9 @@ esac
 
 5. Run `cd ~ && ./setup.sh Downloads/<JDK_Path> && source .bash_profile`
 
+6. Test your setup. Run `java`, `javac`, `mvn` and `hadoop`.
+
+7. To run IntelliJ IDEA, open LXTerminal and run `idea.sh`.
 
 ## Troubleshooting
 ----------------------------
