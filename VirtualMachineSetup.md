@@ -137,7 +137,7 @@ esac
 
 ![image](https://user-images.githubusercontent.com/7341082/114067512-bfa58200-9851-11eb-9bec-67fe7912195d.png)
 
-5. Run `cd ~ && ./setup.sh Downloads/<JDK_Path> && source .bash_profile`
+5. Run `cd ~ && chmod +x setup.sh && ./setup.sh Downloads/<JDK_Path> && source .bash_profile`
 
 6. Test your setup. Run `java`, `javac`, `mvn` and `hadoop`.
 
