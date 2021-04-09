@@ -35,7 +35,8 @@ INTELLIJ_HOME=$BIG_DATA_DIR/idea-IC-211.6693.111
  
 # Download the required dependencies
 download_dependencies() {
-	mkdir $BIG_DATA_DIR && cd $BIG_DATA_DIR
+	mkdir $BIG_DATA_DIR
+	cd $BIG_DATA_DIR
  
 	echo "Downloading Hadoop..."
 	wget "https://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz"	
@@ -46,7 +47,7 @@ download_dependencies() {
 	echo "Downloading IntelliJ IDEA..."
 	wget "https://download.jetbrains.com/idea/ideaIC-2021.1.tar.gz"
   
-  cd $HOME
+  	cd $HOME
 }
  
 # Move a given file to the bigdata directory
@@ -137,7 +138,13 @@ esac
 
 ![image](https://user-images.githubusercontent.com/7341082/114067512-bfa58200-9851-11eb-9bec-67fe7912195d.png)
 
-5. Run `cd ~ && chmod +x setup.sh && ./setup.sh Downloads/<JDK_Path> && source .bash_profile`
+5. Run 
+```
+cd ~
+chmod +x setup.sh
+./setup.sh Downloads/<JDK_Path> 
+source .bash_profile
+```
 
 6. Test your setup. Run `java`, `javac`, `mvn` and `hadoop`.
 
