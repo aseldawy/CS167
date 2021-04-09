@@ -38,7 +38,7 @@ download_dependencies() {
 	mkdir $BIG_DATA_DIR && cd $BIG_DATA_DIR
  
 	echo "Downloading Hadoop..."
-	wget "https://ftp.wayne.edu/apache/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz"	
+	wget "https://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz"	
  
 	echo "Downloading Maven..."
 	wget "https://apache.osuosl.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz"
