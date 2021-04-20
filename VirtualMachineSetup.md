@@ -2,7 +2,7 @@
 ---------------------------------------------------------------
 
 1. Download the given .ova file 
-(https://coursefiles.cs.ucr.edu/cs167.ova)
+(https://coursefiles.cs.ucr.edu/cs167-50GB.ova)
 **Note:** The download is 2.7 GB. 
 
 2. Download and install VirtualBox. There are versions for 
