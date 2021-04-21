@@ -28,7 +28,7 @@
 # Change to the home dir and setup the required vars
 BIG_DATA_DIR=$HOME/BigData
  
-JAVA_HOME=$BIG_DATA_DIR/jdk1.8.0_281
+JAVA_HOME=$BIG_DATA_DIR/jdk1.8.0_291
 MAVEN_HOME=$BIG_DATA_DIR/apache-maven-3.8.1
 HADOOP_HOME=$BIG_DATA_DIR/hadoop-2.10.1
 INTELLIJ_HOME=$BIG_DATA_DIR/idea-IC-211.6693.111
