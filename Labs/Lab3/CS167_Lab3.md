@@ -25,6 +25,8 @@
 ```xml
 <properties>
   <hadoop.version>3.2.2</hadoop.version>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
 </properties>
 
 <dependencies>
