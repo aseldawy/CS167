@@ -15,7 +15,7 @@
 * If you are not yet familiar with Scala, please check [this tutorial](https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html) to help with the transition from Java to Scala.
 
 ## Overview
-In this lab, we will be using mainly Scala code. While pure Scala projects are usually set up using [SBT](https://www.scala-sbt.org), we will use Maven for this project to reuse your existing development environment and avoid the complications of setting up a new development tool. According to the official Scala documentation 'Scala combines object-oriented and functional programming in one concise, high-level language.' Since big-data systems rely heavily on functional programming, Scala is an excellent match for big-data. This is why Spark is natively written in Spark. If you excel in Scala, you can write more concise and readable code and become more productive.
+In this lab, we will be using mainly Scala code. While pure Scala projects are usually set up using [SBT](https://www.scala-sbt.org), we will use Maven for this project to reuse your existing development environment and avoid the complications of setting up a new development tool. According to the [official Scala documentation](https://www.scala-lang.org) 'Scala combines object-oriented and functional programming in one concise, high-level language.' Since big-data systems rely heavily on functional programming, Scala is an excellent match for big-data. This is why Spark is natively written in Spark. If you excel in Scala, you can write more concise and readable code and become more productive.
 
 ## Lab Work
 
@@ -121,13 +121,13 @@ object App {
 5. A few commands in the next sections may require more than 2 arguments.
 
 ### IV. `count-all` and `code-filter` (15 minutes)
-1. The `count-all` command should use the method `RDD#count` which is an action to count the total number of records in the input file. Below is the expected output for the two sample files.
+1. The `count-all` command should use the method [`RDD#count`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/RDD.html#count():Long) which is an action to count the total number of records in the input file. Below is the expected output for the two sample files.
 ```text
 Total count for file 'nasa_19950801.tsv' is 30969
 Total count for file '19950630.23-19950801.00.tsv' is 1891709
 ```
 
-2. The `code-filter` command should count the lines that match a desired response code. The desired code is provided as a third command line argument. This method should use the `filter` transformation followed by the `count` action. Below is the expected output for the two sample files.
+2. The `code-filter` command should count the lines that match a desired response code. The desired code is provided as a third command line argument. This method should use the [`filter`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/RDD.html#filter(f:T=>Boolean):org.apache.spark.rdd.RDD[T]) transformation followed by the `count` action. Below is the expected output for the two sample files.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
 Total count for file '19950630.23-19950801.00.tsv' with response code 302 is 46573
@@ -153,7 +153,7 @@ Total count for file '19950630.23-19950801.00.tsv' in time range [804955673, 805
 
 ### VI. `count-by-code` (15 minutess)
 1. This part requires grouping the records by response code first. In Scala, this is done using a map operation that returns a tuple `(key,value)`.
-2. You can directly count each group using the function `countByKey`.
+2. You can directly count each group using the function [`countByKey`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/PairRDDFunctions.html#countByKey():scala.collection.Map[K,Long]).
 3. To print the output on the resulting map, you can use the method `foreach` on that map. A sample output is given below.
 ```text
 Number of lines per code for the file nasa_19950801.tsv
@@ -180,9 +180,9 @@ Code,Count
 
 ### VII. `sum-bytes-by-code` and `avg-bytes-by-code` (15 minutes)
 1. This method is similar to the previous one except that it will calculate the summation of bytes for each code.
-2. To do that, you can first use the `map` function to produce only the `code` and the `bytes`. Then, you can use the mehod `reducyByKey` to compute the summation.
+2. To do that, you can first use the [`map`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/RDD.html#map[U](f:T=>U)(implicitevidence$3:scala.reflect.ClassTag[U]):org.apache.spark.rdd.RDD[U]) function to produce only the `code` and the `bytes`. Then, you can use the mehod [`reducyByKey`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/PairRDDFunctions.html#reduceByKey(func:(V,V)=>V):org.apache.spark.rdd.RDD[(K,V)]) to compute the summation.
 3. The reduce method is Spark is different that the reduce method in Hadoop. Instead of taking all the values, it only takes two values at a time. To compute the summation, your reduce function should return the sum of the two values given to it.
-4. Since reduceByKey is a transformation, you will need to use the `collect` action to get the results back.
+4. Since reduceByKey is a transformation, you will need to use the [`collect`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/RDD.html#collect():Array[T]) action to get the results back.
 5. A sample output is given below.
 ```text
 Total bytes per code for the file nasa_19950801.tsv
@@ -207,7 +207,7 @@ Code,Sum(bytes)
 ```
 6. For `avg-bytes-by-code` you need to compute the average, rather than the summation. A simple reduce function cannot be used to compute the average since the average function is not associative. However, it can be computed using a combination of sum and count.
 7. The easiest way to compute the average is to combine the output of the two commands `count-by-code` and `sum-bytes-by-code`. The average is simply the sum divided by count.
-8. Bonus (+3 points): The drawback of the above method is that it will need to scan the input twice to count each function, sum and count. It is possible to compute both functions in one scan over the input and without caching any intermediate RDDs. Complete this part to get three bonus points on this lab. Explain your method in the README file and add the code snippet that performs this task. Mark your answer with (B).
+8. Bonus (+3 points): The drawback of the above method is that it will need to scan the input twice to count each function, sum and count. It is possible to compute both functions in one scan over the input and without caching any intermediate RDDs. Complete this part to get three bonus points on this lab. Explain your method in the README file and add the code snippet that performs this task. Mark your answer with (B). Hint, check the [aggregateByKey](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/PairRDDFunctions.html#aggregateByKey[U](zeroValue:U)(seqOp:(U,V)=>U,combOp:(U,U)=>U)(implicitevidence$3:scala.reflect.ClassTag[U]):org.apache.spark.rdd.RDD[(K,U)]) function.
 9. A sample output is given below.
 ```text
 Average bytes per code for the file nasa_19950801.tsv
