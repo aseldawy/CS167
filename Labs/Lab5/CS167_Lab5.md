@@ -26,6 +26,7 @@ We will follow a slightly modified version of the instructions on the [official 
 mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>-lab5 -B
 ```
 Note: Do not forget to replace `UCRNetID` with your UCR Net ID.
+
 2. Change into the project directory and type `mvn package` once to make sure that it compiles.
 3. To configure your project with Spark, merge the following configuration in `pom.xml`.
 ```xml
