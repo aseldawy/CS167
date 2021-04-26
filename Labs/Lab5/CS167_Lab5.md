@@ -7,7 +7,7 @@
 
 ## Prerequisites
 * Setup the development environment as explained in [Lab 1](../Lab1/lab1.md).
-* Download [Apache Spark 3.1.1](https://spark.apache.org/downloads.html). Choose the package type *Pre-built for Apache Hadoop 2.7*.
+* (Similar to Lab 4) Download [Apache Spark 3.1.1](https://spark.apache.org/downloads.html). Choose the package type *Pre-built for Apache Hadoop 2.7*.
 * Download these two sample files [sample file 1](../Lab3/nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download. These are the same files we used in [Lab 3](../Lab3/CS167_Lab3.md).
 * Depending on how you extract the second file, it could be named either `nasa_19950630.22-19950728.12.tsv` or `19950630.23-19950801.00.tsv`. In this lab, we will use these two names interchangeably.
 * For Windows users, install the Ubuntu app from Microsoft Store and set it up.
@@ -15,20 +15,19 @@
 * If you are not yet familiar with Scala, please check [this tutorial](https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html) to help with the transition from Java to Scala.
 
 ## Overview
-In this lab, we will be using mainly Scala code. While pure Scala projects are usually set up using [SBT](https://www.scala-sbt.org), we will use Maven for this project to reuse your existing development environment and avoid the complications of setting up a new development tool.
+In this lab, we will be using mainly Scala code. While pure Scala projects are usually set up using [SBT](https://www.scala-sbt.org), we will use Maven for this project to reuse your existing development environment and avoid the complications of setting up a new development tool. According to the official Scala documentation 'Scala combines object-oriented and functional programming in one concise, high-level language.' Since big-data systems rely heavily on functional programming, Scala is an excellent match for big-data. This is why Spark is natively written in Spark. If you excel in Scala, you can write more concise and readable code and become more productive.
 
 ## Lab Work
 
 ### I. Project Setup (10 minutes)
-We will follow a slightly modified version of the instructions on the [official Scala website](https://docs.scala-lang.org/tutorials/scala-with-maven.html).
+We will follow a slightly modified version of the instructions on the [official Scala website](https://docs.scala-lang.org/tutorials/scala-with-maven.html). Mainly, we will avoid the interactive steps and combine all our choices in one command line.
 1. To generate a new Maven project that works with Scala, use the following command:
 ```console
-mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>-lab5 -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DarchetypeVersion=0.9.1
+mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>-lab5 -B
 ```
-2. Hit enter twice to accept the default version and package.
-3. Review the configuration and enter `Y` to confirm.
-4. Change into the project directory and type `mvn package` once to make sure that it compiles.
-5. To configure your project with Spark, merge the following configuration in `pom.xml`.
+Note: Do not forget to replace `UCRNetID` with your UCR Net ID.
+2. Change into the project directory and type `mvn package` once to make sure that it compiles.
+3. To configure your project with Spark, merge the following configuration in `pom.xml`.
 ```xml
 <properties>
   <spark.version>3.1.1</spark.version>
@@ -43,8 +42,8 @@ mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNe
   </dependency>
 </dependencies>
 ```
-6. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles. Run the main function in `App` class to make sure it works.
-7. To make it easier to run your code from the JAR file, add the following part to the plugins section in your `pom.xml` file.
+4. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles. Run the main function in `App` class to make sure it works.
+5. To make it easier to run your code from the JAR file, add the following part to the plugins section in your `pom.xml` file.
 ```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
