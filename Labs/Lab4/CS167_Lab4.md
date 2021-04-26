@@ -124,6 +124,7 @@ JavaSparkContext spark = new JavaSparkContext(conf);
 
 This code first creates a `SparkConf` instances using the default configuration. If Spark master is already configured, it will use the default configuraiton. If not, it will use the local mode.
 
+2. Edit your `$SPARK_HOME/conf/spark-defaults.conf` and add the line `spark.master  spark://master:7077`. The configurations in this file are automatically loaded when you use spark-submit and instantiate a new instance of SparkConf using the default constructor.
 2. Run the code from IntelliJ IDEA. (Q3) What is the Spark master printed on the standard output on IntelliJ IDEA?
 3. Compile the code from command line and run using `spark-submit`. (Q4) What is the Spark master printed on the standard output on the terminal?
 4. You can manually override the master on the `spark-submit` command. Try the following line and observe what the master is.
