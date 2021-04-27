@@ -297,6 +297,7 @@ Code,Count before,Count after
 ```shell
 ./run.sh > output.txt
 ```
+5. Similar to all labs, do not include any additional files such as the compiled code, input, or output files.
 
 ## Further Readings
 The following reading material could help you with your lab.
