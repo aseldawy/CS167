@@ -139,7 +139,7 @@ Note: `local[2]` means that it runs on the local mode with two cores.
 In the next part, we will extend the program to use more Spark functions. We will use the `filter` transformation to find log entries with a specific response code.
 
 1. Make a copy of the current sample class and named it `Filter`. Place it in the same package as the App class.
-2. Add the following line to take the desired code from the command line.
+2. Add the following line to set the desired code to the value `200`.
 ```java
 final String desiredCode = "200";
 ```
