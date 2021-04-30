@@ -32,6 +32,8 @@ Note: Do not forget to replace `UCRNetID` with your UCR Net ID.
 ```xml
 <properties>
   <spark.version>3.1.1</spark.version>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
 </properties>
 
 <dependencies>
