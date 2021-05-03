@@ -177,6 +177,7 @@ val count = spark.sql(
   .getAs[Long](0)
 ```
 Notice that the return value of any SQL query is always a dataframe even if it contains a single row or a single value.
+
 3. The operation `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
