@@ -328,6 +328,7 @@ ORDER BY count DESC
 LIMIT 1
 ```
 Note: Keep both implementations in your code and comment out the SQL implementation after you make sure it runs. Your submissions should include both implementations but only one of them is uncommented (active).
+
 2. (Bonus +4 points) Implement the command `comparison` using a single SQL function and compare your results to the one that uses DataFrame API. If you decide to implement this part, write your SQL query in the README file and mark your answer with the letter `(B)` to indicate this is the bonus answer. You do not need to include this part in your code.
 
 Hint: You might need to use nested queries to implement this bonus part.
@@ -435,35 +436,6 @@ The folllowing reading material could help you with your lab.
                 <arg>${project.build.directory}/.scala_dependencies</arg>
               </args>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
-        <configuration>
-          <!-- Tests will be run with scalatest-maven-plugin instead -->
-          <skipTests>true</skipTests>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <version>2.0.0</version>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <junitxml>.</junitxml>
-          <filereports>TestSuiteReport.txt</filereports>
-          <!-- Comma separated list of JUnit test class names to execute -->
-          <jUnitClasses>samples.AppTest</jUnitClasses>
-        </configuration>
-        <executions>
-          <execution>
-            <id>test</id>
-            <goals>
-              <goal>test</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
