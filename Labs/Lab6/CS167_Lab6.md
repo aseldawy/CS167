@@ -2,7 +2,7 @@
 
 ## Objectives
 
-* Understand SparkSQL and the DataFrame API
+* Understand SparkSQL and the DataFrame/SparkSQL API
 * Write a Scala program that uses SparkSQL
 
 ## Prerequisites
@@ -13,6 +13,7 @@
 * For Windows users, install the Ubuntu app from Microsoft Store and set it up.
 * To add Scala language support to IntelliJ, you can install the [Scala plugin](https://plugins.jetbrains.com/plugin/1347-scala). Please check the [plugin management page](https://www.jetbrains.com/help/idea/managing-plugins.html) to see the details about installing and managing plugins in Intellij.
 * Note: While the instructions in this labs use Scala, you can switch to Java if you feel more comfortable with it. The lab describes all the steps in Scala because this is the preferred language to use with Spark.
+* If you are not familiar with SQL and you would like to use it, check this [SQL Tutorial](https://www.w3schools.com/sql/). There is no part in this lab that requires knowledge of SQL but knowing about it will help you better understand the lab and there is a bonus task that requires knowledge of SQL.
 
 ## Lab Work
 
@@ -118,7 +119,7 @@ root
  |-- referer: string (nullable = true)
  |-- useragent: string (nullable = true)
 ```
-6. Comment the line `option("inferSchema", "true")` and run your program again. (Q) What is the type of the attributes `time` and `bytes` this time? Why?
+6. Comment the line `option("inferSchema", "true")` and run your program again. (Q1) What is the type of the attributes `time` and `bytes` this time? Why?
 7. (Optional) To use SQL queries, you should add the following line to create a view named `log_lines` that points to your input.
 ```scala
 input.createOrReplaceTempView("log_lines")
@@ -177,6 +178,13 @@ val count = spark.sql(
   .getAs[Long](0)
 ```
 Notice that the return value of any SQL query is always a dataframe even if it contains a single row or a single value.
+
+Note: An alternative way to call functions in Scala is using spaces instead of dot and parantheses. The following syntax is valid.
+```scala
+val queryResult = spark sql "SELECT count(*) FROM log_lines" first
+val count = queryResult.getAs[Long](0)
+```
+You can use this alternative syntax wisely to make your code more readable without being too complex to follow.
 
 3. The command `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
 ```text
@@ -310,7 +318,21 @@ Comparison of the number of lines per code before and after 805383872 on file 19
 ```
 Hint: By default, the name of the column that results from the `count` function is named `count`. You can rename this column in each Datafame separately using the method `withColumnRenamed`, for example, for the count-before dataframe, the stament will be `withColumnRenamed("count", "count_before")`.
 
-### V. Submission (15 minutes)
+### V. Query the Dataframe using SQL API (20 minutes)
+1. Use the SQL API to provide an alternative implementation for the `top-host` command. The following SQL query provides the desired logic.
+```sql
+SELECT host, count(*) AS count
+FROM log_lines
+GROUP BY host
+ORDER BY count DESC
+LIMIT 1
+```
+Note: Keep both implementations in your code and comment out the SQL implementation after you make sure it runs. Your submissions should include both implementations but only one of them is uncommented (active).
+2. (Bonus +4 points) Implement the command `comparison` using a single SQL function and compare your results to the one that uses DataFrame API. If you decide to implement this part, write your SQL query in the README file and mark your answer with the letter `(B)` to indicate this is the bonus answer. You do not need to include this part in your code.
+
+Hint: You might need to use nested queries to implement this bonus part.
+
+### VI. Submission (15 minutes)
 1. Add a `README` file with all your answers.
 2. If you implemented the bonus task, add your explanation and code snippet to the `README` file.
 3. Add a `run` script that compiles your code and then runs the following commands with the given parameters on the file `nasa_19950630.22-19950728.12.tsv`.
@@ -334,6 +356,7 @@ Hint: By default, the name of the column that results from the `count` function 
 The folllowing reading material could help you with your lab.
 * [Spark SQL Programming Guide](http://spark.apache.org/docs/latest/sql-getting-started.html)
 * [Dataset API Docs](hhttp://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset)
+* [SQL Tutorial](https://www.w3schools.com/sql/)
 
 ## FAQ
 * Q: My code does not compile using `mvn package`.
