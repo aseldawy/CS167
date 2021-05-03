@@ -12,6 +12,7 @@
 * Depending on how you extract the second file, it could be named either `nasa_19950630.22-19950728.12.tsv` or `19950630.23-19950801.00.tsv`. In this lab, we will use these two names interchangeably.
 * For Windows users, install the Ubuntu app from Microsoft Store and set it up.
 * To add Scala language support to IntelliJ, you can install the [Scala plugin](https://plugins.jetbrains.com/plugin/1347-scala). Please check the [plugin management page](https://www.jetbrains.com/help/idea/managing-plugins.html) to see the details about installing and managing plugins in Intellij.
+* Note: While the instructions in this labs use Scala, you can switch to Java if you feel more comfortable with it. The lab describes all the steps in Scala because this is the preferred language to use with Spark.
 
 ## Lab Work
 
@@ -118,6 +119,10 @@ root
  |-- useragent: string (nullable = true)
 ```
 6. Comment the line `option("inferSchema", "true")` and run your program again. (Q) What is the type of the attributes `time` and `bytes` this time? Why?
+7. (Optional) If you would like to use SQL queries, you should add the following line to create a view named `log_lines` that points to your input.
+```scala
+input.createOrReplaceTempView("log_lines")
+```
 
 ### IV. Query the Dataframe using Dataframe Operators (60 minutes)
 In this part, we will run some relational operators through the Dataframe API. The logic of these queries is similar to what we did in Lab 5. This will allow you to compare and contrast the two APIs.
@@ -157,6 +162,11 @@ println(s"Command '${command}' on file '${inputfile}' finished in ${(t2-t1)*1E-9
 ```text
 Total count for file 'nasa_19950801.tsv' is 30969
 Total count for file '19950630.23-19950801.00.tsv' is 1891709
+```
+You can also run this logic using the following SQL function:
+```SQL
+SELECT count(*)
+FROM log_lines;
 ```
 3. The operation `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
 ```text
