@@ -119,7 +119,7 @@ root
  |-- useragent: string (nullable = true)
 ```
 6. Comment the line `option("inferSchema", "true")` and run your program again. (Q) What is the type of the attributes `time` and `bytes` this time? Why?
-7. (Optional) If you would like to use SQL queries, you should add the following line to create a view named `log_lines` that points to your input.
+7. (Optional) To use SQL queries, you should add the following line to create a view named `log_lines` that points to your input.
 ```scala
 input.createOrReplaceTempView("log_lines")
 ```
@@ -166,8 +166,17 @@ Total count for file '19950630.23-19950801.00.tsv' is 1891709
 You can also run this logic using the following SQL function:
 ```SQL
 SELECT count(*)
-FROM log_lines;
+FROM log_lines
 ```
+The following code snippet shows how to run this SQL query in your code.
+```scala
+val count = spark.sql(
+  """SELECT count(*)
+    FROM log_lines""")
+  .first()
+  .getAs[Long](0)
+```
+Notice that the return value of any SQL query is always a dataframe even if it contains a single row or a single value.
 3. The operation `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
