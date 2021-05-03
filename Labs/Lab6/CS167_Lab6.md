@@ -125,7 +125,7 @@ input.createOrReplaceTempView("log_lines")
 ```
 
 ### IV. Query the Dataframe using Dataframe Operators (60 minutes)
-In this part, we will run some relational operators through the Dataframe API. The logic of these queries is similar to what we did in Lab 5. This will allow you to compare and contrast the two APIs.
+In this part, we will run some relational operators through the Dataframe/SparkSQL API. The logic of these queries is similar to what we did in Lab 5. This will allow you to compare and contrast the two APIs.
 1. Add the following code (similar to Lab 5) to run a user-provided operation.
 ```scala
 val command: String = args(0)
@@ -158,7 +158,7 @@ command match {
 val t2 = System.nanoTime
 println(s"Command '${command}' on file '${inputfile}' finished in ${(t2-t1)*1E-9} seconds")
 ```
-2. The operation `count-all` is implemented using the `count` function. The output should look similar to the following.
+2. The command `count-all` is implemented using the `count` function. The output should look similar to the following.
 ```text
 Total count for file 'nasa_19950801.tsv' is 30969
 Total count for file '19950630.23-19950801.00.tsv' is 1891709
@@ -178,17 +178,17 @@ val count = spark.sql(
 ```
 Notice that the return value of any SQL query is always a dataframe even if it contains a single row or a single value.
 
-3. The operation `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
+3. The command `code-filter` should count the records with a give response code. To do that, you will use the `filter` method. The easiest way is to provide the test as a string, e.g., `"response=200"`. Alternatively, you can use the expression `$"response" === 200`. For the latter, make use that you ipmort the implicit coversion using the statement `import spark.implicits._` in your program. The output should look similar to the following.
 ```text
 Total count for file 'nasa_19950801.tsv' with response code 200 is 27972
 Total count for file '19950630.23-19950801.00.tsv' with response code 302 is 46573
 ```
-4. The operation `time-filter` should count all the records that happened in a time interval `[start, end]`. You will use the `filter` function but this time with the `between` expression. Again, you can just provide the filter predicate as a string, i.e., `"time BETWEEN 807274014 AND 807283738"`, or as a Scala expression, i.e., `$"time".between(807274014, 807283738)`. This will be followed by `count` to count the records. A sample output is given below.
+4. The command `time-filter` should count all the records that happened in a time interval `[start, end]`. You will use the `filter` function but this time with the `between` expression. Again, you can just provide the filter predicate as a string, i.e., `"time BETWEEN 807274014 AND 807283738"`, or as a Scala expression, i.e., `$"time".between(807274014, 807283738)`. This will be followed by `count` to count the records. A sample output is given below.
 ```text
 Total count for file 'nasa_19950801.tsv' in time range [807274014, 807283738] is 6389
 Total count for file '19950630.23-19950801.00.tsv' in time range [804955673, 805590159] is 554919
 ```
-5. The two operations `count-by-code`, `sum-bytes-by-code`, and `avg-bytes-by-code` will all look very similar. You first need to group records by response code using the `groupBy` function, i.e., `groupBy("response")` or `groupBy($"response")`. On the result, you should call the correct aggregate function, i.e., `count`, `sum`, or `avg`. The last two functions take a parameter which is the column name to aggregate, e.g., `sum("bytes")`. You can finally print the result using the `show()` command. The output should look like the following.
+5. The commands `count-by-code`, `sum-bytes-by-code`, and `avg-bytes-by-code` will all look very similar. You first need to group records by response code using the `groupBy` function, i.e., `groupBy("response")` or `groupBy($"response")`. On the result, you should call the correct aggregate function, i.e., `count`, `sum`, or `avg`. The last two functions take a parameter which is the column name to aggregate, e.g., `sum("bytes")`. You can finally print the result using the `show()` command. The output should look like the following.
 ```text
 Number of lines per code for the file nasa_19950801.tsv
 +--------+-----+
@@ -266,7 +266,7 @@ Average bytes per code for the file 19950630.23-19950801.00.tsv
 |     302|  79.0597341807485|
 +--------+------------------+
 ```
-6. The operation `top-host` should group records by host, `groupBy("host")`, then count records in each group `count()`. After that, you should sort the results in descending order by count, `orderBy($"count".desc)`. Finally, return the top result using the method `first()`. The final result will be of type `Row`. To access the host and number of records for the top result, you can use one of the methods `Row#getAs(String)` and `Row#getAs(Int)` which retrieve an attribute by its name and index, respectively. The final output should look similar to the following.
+6. The command `top-host` should group records by host, `groupBy("host")`, then count records in each group `count()`. After that, you should sort the results in descending order by count, `orderBy($"count".desc)`. Finally, return the top result using the method `first()`. The final result will be of type `Row`. To access the host and number of records for the top result, you can use one of the methods `Row#getAs(String)` and `Row#getAs(Int)` which retrieve an attribute by its name and index, respectively. The final output should look similar to the following.
 ```text
 Top host in the file nasa_19950801.tsv by number of entries
 Host: edams.ksc.nasa.gov
@@ -278,7 +278,7 @@ Top host in the file 19950630.23-19950801.00.tsv by number of entries
 Host: piweba3y.prodigy.com
 Number of entries: 17572
 ```
-7. Finally, the operation `comparison` should count records by response code before and after a specific timestamp. You can do that by first creating two Dataframe by filtering the input twice. For each Dataframe, you can count the records by response code as done in the operation `count-by-code`. Finally, you can join the results of the two Dataframes by code to place them side-by-side in one Dataset. The join method may look like the following line:
+7. Finally, the command `comparison` should count records by response code before and after a specific timestamp. You can do that by first creating two Dataframe by filtering the input twice. For each Dataframe, you can count the records by response code as done in the operation `count-by-code`. Finally, you can join the results of the two Dataframes by code to place them side-by-side in one Dataset. The join method may look like the following line:
 ```scala
 countsBefore.join(countsAfter, "response")
 ```
