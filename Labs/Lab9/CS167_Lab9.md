@@ -12,7 +12,7 @@
   - [All Twitter Dataset](https://star.cs.ucr.edu/dynamic/download.cgi/Tweets/data_index.csv.gz?point) (Hosted by UCR-Star). Download in CSV format. Rename the file to `tweets.csv`.
   - You can browse the [Tweets dataset](https://star.cs.ucr.edu/?Tweets) on UCR-Star on a map
   - [Timezone Dataset](https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_time_zones.zip) (Shapefile format hosted by naturalearthdata.com)
-  - [US County Dataset](ftp://ftp2.census.gov/geo/tiger/TIGER2018/COUNTY/tl_2018_us_county.zip) (Shapefile format hosted by the US Census Bureau)
+  - [US County Dataset](ftp://ftp2.census.gov/geo/tiger/TIGER2018/COUNTY/tl_2018_us_county.zip) (Shapefile format hosted by the US Census Bureau - ftp://ftp2.census.gov/geo/tiger/TIGER2018/COUNTY/tl_2018_us_county.zip)
 * (Optional but highly recommended :wink: ) Like and follow UCR-Star social media pages on [Faceboook](https://www.facebook.com/ucrstar), [Twitter](https://twitter.com/ucrstar/), and [Instagram](https://www.instagram.com/theucrstar), to encourage the team to continue working on this project.
 
 ## Lab Work
