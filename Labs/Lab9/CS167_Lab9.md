@@ -42,6 +42,7 @@ Note: You can directly create the project from IntelliJ to avoid using command l
 | Version | 0.9.2-RC1 |
 
 ![Archetype Information](IntelliJ-ArchetypeInfo.png)
+
 4. Choose the newly added archetype and press "Next".
 ![Choose archetype](IntelliJ-Choose.png)
 5. Enter the GroupId and ArtifactId after replacing `<UCRNetID>` with yours.
