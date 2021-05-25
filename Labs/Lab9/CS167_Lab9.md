@@ -15,6 +15,8 @@
   - [US County Dataset](ftp://ftp2.census.gov/geo/tiger/TIGER2018/COUNTY/tl_2018_us_county.zip) (Shapefile format hosted by the US Census Bureau - ftp://ftp2.census.gov/geo/tiger/TIGER2018/COUNTY/tl_2018_us_county.zip)
 * (Optional but highly recommended :wink: ) Like and follow UCR-Star social media pages on [Faceboook](https://www.facebook.com/ucrstar), [Twitter](https://twitter.com/ucrstar/), and [Instagram](https://www.instagram.com/theucrstar), to encourage the team to continue working on this project.
 
+Note: If you had troubles downloading the files, you can download a cached version of these files from this [Google Drive](https://drive.google.com/drive/folders/1s-fmpYBp5usmzOaO3EhiluqTOZmhmhzi?usp=sharing) shared folder.
+
 ## Lab Work
 
 ### I. Project Setup (20 minutes)
