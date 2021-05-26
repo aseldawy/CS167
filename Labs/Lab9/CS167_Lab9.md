@@ -28,7 +28,7 @@ mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNe
 2. Import the project into IntelliJ as a Maven project.
 3. To make sure that it works correctly, run `mvn package` from command line to make sure that it compiles correctly.
 4. Take a look into the main function in class `BeastScala` that comes with the template to see an example of how it works.
-5. Remove the code inside the try-catch block except from the import line at the beginning.
+5. Remove the code inside the try-catch block except for the import line at the beginning.
 
 Note: You can directly create the project from IntelliJ to avoid using command line by following these alternative instructions.
 1. In IntelliJ welcome screen, choose New Project.
@@ -99,6 +99,7 @@ for (h <- 0 to 23) {
   if (h != 23)
     print(", ")
 }
+println
 ```
 If you run the above code for the sample dataset, you would get an output similar to the following.
 
@@ -119,7 +120,8 @@ In this part, we will improve our previous code to take into account the timezon
 ```scala
 val coffeeTweetsTimeZone: RDD[(IFeature, IFeature)] = coffeeTweets.spatialJoin(timezones)
 ```
-Note: The order of the result of the spatial join operation conform with the order of the input. In other words, for each resulting tuple, the first feature represents the left dataset (tweet) and the second feature represents a the right dataset (timezone).
+Note: The order of the result of the spatial join operation conform with the order of the input. In other words, for each resulting tuple, the first feature represents the left dataset (tweet) and the second feature represents the right dataset (timezone).
+
 2. Modify your `map` function to take the timezone into account based on the following code snippet.
 ```scala
 val time: Date = dateParser.parse(tweet.getAs[String](1))
@@ -157,7 +159,7 @@ You would get a result similar to the following.
 
 ![Counties by donut](counties_donut.png)
 
-(S1) In your submission, include the two images you got for the two keywords "donut", "bagel", and the third keyword that you chose. Name they files as `"counties_<keyword>.png"`
+(S1) In your submission, include the two images you got for the two keywords "donut", "bagel", and the third keyword that you chose. Name the files as `"counties_<keyword>.png"`
 
 ## VI. Use multilevel visualization (20 minutes)
 Add an additional line that produces a multilevel visualization that you can further interact with.
