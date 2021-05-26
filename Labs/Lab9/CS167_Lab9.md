@@ -180,3 +180,7 @@ top_counties.plotPyramid("counties_donut", 12, opts = "mercator" -> true)
 2. Add a run script file that compiles your code and runs the analysis tasks above with the keyword "donut" for the visualization task.
 3. Include six screenshots as described above.
 4. Package your `README` file, run script, and code (without test files or binary files) and submit as one compressed file.
+
+### Frequency Asked Questions (FAQ)
+* Q: I get an out of memory error when I run on the entire dataset.
+* A: This is an unfortunate common error with Spark which sometimes takes up too much memory. You can increase the memory capacity given to your program using the JVM parameter "Xmx". For example, to set the memory usage to 5GB, add the JVM parameter "-Xmx5g" (without the double quotes).
