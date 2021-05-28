@@ -161,7 +161,7 @@ You would get a result similar to the following.
 
 (S1) In your submission, include the two images you got for the two keywords "donut", "bagel", and the third keyword that you chose. Name the files as `"counties_<keyword>.png"`
 
-## VI. Use multilevel visualization (20 minutes)
+### VI. Use multilevel visualization (20 minutes)
 Add an additional line that produces a multilevel visualization that you can further interact with.
 1. Use the following code snippet to produce a multilevel visualization with 12 levels.
 ```scala
@@ -174,8 +174,40 @@ top_counties.plotPyramid("counties_donut", 12, opts = "mercator" -> true)
 
 (S) Take three screenshots similar to the one above and include them in your submission. Name the files as `"counties_<keyword>_multilevelpng"`.
 
+### VII. Running from command line (15 minutes)
+If you try to package your program in a JAR file and run using `spark-submit`, you will notice that it will not work. The reason is that the JAR file contains only your program code but not the core classes of Beast and its dependencies. To solve this issue, we need to make sure that Spark finds the required libraries. This part describes how to do that.
 
-### VII. Submission (15 minutes)
+1. Install the binaries of Beast as a compressed file in [.tar.gz](https://bitbucket.org/eldawy/beast/wiki/binaries/beast-0.9.1-bin.tar.gz) or [.zip](https://bitbucket.org/eldawy/beast/wiki/binaries/beast-0.9.1-bin.zip) format.
+2. Extract the downloaded package to any directory, e.g., `$HOME/Applications`.
+3. Add the binary folder of Beast to your executable path. For example, on Linux, you can add the following line to your `~/.profile` file.
+```bash
+export PATH=$PATH:$HOME/Applications/beast-0.9.1/bin
+```
+Use the correct path at which you downloaded Beast.
+4. To test that it works correctly, run the command `beast` which will print out something that ends with the following part.
+```
+****************************************************
+Choose one of the following operations to run
+cat - Writes a file to the output. Used to convert file format
+histogram - Computes a uniform histogram for a geometry file
+index - Builds a distributed spatial index
+mindex - Compute index metadata (master files) of the given dataset in different indexes
+mplot - Plots the input file as a multilevel pyramid image
+raptor - Computes RaptorZS
+readertest - Computes readtime
+server - Starts the web UI server for Beast
+sj - Computes spatial join that finds all overlapping features from two files.
+soilsalinity - Computes NDVI
+splot - Plots the input file as a single image
+summary - Computes the minimum bounding rectangle (MBR), count, and size of a dataset
+zs - Computes zonal statistics between a vector file and a raster file. Input files (vector, raster)
+****************************************************
+```
+5. To run your program, use the command `beast <JAR>` and replace `<JAR>` with your JAR file. If the main class is not set correctly in your pom file, you might need to add the parameter `--class edu.ucr.cs.cs167.<UCRNetID>.Lab9` before the JAR file.
+
+*Explanation*: The command `beast` is a shortcut that internally calls `spark-submit` with your JAR file along with all Beast JAR files and the dependencies.
+
+### VIII. Submission (15 minutes)
 1. Add a README that contains your information and answers to questions above.
 2. Add a run script file that compiles your code and runs the analysis tasks above with the keyword "donut" for the visualization task.
 3. Include six screenshots as described above.
