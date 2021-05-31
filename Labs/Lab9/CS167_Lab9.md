@@ -215,4 +215,11 @@ zs - Computes zonal statistics between a vector file and a raster file. Input fi
 
 ### Frequency Asked Questions (FAQ)
 * Q: I get an out of memory error when I run on the entire dataset.
-* A: This is an unfortunate common error with Spark which sometimes takes up too much memory. You can increase the memory capacity given to your program using the JVM parameter "Xmx". For example, to set the memory usage to 5GB, add the JVM parameter "-Xmx5g" (without the double quotes).
+* A: This is an unfortunate common error with Spark which sometimes takes up too much memory. You can increase the memory capacity given to your program using the JVM parameter "Xmx". For example, to set the memory usage to 5GB, add the JVM parameter "-Xmx5g" (without the double quotes). See below for details.
+
+![Edit run configuration](set-memory-1.png)
+
+![Add VM options](set-memory-2.png)
+
+![Set memory limit](set-memory-3.png)
+
