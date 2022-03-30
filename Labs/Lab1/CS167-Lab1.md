@@ -7,12 +7,18 @@
 -   Write a script that compiles, tests, and runs your project.
 
 ## Prerequisites
--   Create an Oracle account and download JDK 1.8  
-    [https://www.oracle.com/java/technologies/javase-jdk8-downloads.html](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
+-   JDK 8 (1.8)
+    - Windows: Download and install from [https://www.oracle.com/java/technologies/downloads/#java8-windows](https://www.oracle.com/java/technologies/downloads/#java8-windows)   
+    - MacOS: Download and install from [https://www.oracle.com/java/technologies/downloads/#java8-mac](https://www.oracle.com/java/technologies/downloads/#java8-mac)
+    - Linux: Run the following command
+        - Ubuntu/Debian: `sudo apt-get update; sudo apt-get install -y openjdk-8-jdk`
+        - Readhat/CentOS/Fedora: `sudo yum install java-1.8.0-openjdk` or `sudo dnf install java-1.8.0-openjdk-devel`
 -   Download IntelliJ IDEA Community Edition  
     [https://www.jetbrains.com/idea/download/index.html](https://www.jetbrains.com/idea/download/index.html)
+    - Ubuntu: install from Software Center, or `sudo snap install intellij-idea-community --classic`
 -   Download Maven binaries (Cross platform)  
     [http://maven.apache.org/download.cgi](http://maven.apache.org/download.cgi)
+    - Ubuntu: `sudo apt-get install -y maven`
 -   Download Hadoop binaries v3.2.3  
     [https://hadoop.apache.org/releases.html](https://hadoop.apache.org/releases.html)
 -   (Optional) If you run on Windows 10, you can install Ubuntu from Microsoft Store  
@@ -22,36 +28,55 @@
 Follow the instructions below to complete this lab. If you have any questions, please contact the TA in your lab. Make sure to answer any questions marked by the (Q) sign and submit the deliverables marked by the (S) sign.
 
 ### Install Required Software
-#### JDK
+Install the aforementioned software via installer, archive file, or command line.
+For archive file, unarchive them to your preferred location. Try to **avoid spaces** in file path on any system (Windows in particular).
 
-* If you have an existing JDK that is different than Oracle JDK 8, you will need to uninstall it first. OpenJDK might not work. Newer versions of Oracle JDK might not work either.
-* Run the installer or extract the binary package depending on your systems.
+### Set Environment Variables
+#### Linux and MacOS
+1. In command line, run `echo $SHELL`
+    - If it prints ***/bin/bash***, then the profile file can be ***~/.bash_rc*** or ***~/.bash_profile***
+    - If it prints ***/bin/zsh***, then the profile file can be ***~/.zsh_rc*** or ***~/.zprofile***
+2. Find where JDK 8, Maven and Hadoop are installed/unarchived
+3. Edit the profile file in step 1 with the following lines (replace the paths accordingly)
+    ```bash
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home"
+    export MAVEN_HOME="/opt/apache-maven-3.8.5"
+    export HADOOP_HOME="/opt/hadoop-3.2.3"
     
-* Set the environment variable JAVA_HOME to the home directory of JDK.  
-    E.g., (Linux) Add `export JAVA_HOME=$HOME/jdk1.8.0_131` to `$HOME/.bashrc`  
-    (Windows) On windows, to access the environment variables, open the start menu and start typing "Environment Variables" and the option "Edit the system environment variables" should appear.
+    PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$HADOOP_HOME/bin:$PATH
+    ```
+4. Load the environment `source ~/.bash_rc` (replace the filename)
+5. Verify \*\_HOME, they should print the correct values you just set
+    ```bash
+    echo $JAVA_HOME
+    echo $MAVEN_HOME
+    echo $HADOOP_HOME
+    ```
+6. Verify software, they should print the version numbers
+    ```bash
+    javac -version
+    mvn -version
+    hadoop version
+    ```
 
-![alt text](lab1_images/windows_set_env_1.png)
- 
-From there, click on "Environment Variables" 
- 
-![alt text](lab1_images/windows_set_env_2.png)
+#### Windows
+1. Open the start menu and start typing “Environment Variables” and the option “Edit the system environment variables” should appear.
 
-And then, press "New" and enter your environment variable as shown below.
+    ![alt text](lab1_images/windows_set_env_1.png)
 
-![alt text](lab1_images/windows_set_env_3.png)    
+2. From there, click on “Environment Variables” 
+
+    ![alt text](lab1_images/windows_set_env_2.png)
+
+3. And then, press “New” and enter your environment variable as shown below.
+
+    ![alt text](lab1_images/windows_set_env_3.png)    
     
-* Add $JAVA_HOME/bin to your executable path
-E.g., Add export PATH=$PATH:$JAVA_HOME/bin to $HOME/.bashrc or $HOME/.profile
+4. Set `JAVA_HOME`, `MAVEN_HOME` and `HADOOP_HOME` to the corresponding locations.
 
-#### IntelliJ IDEA
-* Follow the directions of the installer or extract the compressed file.
-
-#### Maven
-* Extract the compressed file and add MAVEN_HOME/bin to the executable path.
+5. Edit `Path` variable, append `%JAVA_HOME%\bin`, `%MAVEN_HOME%\bin` and `%HADOOP_HOME%\bin`.
 
 #### Hadoop
-* Extract the compressed file and add $HADOOP_HOME to your environment variables and $HADOOP_HOME/bin to your executable path.
 * (Windows) If you run on Windows, download Hadoop.dll and winutils.exe and place them in $HADOOP_HOME/bin directory. https://github.com/steveloughran/winutils
 
 #### Create an Empty Java Project from Command Line
@@ -61,6 +86,19 @@ E.g., Add export PATH=$PATH:$JAVA_HOME/bin to $HOME/.bashrc or $HOME/.profile
 mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 ```
 Replace `<UCRNetID>` with your UCR Net ID (not student ID).
+
+##### Alternative Method
+1. Open Intellij
+2. Select "New Project"
+3. Make sure "Project SDK" is showing **1.8** in the right panel.
+4. Select "Maven" in the left panel, check "Create from archetype" in the right panel, then select `org.apache.maven.archetypes:maven-archetype-quickstart`. Click "Next".
+5. Expand "Artifact Coordinates"
+6. Change "GroupId" to `edu.ucr.cs.cs167.<UCRNetID>`
+7. Change "ArticifactId" to `<UCRNetID>_lab1`
+8. Change "Version" to `1.0`
+9. Modify "Location" if necessary.
+10. "Next" and then "Finish".
+
 
 (Q1) What is the name of the created directory?
 * Change into the project directory and type mvn package
