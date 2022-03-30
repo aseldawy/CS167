@@ -8,8 +8,8 @@
 
 ## Prerequisites
 -   JDK 8 (1.8)
-    - Windows: Download and install from [https://www.oracle.com/java/technologies/downloads/#java8-windows](https://www.oracle.com/java/technologies/downloads/#java8-windows)   
-    - MacOS: Download and install from [https://www.oracle.com/java/technologies/downloads/#java8-mac](https://www.oracle.com/java/technologies/downloads/#java8-mac)
+    - Windows: Download and install **Windows x86/x64 Installer** from [https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)   
+    - MacOS: Download and install **macOS x64 DMG Installer** from [https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)
     - Linux: Run the following command
         - Ubuntu/Debian: `sudo apt-get update; sudo apt-get install -y openjdk-8-jdk`
         - Readhat/CentOS/Fedora: `sudo yum install java-1.8.0-openjdk` or `sudo dnf install java-1.8.0-openjdk-devel`
@@ -39,7 +39,7 @@ For archive file, unarchive them to your preferred location. Try to **avoid spac
 2. Find where JDK 8, Maven and Hadoop are installed/unarchived
 3. Edit the profile file in step 1 with the following lines (replace the paths accordingly)
     ```bash
-    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home"
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_311.jdk/Contents/Home"
     export MAVEN_HOME="/opt/apache-maven-3.8.5"
     export HADOOP_HOME="/opt/hadoop-3.2.3"
     
