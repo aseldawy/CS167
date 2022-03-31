@@ -93,7 +93,8 @@ Follow the instructions below to complete this lab. If you have any questions, p
 
   1. Download the installer **x64 Installer (jdk-8u321-windows-x64.exe)** from [https://www.oracle.com/java/technologies/downloads/#java8-windows](https://www.oracle.com/java/technologies/downloads/#java8-windows).
   2. Do **NOT** install it to the default location "C:\Program Files\Java". The path contains space, making Hadoop unable to work properly.
-  3. During installation, change the install location to some path with no space, like "C:\cs167\jdk1.8.0_321". Do the same to JRE, "C:\cs167\jre1.8.0_321" for example.
+  3. During installation, change the install location to some path with no space, like "C:\cs167\jdk1.8.0_321".
+  4. You may skip installation of "Source Code" and "Public JRE" during the installation. To do so, click on the drive icon, select "This feature will not be available".
 
 #### Apache Maven
 
@@ -351,7 +352,7 @@ Try the following method if you see red errors (likely on Windows).
 4. Select "Maven" in the left panel, check "Create from archetype" in the right panel, then select `org.apache.maven.archetypes:maven-archetype-quickstart`. Click "Next".
 5. Expand "Artifact Coordinates"
 6. Change "GroupId" to `edu.ucr.cs.cs167.<UCRNetID>` (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
-7. Change "ArticifactId" to `<UCRNetID>_lab1` (Replace `<UCRNetID>` with your UCR Net ID (not student ID)), the prohect "Name" will be automatically changed.
+7. Change "ArticifactId" to `<UCRNetID>_lab1` (Replace `<UCRNetID>` with your UCR Net ID, not student ID), the project "Name" will be automatically changed.
 9. Modify "Location" to "~/cs167/workspace/\<UCRNetID\>_lab1" or "C:\cs167\workspace\\<UCRNetID\>_lab1" (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
 10. Click "Next" and then "Finish".
 
@@ -517,7 +518,7 @@ Note: We will later cover how MapReduce programs are executed in more details. T
 #### Prepare Your Submission
 
 - To avoid entering the full class name when you run your program, configure the main class in the **pom.xml** file as follows.
-  - If you can find `<artifactId>maven-jar-plugin</artifactId>` under `<build>` &rarr; `<plugins>` &rarr; `<plugin>`, add the following block into it  (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
+  - If you can find `<artifactId>maven-jar-plugin</artifactId>` under `<build>` &rarr; `<plugins>` &rarr; `<plugin>`, add the following block into it (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
 
     ```xml
     <configuration>
@@ -563,7 +564,7 @@ Note: We will later cover how MapReduce programs are executed in more details. T
 - Feel free to style your README file according to the Markdown markup language
 <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet>
 You can also refer to our template at [HERE](CS167-Lab1-README.md).
-- Add a script file "run.sh" that will compile and run your program. Find a sample below (Replace `<UCRNetID>` with your UCR Net ID, not student ID.).
+- Add a script file "run.sh" that will compile and run your program. Find a sample below (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
 
   ```shell script
   #!/usr/bin/env sh
