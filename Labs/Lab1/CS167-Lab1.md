@@ -17,7 +17,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 
 1. **Make sure your user name does not have any space. Otherwise, create an user without space.**
 2. **Create a writable folder with no space in the path, for example:**
-    - Linux and MacOS: "~/cs167", where *~* is your home directory
+    - Linux and MacOS: "\~/cs167", where *\~* is your home directory
       - Linux: "/home/user/cs167", where your username is "user".
       - MacOS: "/Users/user/cs167", where your username is "user".
     - Windows: "C:\cs167"
@@ -29,22 +29,21 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Oracle JDK 8 (OpenJDK or other versions may fail)
 
   1. Download **x64 Compressed Archive (jdk-8u321-linux-x64.tar.gz)** from [https://www.oracle.com/java/technologies/downloads/#java8-linux](https://www.oracle.com/java/technologies/downloads/#java8-linux).
-  2. Unarchive it to the folder you created before, e.g, "~/cs167". Your JDK path will be "~/cs167/jdk1.8.0_321".
+  2. Unarchive it to the folder you created before, e.g, "\~/cs167". Your JDK path will be "\~/cs167/jdk1.8.0_321".
 
 #### Apache Maven
 
   1. Download the archive (3.8.5) from [https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz](https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz).
-  2. Unarchive it to the folder you created before, e.g, "~/cs167". Your Maven path will be "~/cs167/apache-maven-3.8.5".
+  2. Unarchive it to the folder you created before, e.g, "\~/cs167". Your Maven path will be "\~/cs167/apache-maven-3.8.5".
 
 #### IntelliJ Community Edition
 
 - Ubuntu
   - Find **IDEA Community** in **Software Center** and install it.
   - Or run the following command:
-
-        ```bash
-        sudo snap install intellij-idea-community --classic
-        ```
+    ```bash
+    sudo snap install intellij-idea-community --classic
+    ```
 
 - CentOS/Fedora/Redhat
   - Follow the instructions at [https://www.javatpoint.com/how-to-install-intelij-idea-on-centos](https://www.javatpoint.com/how-to-install-intelij-idea-on-centos) or [https://snapcraft.io/install/intellij-idea-community/centos](https://snapcraft.io/install/intellij-idea-community/centos).
@@ -52,7 +51,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Apache Hadoop
 
   1. Download the archive (3.2.3) from [https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.3/hadoop-3.2.3.tar.gz](https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.3/hadoop-3.2.3.tar.gz).
-  2. Unarchive it to the folder you created before, e.g, "~/cs167". Your Hadoop path will be "~/cs167/hadoop-3.2.3".
+  2. Unarchive it to the folder you created before, e.g, "\~/cs167". Your Hadoop path will be "\~/cs167/hadoop-3.2.3".
 
 </details>
 
@@ -68,7 +67,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Apache Maven
 
   1. Download the archive (3.8.5) from [https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz](https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz).
-  2. Unarchive it to the folder you created before, e.g, "~/cs167". Your Maven path will be "~/cs167/apache-maven-3.8.5".
+  2. Unarchive it to the folder you created before, e.g, "\~/cs167". Your Maven path will be "\~/cs167/apache-maven-3.8.5".
 
 #### IntelliJ Community Edition
 
@@ -78,7 +77,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Apache Hadoop
 
   1. Download the archive (3.2.3) from [https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.3/hadoop-3.2.3.tar.gz](https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.3/hadoop-3.2.3.tar.gz).
-  2. Unarchive it to the folder you created before, e.g, "~/cs167". Your Hadoop path will be "~/cs167/hadoop-3.2.3".
+  2. Unarchive it to the folder you created before, e.g, "\~/cs167". Your Hadoop path will be "\~/cs167/hadoop-3.2.3".
 
 </details>
 
@@ -93,8 +92,8 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Oracle JDK 8 (OpenJDK or other versions may fail)
 
   1. Download the installer **x64 Installer (jdk-8u321-windows-x64.exe)** from [https://www.oracle.com/java/technologies/downloads/#java8-windows](https://www.oracle.com/java/technologies/downloads/#java8-windows).
-  2. Do **NOT** install it to the default location *C:\Program Files\Java*. The path contains space, making Hadoop unable to work properly.
-  3. During installation, change the install location to some path with no space, "C:\cs167\jdk1.8.0_321". Do the same to JRE, "C:\cs167\jre1.8.0_321" for example.
+  2. Do **NOT** install it to the default location "C:\Program Files\Java". The path contains space, making Hadoop unable to work properly.
+  3. During installation, change the install location to some path with no space, like "C:\cs167\jdk1.8.0_321". Do the same to JRE, "C:\cs167\jre1.8.0_321" for example.
 
 #### Apache Maven
 
@@ -103,17 +102,20 @@ Follow the instructions below to complete this lab. If you have any questions, p
 
 #### IntelliJ (IDEA) Community Edition
 
-  1. Download the **Community** version from [https://www.jetbrains.com/idea/download/#section=mac](https://www.jetbrains.com/idea/download/#section=win). Select ".dmg (Intel)" or ".dmg (Apple Silicon)" according to your hardware.
+  1. Download the **Community** version from [https://www.jetbrains.com/idea/download/#section=windows](https://www.jetbrains.com/idea/download/#section=windows). Select "Windows (.exe)".
   2. Install it. It is OK to install IDEA to the default location.
 
 #### Apache Hadoop
 
   1. Download the archive (3.2.2) from [https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz](https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz).
   2. Unarchive it to the folder you created before, e.g, "C:\cs167". Your Hadoop path will be "C:\cs167\hadoop-3.2.2".
+     - To unarchive it, open the "hadoop-3.2.2.tar.gz" via 7-zip, double click "hadoop-3.2.2.tar" to open it. This may take a few seconds.
+     - Select "hadoop-3.2.2", click the "Extract" button (do not drag to unarchive), Set "Copy to:" to "C:\cs167\", and the click "OK".
+     - The decompression takes a few seconds to minutes, you will see 3 errors saying "Cannot create symbolic link: ...", just click "Close" to ignore the errors. Those files are only needed for Linux and MacOS.
   3. Patch the binaries, otherwise many Hadoop related functions will fail:
       1. Download the patched binaries from [https://github.com/cdarlint/winutils](https://github.com/cdarlint/winutils)
       2. To download a folder only, paste `https://github.com/cdarlint/winutils/tree/master/hadoop-3.2.2/bin` into the text box in [https://download-directory.github.io/](https://download-directory.github.io/), and press Enter key. This will download a zip file "cdarlint winutils master hadoop-3.2.2-bin.zip" which contains the patched binaries for 3.2.2 only.
-      3. Unzip the downloaded file, and put all the files in the zip to C:\cs167\hadoop-3.2.2\bin to overwrite existing files.
+      3. Unzip the downloaded file, and put all the files in the zip to "C:\cs167\hadoop-3.2.2\bin" to overwrite existing files.
 
 #### Windows Terminal (Optional)
 
@@ -163,9 +165,9 @@ Follow the instructions below to complete this lab. If you have any questions, p
       - Linux
 
         ```
-        export JAVA_HOME="/Users/$LOGNAME/cs167/jdk1.8.0_321"
-        export MAVEN_HOME="/Users/$LOGNAME/cs167/apache-maven-3.8.5"
-        export HADOOP_HOME="/Users/$LOGNAME/cs167/hadoop-3.2.3"
+        export JAVA_HOME="/home/$LOGNAME/cs167/jdk1.8.0_321"
+        export MAVEN_HOME="/home/$LOGNAME/cs167/apache-maven-3.8.5"
+        export HADOOP_HOME="/home/$LOGNAME/cs167/hadoop-3.2.3"
         
         PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$HADOOP_HOME/bin:$PATH
         ```
@@ -223,11 +225,12 @@ Follow the instructions below to complete this lab. If you have any questions, p
       - Variable name: `JAVA_HOME`, Variable value: `C:\cs167\jdk1.8.0_321`
       - Variable name: `MAVEN_HOME`, Variable value: `C:\cs167\apache-maven-3.8.5`
       - Variable name: `HADOOP_HOME`, Variable value: `C:\cs167\hadoop-3.2.2`
-  5. Double click variable **Path**, add the following 3 items:
+  5. Double click variable **Path**, add the following 3 values via "New" button:
       - `%JAVA_HOME%\bin`
       - `%MAVEN_HOME%\bin`
       - `%HADOOP_HOME%\bin`
-  6. Close the current terminal, and rerun the commands in step 1, they should print 3 non-empty lines with the values you just set.
+  6. Don't forget to click "Ok" to close and save the changes in environment variables.
+  7. Close and restart the current terminal, and rerun the commands in step 1, they should print 3 non-empty lines with the values you just set.
 
 </details>
 
@@ -275,7 +278,7 @@ Run command
 hadoop version
 ```
 
-Example output (contents may differ)
+Example output on Linux and MacOS (contents may differ)
 
 ```
 Hadoop 3.2.3
@@ -284,6 +287,16 @@ Compiled by ubuntu on 2022-03-20T01:18Z
 Compiled with protoc 2.5.0
 From source with checksum 39bb14faec14b3aa25388a6d7c345fe8
 This command was run using /Users/user/cs167/hadoop-3.2.3/share/hadoop/common/hadoop-common-3.2.3.jar
+```
+
+Example output on Windows
+```
+Hadoop 3.2.2
+Source code repository Unknown -r 7a3bc90b05f257c8ace2f76d74264906f0f7a932
+Compiled by hexiaoqiao on 2021-01-03T09:26Z
+Compiled with protoc 2.5.0
+From source with checksum 5a8f564f46624254b27f6a33126ff4
+This command was run using /C:/cs167/hadoop-3.2.2/share/hadoop/common/hadoop-common-3.2.2.jar
 ```
 
 ### Create an Empty Java Project from Command Line
@@ -298,11 +311,7 @@ This command was run using /Users/user/cs167/hadoop-3.2.3/share/hadoop/common/ha
 
   ```bash
   # Replace <UCRNetID> with your UCR Net ID, not student ID.
-  mvn archetype:generate \
-    -DgroupId=edu.ucr.cs.cs167.<UCRNetID> \
-    -DartifactId=<UCRNetID>_lab1 \
-    -DarchetypeArtifactId=maven-archetype-quickstart \
-    -DinteractiveMode=false
+  mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
   ```
 
 (Q1) What is the name of the created directory?
@@ -465,7 +474,7 @@ Try the following method if you see red errors (likely on Windows).
 
 (Q3) What do you see at the output?
 
-- Create a new text file named "input.txt" in "target" folder, and add the following sample content to it.
+- Create a new text file named "input.txt" in the project folder (same level as "src"), and add the following sample content to it.
 
     ```text
     if you cannot fly, then run
