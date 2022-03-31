@@ -21,7 +21,8 @@
 ## Lab Work
 Follow the instructions below to complete this lab. If you have any questions, please contact the TA in your lab. Make sure to answer any questions marked by the (Q) sign and submit the deliverables marked by the (S) sign.
 
-### Install Required Software
+### 1. Preparation: Install Required Software
+You are expected to do t his part before the lab. It should take about an hour.
 #### JDK
 
 * If you have an existing JDK that is different than Oracle JDK 8, you will need to uninstall it first. OpenJDK might not work. Newer versions of Oracle JDK might not work either.
@@ -51,11 +52,13 @@ E.g., Add export PATH=$PATH:$JAVA_HOME/bin to $HOME/.bashrc or $HOME/.profile
 * Extract the compressed file and add MAVEN_HOME/bin to the executable path.
 
 #### Hadoop
-* Extract the compressed file and add $HADOOP_HOME to your environment variables and $HADOOP_HOME/bin to your executable path.
-* (Windows) If you run on Windows, download Hadoop.dll and winutils.exe and place them in $HADOOP_HOME/bin directory. https://github.com/steveloughran/winutils
+* Extract the compressed file and add `$HADOOP_HOME` to your environment variables and `$HADOOP_HOME/bin` to your executable path.
+* (Windows) If you run on Windows, download `hadoop.dll` and `winutils.exe` from [this link](https://github.com/steveloughran/winutils) and place them in `%HADOOP_HOME%/bin` directory. Make sure to choose the version that is closest to your Hadoop version.
+
+### 2. Create a Template Java Project
 
 #### Create an Empty Java Project from Command Line
-* Create a new directory $HOME/workspace to place all your projects.
+* Create a new directory `$HOME/workspace` to place all your projects.
 * Inside $HOME/workspace, run the following command
 ```console
 mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
@@ -79,6 +82,8 @@ Replace `<JARFile>` and `<UCRNetID>` with the correct names.
 
 ![alt text](lab1_images/import_project_1.png)
 ![alt text](lab1_images/import_project_2.png)
+
+### 3. Make it a Hadoop Project
 
 #### Configure for Hadoop
 * Edit your pom.xml file and add the following code. This adds Hadoop libraries to your dependencies so that you an access Hadoop API.
@@ -136,9 +141,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-```
 
-```java
 /**
  * Word Count MapReduce Example.
  *
@@ -218,7 +221,7 @@ Then
 
 Note: We will later cover how MapReduce programs are executed in more details. This lab just ensures that you have the development environment setup.
 
-#### Run the WordCount example from Command Line
+### 4. Run the WordCount example from Command Line
 * At the command line, type:
 ```console
 mvn package 
@@ -231,7 +234,7 @@ mvn package
 hadoop jar target/<JARFile> edu.ucr.cs.cs167.<UCRNetId>.App input.txt output.txt
 ```
 
-#### Prepare Your Submission
+### 5. Prepare Your Submission
 * To avoid entering the full class name when you run your program, configure the main class in the pom.xml file as follows.
 ```xml
 <build>
@@ -293,3 +296,65 @@ tar -c src pom.xml README.md run.sh -f <UCRNetID>-Lab1.tar.gz
 * Make sure to follow the naming conventions that are mentioned in this lab.
 * We will follow similar naming conventions for future labs with the necessary changes for the lab name.
 * Failure to follow these instructions and conventions might result in losing some points. This includes, for example, adding unnecessary files in your compressed file, using different package names, using a different name for the compressed file, not including a runnable script, and not including a README file.
+
+## Frequent Problems
+__Problem__
+```
+Exception in thread "main" org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory output.txt already exists
+```
+__Resolution__: Delete the output directory if it already exists.
+
+
+__Problem__
+```
+Exception in thread "main" java.lang.RuntimeException: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+```
+__Resolution__: Set the `HADOOP_HOME` environment variable to where Hadoop is installed. After that, you might need to restart IntelliJ IDEA or the command-line depending on where you got this error.
+
+__Problem__
+```
+Exception in thread "main" java.lang.RuntimeException: java.io.FileNotFoundException: Could not locate Hadoop executable: hadoop\bin\winutils.exe -see https://wiki.apache.org/hadoop/WindowsProblems
+```
+__Resolution__: Make sure that `winutils.exe` is in `%HADOOP_HOME%\bin` directory.
+
+__Problem__
+```
+Exception in thread "main" java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Ljava/lang/String;I)Z
+```
+__Resolution__: Make sure that `hadoop.dll` is in `%HADOOP_HOME%\bin` directory and that `%HADOOP_HOME%\bin` is in the executable path.
+
+__Problem__
+```
+Exception in thread "main" 0: No such file or directory
+	at org.apache.hadoop.io.nativeio.NativeIO$POSIX.chmod(NativeIO.java:388)
+	at org.apache.hadoop.fs.RawLocalFileSystem.setPermission(RawLocalFileSystem.java:863)
+	at org.apache.hadoop.fs.ChecksumFileSystem$1.apply(ChecksumFileSystem.java:510)
+	at org.apache.hadoop.fs.ChecksumFileSystem$FsOperation.run(ChecksumFileSystem.java:491)
+	at org.apache.hadoop.fs.ChecksumFileSystem.setPermission(ChecksumFileSystem.java:513)
+	at org.apache.hadoop.fs.FileSystem.mkdirs(FileSystem.java:682)
+	at org.apache.hadoop.mapreduce.JobResourceUploader.mkdirs(JobResourceUploader.java:660)
+	at org.apache.hadoop.mapreduce.JobResourceUploader.uploadResourcesInternal(JobResourceUploader.java:174)
+	at org.apache.hadoop.mapreduce.JobResourceUploader.uploadResources(JobResourceUploader.java:135)
+	at org.apache.hadoop.mapreduce.JobSubmitter.copyAndConfigureFiles(JobSubmitter.java:99)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:194)
+	at org.apache.hadoop.mapreduce.Job$11.run(Job.java:1565)
+	at org.apache.hadoop.mapreduce.Job$11.run(Job.java:1562)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1762)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1562)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1583)
+```
+__Resolution__: Modify your code as below when Hadoop configuration is created. Make sure that the directory that you add to the configuration exists and is writable.
+```java
+Configuration conf = new Configuration();
+conf.set("mapreduce.jobtracker.staging.root.dir", "%USERPROFILE%\\Workspace\\hadooptmp\\staging");
+```
+
+__Problem__
+```
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+```
+__Resolution__: This is just a warning. You can ignore it for now.
