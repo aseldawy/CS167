@@ -29,9 +29,9 @@
 BIG_DATA_DIR=$HOME/BigData
  
 JAVA_HOME=$BIG_DATA_DIR/jdk1.8.0_291
-MAVEN_HOME=$BIG_DATA_DIR/apache-maven-3.8.1
-HADOOP_HOME=$BIG_DATA_DIR/hadoop-2.10.1
-INTELLIJ_HOME=$BIG_DATA_DIR/idea-IC-211.6693.111
+MAVEN_HOME=$BIG_DATA_DIR/apache-maven-3.8.5
+HADOOP_HOME=$BIG_DATA_DIR/hadoop-3.2.3
+INTELLIJ_HOME=$BIG_DATA_DIR/idea-IC-213.7172.25
  
 # Download the required dependencies
 download_dependencies() {
@@ -66,15 +66,15 @@ extract_archives() {
 	echo "Extracted JDK."
  
 	echo "Extracting Maven..."
-	tar -xzf $MAVEN_HOME-bin.tar.gz 
+	tar -xzf apache-maven-*-bin.tar.gz 
 	echo "Extracted Maven."
  
 	echo "Extracting Hadoop..."
-	tar -xzf $HADOOP_HOME.tar.gz
+	tar -xzf hadoop*.tar.gz
 	echo "Extracted Hadoop."
  
 	echo "Extracting IntelliJ IDEA..."
-	tar -xzf $BIG_DATA_DIR/ideaIC-2021.1.tar.gz
+	tar -xzf $BIG_DATA_DIR/ideaIC-*.tar.gz
 	echo "Extracted IntelliJ IDEA."
 }
  
