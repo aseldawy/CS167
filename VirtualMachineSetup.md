@@ -2,8 +2,8 @@
 ---------------------------------------------------------------
 
 1. Download the given .ova file 
-(https://coursefiles.cs.ucr.edu/cs167-50GB.ova)
-**Note:** The download is 2.7 GB. 
+(https://coursefiles.cs.ucr.edu/cs167-S22.ova)
+**Note:** The download is 4.96 GB. 
 
 2. Download and install VirtualBox. There are versions for 
 (https://www.virtualbox.org/wiki/Downloads)
@@ -39,13 +39,14 @@ download_dependencies() {
 	cd $BIG_DATA_DIR
  
 	echo "Downloading Hadoop..."
-	wget "https://mirrors.ocf.berkeley.edu/apache/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz"	
+	wget "https://dlcdn.apache.org/hadoop/common/hadoop-3.2.3/hadoop-3.2.3.tar.gz"	
  
 	echo "Downloading Maven..."
-	wget "https://apache.osuosl.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz"
+	wget "https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz"
+	
  
 	echo "Downloading IntelliJ IDEA..."
-	wget "https://download.jetbrains.com/idea/ideaIC-2021.1.tar.gz"
+	wget "https://download.jetbrains.com/idea/ideaIC-2021.3.3.tar.gz"
   
   	cd $HOME
 }
