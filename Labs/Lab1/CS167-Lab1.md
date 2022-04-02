@@ -153,13 +153,13 @@ Follow the instructions below to complete this lab. If you have any questions, p
       echo $SHELL
       ```
 
-      - If it prints **/usr/bash**, you are using **bash**, the profile file name should be `.bash_rc` or `.bash_profile` (note the leading dot).
-      - If it prints **/usr/zsh**, you are using **zsh**, the profile file name should be `.zsh_rc` or `.zprofile` (note the leading dot).
-  3. Assume you are using **bash**, and profile file `.bash_rc`
+      - If it prints **/usr/bash**, you are using **bash**, the profile file name should be `.bashrc` or `.bash_profile` (note the leading dot).
+      - If it prints **/usr/zsh**, you are using **zsh**, the profile file name should be `.zshrc` or `.zprofile` (note the leading dot).
+  3. Assume you are using **bash**, and profile file `.bashrc`
   4. Edit or create the profile, run the following command
 
       ```bash
-      vi ~/.bash_rc # Change the file name accodingly
+      vi ~/.bashrc # Change the file name accodingly
       ```
 
   5. Add the following lines into the profile, and save.
@@ -314,8 +314,10 @@ This command was run using /C:/cs167/hadoop-3.2.2/share/hadoop/common/hadoop-com
   # Replace <UCRNetID> with your UCR Net ID, not student ID.
   mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
   ```
+  If the above command fails on Windows, you may try Windows Command Prompt (cmd). This command may have some issues with PowerShell and Windows Terminal.
+  Alternatively, you can use the alternative method later in this section to create a project via IntelliJ.
 
-***(Q1)*** What is the name of the created directory?
+- ***(Q1) What is the name of the created directory?***
 
 - Change into the project directory and type
 
@@ -332,7 +334,7 @@ This command was run using /C:/cs167/hadoop-3.2.2/share/hadoop/common/hadoop-com
 
   Replace <UCRNetID> with your UCR Net ID, not student ID.
 
-***(Q2)*** What do you see at the console output?
+- ***(Q2) What do you see at the console output?***
 
 #### Import Your Project into InelliJ IDEA
 
@@ -399,80 +401,83 @@ Try the following method if you see red errors (likely on Windows).
       ```
 
   - If the IDE asks for importing the changes in your pom.xml file, press "Import Changes" to accept the changes.
+    - In newer version of IntelliJ, you don't see this promot. Instead, you may see a floating M icon, click it to **Load Maven Changes**.  
 
+---
 ### 5. Create WordCount Example
 
 1. Replace the code in your App.java file with the following code but leave the package line as-is.
-	  ```java
-	  // Replace <UCRNetID> with your UCR Net ID, not student ID.
-	  package edu.ucr.cs.cs167.<UCRNetID>;
+    ```java
+    // Replace <UCRNetID> with your UCR Net ID, not student ID.
+    package edu.ucr.cs.cs167.<UCRNetID>;
 
-	  import java.io.IOException;
-	  import java.util.StringTokenizer;
+    import java.io.IOException;
+    import java.util.StringTokenizer;
 
-	  import org.apache.hadoop.conf.Configuration;
-	  import org.apache.hadoop.fs.Path;
-	  import org.apache.hadoop.io.IntWritable;
-	  import org.apache.hadoop.io.Text;
-	  import org.apache.hadoop.mapreduce.Job;
-	  import org.apache.hadoop.mapreduce.Mapper;
-	  import org.apache.hadoop.mapreduce.Reducer;
-	  import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-	  import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+    import org.apache.hadoop.conf.Configuration;
+    import org.apache.hadoop.fs.Path;
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Job;
+    import org.apache.hadoop.mapreduce.Mapper;
+    import org.apache.hadoop.mapreduce.Reducer;
+    import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-	  /**
-	  * Word Count MapReduce Example.
-	  */
-	  public class App {
-	      public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
-		  private final static IntWritable one = new IntWritable(1);
-		  private Text word = new Text();
+    /**
+    * Word Count MapReduce Example.
+    */
+    public class App {
+        public static class TokenizerMapper
+                extends Mapper<Object, Text, Text, IntWritable> {
+            private final static IntWritable one = new IntWritable(1);
+            private Text word = new Text();
 
-		  public void map(Object key, Text value, Context context
-		  ) throws IOException, InterruptedException {
-		      StringTokenizer itr = new StringTokenizer(value.toString());
-		      while (itr.hasMoreTokens()) {
-			  word.set(itr.nextToken());
-			  context.write(word, one);
-		      }
-		  }
-	      }
+            public void map(Object key, Text value, Context context
+            ) throws IOException, InterruptedException {
+                StringTokenizer itr = new StringTokenizer(value.toString());
+                while (itr.hasMoreTokens()) {
+                    word.set(itr.nextToken());
+                    context.write(word, one);
+                }
+            }
+        }
 
-	      public static class IntSumReducer
-		      extends Reducer<Text, IntWritable, Text, IntWritable> {
-		  private IntWritable result = new IntWritable();
+        public static class IntSumReducer
+                extends Reducer<Text, IntWritable, Text, IntWritable> {
+            private IntWritable result = new IntWritable();
 
-		  public void reduce(Text key, Iterable<IntWritable> values,
-				    Context context
-		  ) throws IOException, InterruptedException {
-		      int sum = 0;
-		      for (IntWritable val : values) {
-			  sum += val.get();
-		      }
-		      result.set(sum);
-		      context.write(key, result);
-		  }
-	      }
+            public void reduce(Text key, Iterable<IntWritable> values,
+                              Context context
+            ) throws IOException, InterruptedException {
+                int sum = 0;
+                for (IntWritable val : values) {
+                    sum += val.get();
+                }
+                result.set(sum);
+                context.write(key, result);
+            }
+        }
 
-	      public static void main(String[] args) throws Exception {
-		  Configuration conf = new Configuration();
-		  Job job = Job.getInstance(conf, "word count");
-		  job.setJarByClass(App.class);
-		  job.setMapperClass(TokenizerMapper.class);
-		  job.setCombinerClass(IntSumReducer.class);
-		  job.setReducerClass(IntSumReducer.class);
-		  job.setOutputKeyClass(Text.class);
-		  job.setOutputValueClass(IntWritable.class);
-		  FileInputFormat.addInputPath(job, new Path(args[0]));
-		  FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		  System.exit(job.waitForCompletion(true) ? 0 : 1);
-	      }
-	  }
-	  ```
+        public static void main(String[] args) throws Exception {
+            Configuration conf = new Configuration();
+            Job job = Job.getInstance(conf, "word count");
+            job.setJarByClass(App.class);
+            job.setMapperClass(TokenizerMapper.class);
+            job.setCombinerClass(IntSumReducer.class);
+            job.setReducerClass(IntSumReducer.class);
+            job.setOutputKeyClass(Text.class);
+            job.setOutputValueClass(IntWritable.class);
+            FileInputFormat.addInputPath(job, new Path(args[0]));
+            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            System.exit(job.waitForCompletion(true) ? 0 : 1);
+        }
+    }
+    ```
 
 2. Run the updated App class.
 
-***(Q3)*** What do you see at the output?
+- ***(Q3) What do you see at the output?***
 
 - Create a new text file named "input.txt" in the project folder (same level as "src"), and add the following sample content to it.
 
@@ -491,9 +496,9 @@ Try the following method if you see red errors (likely on Windows).
 
     ![alt text](lab1_images/word_count_2.png)
 
-***(Q4)*** What is the output that you see at the console?
+- ***(Q4) What is the output that you see at the console?***
 
-Note: We will later cover how MapReduce programs are executed in more details. This lab just ensures that you have the development environment setup.
+  Note: We will later cover how MapReduce programs are executed in more details. This lab just ensures that you have the development environment setup.
 
 #### Run the WordCount example from Command Line
 
@@ -503,9 +508,13 @@ Note: We will later cover how MapReduce programs are executed in more details. T
     mvn package 
     ```
 
-- Try to run your program as we did earlier.
+- Try to run your program as we did earlier. 
 
-***(Q5)*** Does it run? Why or why not?
+  ```bash
+  java -cp target/<UCRNetID>_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.App
+  ```
+
+- ***(Q5) Does it run? Why or why not?***
 
 - Try to run the program using the following command:
 
@@ -514,6 +523,7 @@ Note: We will later cover how MapReduce programs are executed in more details. T
     hadoop jar target/<UCRNetID>_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetId>.App input.txt output.txt
     ```
 
+---
 ### 6. Prepare Your Submission
 
 - To avoid entering the full class name when you run your program, configure the main class in the **pom.xml** file as follows.
@@ -549,6 +559,12 @@ Note: We will later cover how MapReduce programs are executed in more details. T
     </build>
     ```
 
+- Then, rebuild the project/jar file.
+
+  ```bash
+  mvn package
+  ```
+
 - Now, you can run your program using the following command.
 
   ```bash
@@ -562,7 +578,7 @@ Note: We will later cover how MapReduce programs are executed in more details. T
 - Add any additional information that you think are important.
 - Feel free to style your README file according to the Markdown markup language
 <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet>
-You can also refer to our template at [HERE](CS167-Lab1-README.md).
+You can also refer to our template at [HERE](CS167-Lab1-README.md) (Click on the <> icon to Display the source blob, or click Raw to see the original content).
 - Add a script file "run.sh" that will compile and run your program. Find a sample below (Replace `<UCRNetID>` with your UCR Net ID, not student ID).
 
   ```shell script
@@ -581,55 +597,75 @@ You can also refer to our template at [HERE](CS167-Lab1-README.md).
   ```
 
   Note: Do not include the sample file or the target directory. E.g.,
-  - Linux and MacOS
+  - Linux
 
     ```bash
-    tar -c src pom.xml README.md run.sh -f <UCRNetID>-Lab1.tar.gz
+    # Create .tar.gz
+    tar -czf <UCRNetID>_lab1.tar.gz src pom.xml README.md run.sh
+    # Or create .zip
+    zip <UCRNetID>_lab1.zip -ur src pom.xml README.md run.sh
+    ```
+
+  - MacOS
+
+    ```bash
+    # Remove Mac only system files
+    find src -name ".*" -exec rm -fr {} \;
+    # Create .tar.gz
+    tar -czf <UCRNetID>_lab1.tar.gz src pom.xml README.md run.sh
+    # Or create .zip
+    zip <UCRNetID>_lab1.zip -ur src pom.xml README.md run.sh
     ```
 
   - Windows: You may manually zip the aforementioned 4 folder and files, and name your zip file to "\<UCRNetID\>-Lab1.zip".
     - Alternatively, you can use 7-zip to create a .tar.gz file on Windows.
 
-- ***(S)*** Submit your compressed file as the lab deliverable.
+- ***(S) Submit your compressed file as the lab deliverable.***
 
 #### Notes
 
 * Make sure to follow the naming conventions that are mentioned in this lab.
-- We will follow similar naming conventions for future labs with the necessary changes for the lab name.
-- Failure to follow these instructions and conventions might result in losing some points. This includes, for example, adding unnecessary files in your compressed file, using different package names, using a different name for the compressed file, not including a runnable script, and not including a README file.
 
+  - We will follow similar naming conventions for future labs with the necessary changes for the lab name.
+
+  - Failure to follow these instructions and conventions might result in losing some points. This includes, for example, adding unnecessary files in your compressed file, using different package names, using a different name for the compressed file, not including a runnable script, and not including a README file.
+
+---
 ## Frequent Problems
+
 **Problem**
 
-```
+```console
 Exception in thread "main" org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory output.txt already exists
 ```
+
 **Resolution**: Delete the output directory if it already exists.
 
 **Problem**
 
-```
+```console
 Exception in thread "main" java.lang.RuntimeException: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
 ```
+
 **Resolution**: Set the `HADOOP_HOME` environment variable to where Hadoop is installed. After that, you might need to restart IntelliJ IDEA or the command-line depending on where you got this error.
 
 **Problem**
 
-```
+```console
 Exception in thread "main" java.lang.RuntimeException: java.io.FileNotFoundException: Could not locate Hadoop executable: hadoop\bin\winutils.exe -see https://wiki.apache.org/hadoop/WindowsProblems
 ```
 **Resolution**: Make sure that `winutils.exe` is in `%HADOOP_HOME%\bin` directory.
 
 **Problem**
 
-```
+```console
 Exception in thread "main" java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Ljava/lang/String;I)Z
 ```
 **Resolution**: Make sure that `hadoop.dll` is in `%HADOOP_HOME%\bin` directory and that `%HADOOP_HOME%\bin` is in the executable path.
 
 **Problem**
 
-```
+```console
 Exception in thread "main" 0: No such file or directory
  at org.apache.hadoop.io.nativeio.NativeIO$POSIX.chmod(NativeIO.java:388)
  at org.apache.hadoop.fs.RawLocalFileSystem.setPermission(RawLocalFileSystem.java:863)
@@ -650,6 +686,7 @@ Exception in thread "main" 0: No such file or directory
  at org.apache.hadoop.mapreduce.Job.submit(Job.java:1562)
  at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1583)
 ```
+
 **Resolution**: Modify your code as below when Hadoop configuration is created. Make sure that the directory that you add to the configuration exists and is writable.
 
 ```java
@@ -659,9 +696,10 @@ conf.set("mapreduce.jobtracker.staging.root.dir", "%USERPROFILE%\\Workspace\\had
 
 **Problem**
 
-```
+```console
 log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
 log4j:WARN Please initialize the log4j system properly.
 log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
 ```
+
 **Resolution**: This is just a warning. You can ignore it for now.
