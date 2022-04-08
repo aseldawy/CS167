@@ -56,7 +56,7 @@ Write a main function with the following specifications.
 
     ```java
     // `output` is a Path variable in step 3
-    System.err.printf("Output file '%s' does not exist!\n", output);
+    System.err.printf("Output file '%s' already exists!\n", output);
     System.exit(-1);
     ```
 
@@ -70,7 +70,7 @@ Write a main function with the following specifications.
     The message should show the correct size, input, output, and total time according to how the program ran. Make sure you use the same wording of the output above or you may lose points. You may use the following code.
 
     ```java
-    // `bytesCopied` is the actual number of bytes copied.
+    // `bytesCopied` is the actual number of bytes copied. You may need to use `long` type to avoid overflow.
     // `input` and `output` are Path in step 3.
     // `startTime` and `endTime` are the System.nanoTime() before and after the copy function.
     System.out.printf("Copied %d bytes from '%s' to '%s' in %f seconds\n",
@@ -102,9 +102,9 @@ To run HDFS, you need at least one name node and one data node.
     </property>
     ```
 
-2. Initialize the files for HDFS by running the command `hadoop namenode -format`
-3. Start the master node by running `hadoop namenode`
-4. Start the data node by running `hadoop datanode`
+2. Initialize the files for HDFS by running the command `hdfs namenode -format`
+3. Start the master node by running `hdfs namenode`
+4. Start the data node by running `hdfs datanode`
 
 *Note: You will need to run the name node and data node in two separate tabs/windows. Keep them open so you can see their progress as your program runs.*
 
@@ -120,13 +120,26 @@ To run HDFS, you need at least one name node and one data node.
 
 1. Run your program again from the command line to copy the file. You will need to use the `hadoop` command as was shown in Lab 1.
     * ***(Q4) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?***
-2. Run your program again, this time specify the full path to your local file (both input and output) and explicitly specify the local file system (`file:///=`)
+2. Run your program again, this time specify the full path to your local file (both input and output) and explicitly specify the local file system using [`file://`](https://en.wikipedia.org/wiki/File_URI_scheme) protocol.
 3. ***(Q5) Use your program to test the following cases and record the running time for each case.***
     1. Copy a file from local file system to HDFS
     2. Copy a file from HDFS to local file system.
     3. Copy a file from HDFS to HDFS.
 
-Note: to explicitly specify the HDFS file system, use the scheme `hdfs://` followed by the absolute path.
+Note: to explicitly specify the HDFS file system, use the scheme `hdfs://` followed by the absolute path. For example:
+
+```bash
+# Linux and MacOS local file
+file:///Users/your_user/cs167/netid_lab2/AREAWATER.csv
+
+# Windows local file
+file:///C:/cs167/netid_lab2/AREAWATER.csv
+
+# HDFS
+hdfs://localhost:9000/user/your_user/AREAWATER.csv
+# Or
+hdfs:///user/your_user/AREAWATER.csv
+```
 
 ### VII. Bonus Task (30 minutes) +3 points
 
