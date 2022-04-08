@@ -596,29 +596,7 @@ You can also refer to our template at [HERE](CS167-Lab1-README.md) (Click on the
   run.sh
   ```
 
-  Note: Do not include the sample file or the target directory. E.g.,
-  - Linux
-
-    ```bash
-    # Create .tar.gz
-    tar -czf <UCRNetID>_lab1.tar.gz src pom.xml README.md run.sh
-    # Or create .zip
-    zip <UCRNetID>_lab1.zip -ur src pom.xml README.md run.sh
-    ```
-
-  - MacOS
-
-    ```bash
-    # Remove Mac only system files
-    find src -name ".*" -exec rm -fr {} \;
-    # Create .tar.gz
-    tar -czf <UCRNetID>_lab1.tar.gz src pom.xml README.md run.sh
-    # Or create .zip
-    zip <UCRNetID>_lab1.zip -ur src pom.xml README.md run.sh
-    ```
-
-  - Windows: You may manually zip the aforementioned 4 folder and files, and name your zip file to "\<UCRNetID\>-Lab1.zip".
-    - Alternatively, you can use 7-zip to create a .tar.gz file on Windows.
+  Check [here](../MakeArchive.md) for how to make the archive file in `.tar.gz` or `.zip` format with only required files.
 
 - ***(S) Submit your compressed file as the lab deliverable.***
 
