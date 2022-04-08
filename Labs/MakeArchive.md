@@ -1,10 +1,10 @@
 # CS167: How to make archive for submission
 
-Assume your UCR Net ID is `abcd012` and it is lab `1`.
+Assume your UCR Net ID is `abcd012` and it is lab `1`. Change `abcd012` to your own UCR Net ID, and change the lab number accordingly in all places.
 
 The archive file name must be either `abcd012_lab1.tar.gz` or `abcd012_lab1.zip`.
 
-Folder(s) and file(s) to include:
+Folder(s) and file(s) to include (just for example, you should use the actual file list for the corresponding lab):
 
 * src/
 * pom.xml
@@ -53,7 +53,7 @@ To create `.tar.gz` file:
 2. Right click to show the context menu, select **7-Zip**, then select **Add to archive...**.
 3. Change **Archive format** to `tar`. Also, change the archive name to `abcd012_lab1.tar`, then click **OK** to create a `.tar` file.
     * Make sure the archive format is `tar`, not the other options.
-4. In Windows Explorer, select `abcd012_lab1.tar` you just created, right click it to show the context menu, select select **7-Zip**, then select **Add to archive...**.
+4. In Windows Explorer, select `abcd012_lab1.tar` you just created, right click it to show the context menu, select **7-Zip**, then select **Add to archive...**.
 5. Change **Archive format** to `gzip`. The archive name should be automatically changed to `abcd012_lab1.tar.gz`. If not, manually change the archive name. Then click **OK** to create a `.tar.gz` file.
     * Make sure the archive format is `gzip`, not the other options.
 
