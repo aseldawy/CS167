@@ -24,7 +24,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 
 1. Create a new Java project using Maven for lab 3 either from command line or from IntelliJ. The project name should be `<UCRNetID>_lab3` (Replace `<UCRNetID>` with your UCR Net ID).
 
-### II. Main Program (45 minutes) - In-home part
+### II. Main Program (30 minutes) - In-home part
 
 1. Write a function with the following signature:
 ```java
@@ -58,7 +58,7 @@ Printing numbers in the range [10,25]
 ```
 
 At this stage, your program runs correctly but it does not use any of the functional programming features of Java. In the following part, we will see how to convert this simple program to use some functional programming features.
-### III. Use functional programming to test even and odd numbers (45 minutes)
+### III. Use functional programming to test even and odd numbers (30 minutes)
 
 1. Add two new classes `IsEven` and `IsOdd`. One of them is provided below for your reference.
 ```java
