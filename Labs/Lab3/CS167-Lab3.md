@@ -137,7 +137,8 @@ Printing numbers in the range [3,20]
 
 **Note**: This function works by keeping a reference to the final variable `base` and referring to it whenever it is executed. Effectively, the variable *base* becomes an additional parameter to the function.
 
-5. Try this: add the statement `base=0` at the very end of your main function; even after the `printNumbers` call. **(Q)** Did the program compile? **(Q)** If it does not work, what is the error message you get?
+5. Try this: add the statement `base=0` at the very end of your main function; even after the `printNumbers` call. ***(Q1) Did the program compile?*** 
+***(Q2) If it does not work, what is the error message you get?***
 
 ## VI. Function Composition (30 minutes)
 In this part, we will extend the logic of our program to use *function composition*, i.e., combine multiple functions into one function. In this part, the third parameter can include multiple bases separated with either `^` or `v`. If they are separated by `^`, the program should print numbers that are multiples of *all* the numbers. If they are separated by `v`, it will print the numbers that are multiple of *any* of the numbers. In other words, `^` means `and` and `v` means `or`. Mixing `^` and `v` is not allowed.
@@ -155,6 +156,7 @@ public static Function<Integer, Boolean> combineWithOr(Function<Integer, Boolean
 ```
 
 *Note*: The `...` symbol creates a function with a variable number of arguments.
+
 5. Use one of these two functions to combine all filters into one. For example, if you want to combine with with `and`, you can do the following.
 ```java
 Function<Integer, Boolean> filter = combineWithAnd(filters);
