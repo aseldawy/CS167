@@ -71,7 +71,7 @@ static class IsEven implements Function<Integer, Boolean> {
 ```
 Make sure to write the other class as well. The code above declares a class named `IsEven` that implements the interface `Function`. It defines a function named `apply` which applies the desired test.
 
-2. Let us try to call the `IsEven` function with the parameter 5. The expected result is `false`. ***(Q1) Which of the following is the right way to call the `IsEven` function? ***
+2. Let us try to call the `IsEven` function with the parameter 5. The expected result is `false`. ***(Q1) Which of the following is the right way to call the `IsEven` function?***
 
 - IsEven(5)
 - IsEven.apply(5)
