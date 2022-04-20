@@ -24,7 +24,9 @@
 
 ```xml
 <properties>
-  <hadoop.version>3.2.2</hadoop.version>
+  <!-- Change the version number below to match your installed Hadoop. -->
+  <!-- For example, 3.2.2 on Windows. -->
+  <hadoop.version>3.2.3</hadoop.version>
   <maven.compiler.source>1.8</maven.compiler.source>
   <maven.compiler.target>1.8</maven.compiler.target>
 </properties>
@@ -35,25 +37,21 @@
       <artifactId>hadoop-common</artifactId>
       <version>${hadoop.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs</artifactId>
       <version>${hadoop.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-mapreduce-client-common</artifactId>
       <version>${hadoop.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-mapreduce-client-core</artifactId>
       <version>${hadoop.version}</version>
     </dependency>
-
 </dependencies>
 ```
 
@@ -120,9 +118,9 @@ public class Filter {
 ```
 4. Take some time to understand the code and answer the following questions.
 
-* (Q1) What do you think the line `job.setJarByClass(Filter.class);` does?
-* (Q2) What is the effect of the line `job.setNumReduceTasks(0);`?
-* (Q3) Where does the `main` function run? (Driver node, Master node, or an execturo node).
+* ***(Q1) What do you think the line `job.setJarByClass(Filter.class);` does?***
+* ***(Q2) What is the effect of the line `job.setNumReduceTasks(0);`?***
+* ***(Q3) Where does the `main` function run? (Driver node, Master node, or an execturo node).***
 
 5. Initially, to make the code easy to run and test, we want the program to filter all the lines with response code `200`. We will hard code the value `200` instead of accepting it from the user input. To do so, replace the `// TODO Filter by response code` with the following code snippet and make any required adjustments to the code.
 
@@ -134,7 +132,7 @@ if (responseCode.equals("200"))
 Notice that we use `String#equals` rather than the operator `==` since `String` is not a primitive value.
 
 6. Run the code with the following command line arguments `nasa_19950801.tsv filter_output.tsv`. Make sure to delete the output directory before you run if you execute your program several times.
-7. Check the output. (Q4) How many lines do you see in the output?
+7. Check the output. ***(Q4) How many lines do you see in the output?***
 8. Compile and run your program from the command line using the `hadoop jar` command.
 
 ```console
@@ -149,8 +147,8 @@ In this part, we will customize our program by taking the desired response code 
 3. In the setup function, add a code that will read the desired response code from the job configuration and store it in an instance variable in the class `TokenizerMapper`.
 4. Modify the `map` function to use the user given response code rather than the hard-coded response code that we used in Part II.
 5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a command-line argument.
-6. Run it from IntelliJ IDEA on a file in your local file system. (Q5) How many files are produced in the output? (Q6) Explain this number based on the input file size and default block size.
-7. Run it from the command line on a file in HDFS. (Q7) How many files are produced in the output? (Q8) Explain this number based on the input file size and default block size.
+6. Run it from IntelliJ IDEA on a file in your local file system. ***(Q5) How many files are produced in the output?*** ***(Q6) Explain this number based on the input file size and default block size.***
+7. Run it from the command line on a file in HDFS. ***(Q7) How many files are produced in the output?*** ***(Q8) Explain this number based on the input file size and default block size.***
 
 Note: Make sure that you run the namenode and datanode from the command line to access HDFS as explained in Lab 2.
 
@@ -257,9 +255,9 @@ public class Aggregation {
 }
 ```
 2. Implement the TODO items to make the desired logic. Hint: look at the WordCount example.
-3. Run your program on the file `nasa_19950801.tsv` and check the output directory. (Q9) How many files are produced in the output directory and how many lines are there in each file? (Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.
-4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. (Q11) How many files are produced in the output directory and how many lines are there in each file? (Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.
-4. Run your program on the output of the `Filter` operation with response code `200`. (Q13) How many files are produced in the output directory and how many lines are there in each file? (Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. ***(Q9) How many files are produced in the output directory and how many lines are there in each file?*** ***(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`. ***(Q11) How many files are produced in the output directory and how many lines are there in each file?*** ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+4. Run your program on the output of the `Filter` operation with response code `200`. ***(Q13) How many files are produced in the output directory and how many lines are there in each file?*** ***(Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
 ### VI. Submission (15 minutes)
 1. Add a `README` file with all your answers.
