@@ -71,6 +71,8 @@ In this part, you will need to write a MapReduce program that produces the lines
 3. Add the following code stub in your filter class.
 
     ```java
+    package edu.ucr.cs.cs167.<UCRNetID>;
+
     import org.apache.hadoop.conf.Configuration;
     import org.apache.hadoop.fs.Path;
     import org.apache.hadoop.io.LongWritable;
@@ -88,32 +90,12 @@ In this part, you will need to write a MapReduce program that produces the lines
     * Filter log file by response code
     */
     public class Filter {
-        public static class TokenizerMapper
-                extends Mapper<LongWritable, Text, NullWritable, Text> {
-
-            @Override
-            protected void setup(Context context) throws IOException, InterruptedException {
-                super.setup(context);
-                // TODO add additional setup to your map task, if needed.
-            }
-
-            public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-                if (key.get() == 0)
-                    return; // Skip header line
-                String[] parts = value.toString().split("\t");
-                String responseCode = parts[5];
-                // TODO Filter by response code
-            }
-        }
-
         public static void main(String[] args) throws Exception {
             String inputPath = args[0];
             String outputPath = args[1];
             // String desiredResponse = args[2];
-
-            Configuration conf = new Configuration();
-            // TODO pass the desiredResponse code to the MapReduce program
             Job job = Job.getInstance(conf, "filter");
+            // TODO pass the desiredResponse code to the MapReduce program
             job.setJarByClass(Filter.class);
             job.setMapperClass(TokenizerMapper.class);
             job.setNumReduceTasks(0);
@@ -123,6 +105,25 @@ In this part, you will need to write a MapReduce program that produces the lines
             Path output = new Path(outputPath);
             FileOutputFormat.setOutputPath(job, output);
             System.exit(job.waitForCompletion(true) ? 0 : 1);
+        }
+
+        public static class TokenizerMapper extends 
+                Mapper<LongWritable, Text, NullWritable, Text> {
+
+            @Override
+            protected void setup(Context context) 
+                    throws IOException, InterruptedException {
+                super.setup(context);
+                // TODO add additional setup to your map task, if needed.
+            }
+
+            public void map(LongWritable key, Text value, Context context) 
+                    throws IOException, InterruptedException {
+                if (key.get() == 0) return; // Skip header line
+                String[] parts = value.toString().split("\t");
+                String responseCode = parts[5];
+                // TODO Filter by response code
+            }
         }
     }
     ```
@@ -219,9 +220,17 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
 
 5. Generate a JAR file for your program and run it using the command `yarn jar <*.jar> <main class> <input> <output> <code>`.
 
-    ```console
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter file://$(pwd)/nasa_19950801.tsv file://$(pwd)/filter_output.tsv 200
-    ```
+    * Linux and MacOS
+
+        ```bash
+        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter file://`pwd`/nasa_19950801.tsv file://`pwd`/filter_output.tsv 200
+        ```
+
+    * Windows
+
+        ```bash
+        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter file://$pwd/nasa_19950801.tsv file://$pwd/filter_output.tsv 200
+        ```
 
 6. If you did not do already, start HDFS as described in Lab 2 and run your program on an input file that is stored in HDFS and produce the output in HDFS. For example:
 
@@ -236,6 +245,8 @@ In this part, we will create another MapReduce program that computes the total b
 1. Create a new class `Aggregation` based on the following stub code.
 
     ```java
+    package edu.ucr.cs.cs167.<UCRNetID>;
+
     import org.apache.hadoop.conf.Configuration;
     import org.apache.hadoop.fs.Path;
     import org.apache.hadoop.io.IntWritable;
@@ -252,60 +263,81 @@ In this part, we will create another MapReduce program that computes the total b
 
 
     public class Aggregation {
-      public static class TokenizerMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
-
-        private final static IntWritable one = new IntWritable(1);
-        private IntWritable outKey = new IntWritable();
-        private IntWritable outVal = new IntWritable();
-
-        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-          if (key.get() == 0)
-            return;
-          String[] parts = value.toString().split("\t");
-          int responseCode = Integer.parseInt(parts[5]);
-          int bytes = Integer.parseInt(parts[6]);
-          // TODO write <responseCode, bytes> to the output
+        public static void main(String[] args) throws Exception {
+            Configuration conf = new Configuration();
+            Job job = Job.getInstance(conf, "aggregation");
+            job.setJarByClass(Aggregation.class);
+            job.setMapperClass(TokenizerMapper.class);
+            job.setCombinerClass(IntSumReducer.class);
+            job.setReducerClass(IntSumReducer.class);
+            job.setMapOutputKeyClass(IntWritable.class);
+            job.setMapOutputValueClass(IntWritable.class);
+            job.setOutputKeyClass(IntWritable.class);
+            job.setOutputValueClass(IntWritable.class);
+            job.setInputFormatClass(TextInputFormat.class);
+            job.setNumReduceTasks(2);
+            FileInputFormat.addInputPath(job, new Path(args[0]));
+            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            System.exit(job.waitForCompletion(true) ? 0 : 1);
         }
-      }
 
-      public static class IntSumReducer
-          extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
-        private IntWritable result = new IntWritable();
+        public static class TokenizerMapper extends
+                Mapper<LongWritable, Text, IntWritable, IntWritable> {
 
-        public void reduce(IntWritable key, Iterable<IntWritable> values,
-                          Context context) throws IOException, InterruptedException {
-          // TODO write <key, sum(values)> to the output
+            private final IntWritable outKey = new IntWritable();
+            private final IntWritable outVal = new IntWritable();
+
+            public void map(LongWritable key, Text value, Context context)
+                    throws IOException, InterruptedException {
+                if (key.get() == 0)
+                    return;
+                String[] parts = value.toString().split("\t");
+                int responseCode = Integer.parseInt(parts[5]);
+                int bytes = Integer.parseInt(parts[6]);
+                // TODO write <responseCode, bytes> to the output
+            }
         }
-      }
 
-      public static void main(String[] args) throws Exception {
-        Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "aggregation");
-        job.setJarByClass(Aggregation.class);
-        job.setMapperClass(TokenizerMapper.class);
-        job.setCombinerClass(IntSumReducer.class);
-        job.setReducerClass(IntSumReducer.class);
-        job.setMapOutputKeyClass(IntWritable.class);
-        job.setMapOutputValueClass(IntWritable.class);
-        job.setOutputKeyClass(IntWritable.class);
-        job.setOutputValueClass(IntWritable.class);
-        job.setInputFormatClass(TextInputFormat.class);
-        job.setNumReduceTasks(2);
-        FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
-      }
+        public static class IntSumReducer extends
+                Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
+
+            private final IntWritable result = new IntWritable();
+
+            public void reduce(IntWritable key, Iterable<IntWritable> values,
+                            Context context)
+                    throws IOException, InterruptedException {
+                // TODO write <key, sum(values)> to the output
+            }
+        }
     }
     ```
 
-2. Implement the TODO items to make the desired logic. Hint: look at the WordCount example.
+2. Implement the **TODO** items to make the desired logic. Hint: look at the [WordCount example](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0).
+
 3. Run your program on the file `nasa_19950801.tsv` and check the output directory.
+
+    ```bash
+    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950801.tsv hdfs:///aggregation_nasa_19950801_output.tsv
+    ```
+
     * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
     * ***(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`.
+
+    ```bash
+    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///aggregation_nasa_19950630_output.tsv
+    ```
+
     * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
     * ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+
 5. Run your program on the output of the `Filter` operation with response code `200`.
+
+    ```bash
+    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///filter_output.tsv/part-m-00000 hdfs:///aggregation_filter_output.tsv
+    ```
+
     * ***(Q13) How many files are produced in the output directory and how many lines are there in each file?***
     * ***(Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
