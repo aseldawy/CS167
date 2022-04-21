@@ -383,4 +383,4 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
     </property>
     ```
 
-    See also [<https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits>)
+    See also https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits
