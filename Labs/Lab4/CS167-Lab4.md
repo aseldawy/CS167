@@ -21,7 +21,7 @@
 2. Import your project into IntelliJ IDEA.
 
 3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
-    * Manually create `src/main/resources` if it does not exist. 
+    * Manually create `src/main/resources` if it does not exist.
 
 4. Place the two sample files in your project home directory.
 
@@ -366,6 +366,38 @@ Requirements:
 
 See how to create the archive file for submission at [here](../MakeArchive.md).
 
+## Useful Hadoop Filesystem Commands
+
+Check all Hadoop filesystem commands from [https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html)
+
+Specifically, you would be interested in the following commands:
+
+* Upload file: [put](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#put)
+* Create a directory: [mkdir](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#mkdir)
+  * To create directory with parent directoriesl use argument `-p`.
+* Delete file: [rm](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#rm)
+  * To delete a directory recursively, use argument `-r`.
+* List files: [ls](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#ls)
+
+#### Example commands
+
+```bash
+# Upload file to hdfs root
+hadoop fs -put nasa_19950801.tsv /
+
+# Create a directory
+hadoop fs -mkdir -p /dir1/dir2
+
+# Upload file to hdfs under some directory
+hadoop fs -put nasa_19950630.22-19950728.12.tsv /dir1/dir2/
+
+# List directory contents
+hadoop fs -ls /dir1/dir2
+
+# Delete a directory
+hadoop fs -rm -f -r /dir1
+```
+
 ## Common Errors
 
 * Error: When I run my program on YARN, I see an error message similar to the following.
@@ -383,4 +415,4 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
     </property>
     ```
 
-    See also https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits
+    See also [https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits](https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits)
