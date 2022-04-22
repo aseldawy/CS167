@@ -20,7 +20,7 @@
 
 2. Import your project into IntelliJ IDEA.
 
-3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properites` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
+3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properties` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
     * Manually create `src/main/resources` if it does not exist.
 
 4. Place the two sample files in your project home directory.
