@@ -94,6 +94,7 @@ In this part, you will need to write a MapReduce program that produces the lines
             String inputPath = args[0];
             String outputPath = args[1];
             // String desiredResponse = args[2];
+            Configuration conf = new Configuration()
             Job job = Job.getInstance(conf, "filter");
             // TODO pass the desiredResponse code to the MapReduce program
             job.setJarByClass(Filter.class);
