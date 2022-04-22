@@ -10,6 +10,7 @@
 
 * Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md).
 * Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
+  * If you unarchive the file downloaded from Google Drive (nasa_19950630.22-19950728.12.tsv.gz) and get **t19950630.23-19950801.00.tsv**, you can either rename this file to **nasa_19950630.22-19950728.12.tsv**, or replace **nasa_19950630.22-19950728.12.tsv** in all the commands below to **t19950630.23-19950801.00.tsv**.
 * For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
 
 ## Lab Work
@@ -327,17 +328,24 @@ In this part, we will create another MapReduce program that computes the total b
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`.
 
     ```bash
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///aggregation_nasa_19950630_output.tsv
+    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///aggregation_large_output.tsv
     ```
 
     * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
     * ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
-5. Run your program on the output of the `Filter` operation with response code `200`.
+5. Run your program on the output of the `Filter` operation with response code `200` on the file `nasa_19950630.22-19950728.12.tsv`.
+    1. Re-run `Filter` program on the file `nasa_19950630.22-19950728.12.tsv`.
 
-    ```bash
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///filter_output.tsv/part-m-00000 hdfs:///aggregation_filter_output.tsv
-    ```
+        ```bash
+        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///filter_large_output.tsv 200
+        ```
+
+    2. Run `Aggregation` program on the output **directory** of `Filter`: filter_nasa_19950630_output.tsv
+
+        ```bash
+        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///filter_large_output.tsv hdfs:///aggregation_filter_large_output.tsv
+        ```
 
     * ***(Q13) How many files are produced in the output directory and how many lines are there in each file?***
     * ***(Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.***
