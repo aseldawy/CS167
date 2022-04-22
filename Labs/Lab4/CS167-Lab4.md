@@ -202,7 +202,7 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
     </property>
     ```
 
-    Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.xml.template` and name it `mapredi-site.xml`.
+    Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.xml.template` and name it `mapred-site.xml`.
 
 2. Edit the file `$HADOOP_HOME/etc/hadoop/yarn-site.xml` and add the following part.
 
