@@ -379,6 +379,10 @@ Specifically, you would be interested in the following commands:
 * Delete file: [rm](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#rm)
   * To delete a directory recursively, use argument `-r`.
 * List files: [ls](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#ls)
+* Print text file content: [cat](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#cat)
+  * Do not use this command on large files, otherwise your terminal may freeze.
+* Print the first few lines of a text file: [head](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#head)
+* Print the last few lines of a text file: [tail](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#tail)
 
 #### Example commands
 
