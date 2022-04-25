@@ -15,6 +15,8 @@
 
 * (Q3) Where does the `main` function run? (Driver node, Master node, or an executor node).
 
+* (Q4) How many lines do you see in the output?
+
 * (Q5) How many files are produced in the output?
 
 * (Q6) Explain this number based on the input file size and default block size.
