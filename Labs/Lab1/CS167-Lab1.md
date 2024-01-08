@@ -191,8 +191,8 @@ mvn -version
 Example output (contents may differ)
 
 ```text
-Maven home: /Users/eldawy/Applications/apache-maven-3.9.4
-Java version: 20.0.2, vendor: Oracle Corporation, runtime: /Users/eldawy/Applications/jdk-20.0.2.jdk/Contents/Home
+Maven home: /Users/student/cs167/apache-maven-3.9.6
+Java version: 17.0.9, vendor: Oracle Corporation, runtime: /Users/student/cs167/jdk-17.0.9.jdk/Contents/Home
 Default locale: en_US, platform encoding: UTF-8
 OS name: "mac os x", version: "14.2.1", arch: "x86_64", family: "mac"
 ```
