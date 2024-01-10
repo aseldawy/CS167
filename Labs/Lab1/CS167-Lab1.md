@@ -152,9 +152,9 @@ In this part, you will configure some environment variables to make sure your pr
 2. Press `Win + R` to open the *Run* window.
 3. Type `rundll32.exe sysdm.cpl,EditEnvironmentVariables` and press Enter.
 4. In *User variables for xxx*, click *New* to add a new environment variable for each of the following 3 pairs:
-    - Variable name: `JAVA_HOME`, Variable value: `C:\cs167\jdk-17.0.9`
-    - Variable name: `MAVEN_HOME`, Variable value: `C:\cs167\apache-maven-3.9.6`
-    - Variable name: `HADOOP_HOME`, Variable value: `C:\cs167\hadoop-3.3.6`
+    - Variable name: `JAVA_HOME`, Variable value: `C:\Users\[username]\cs167\jdk-17.0.9`
+    - Variable name: `MAVEN_HOME`, Variable value: `C:\Users\[username]\cs167\apache-maven-3.9.6`
+    - Variable name: `HADOOP_HOME`, Variable value: `C:\Users\[username]\cs167\hadoop-3.3.6`
 5. Double click variable **Path**, add the following 3 values via "New" button:
     - `%JAVA_HOME%\bin`
     - `%MAVEN_HOME%\bin`
