@@ -9,14 +9,16 @@
 
 ## Pre-lab
 Before the lab, complete the following steps to be ready for the lab.
-1. If you want to use the virtual machine, download the virutal machine image at [this link](https://coursefiles.cs.ucr.edu/cs167-S22.ova).
-2. If you want to use the virtual machine, download and setup VirtualBox at [this link](https://www.virtualbox.org/wiki/Downloads).
-3. Follow the instructions on [this page](../../VirtualMachineSetup.md) to setup the virutal machine.
-4. Download JDK 17 from [this link](https://www.oracle.com/java/technologies/downloads/#java17) and make sure to get the version suitable for your OS.
-5. Download [Apache Maven binaries](https://maven.apache.org/download.cgi).
-6. Download [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/).
+1. Download JDK 17 from [this link](https://www.oracle.com/java/technologies/downloads/#java17) and make sure to get the version suitable for your OS.
+2. Download [Apache Maven binaries](https://maven.apache.org/download.cgi).
+3. Download [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/).
 
-If you have troubles with setting up the virtual machine, bring your questions to the lab.
+Only if you plan to use the virtual machine (not recommended):
+1. Download the virtual machine image at [this link](https://coursefiles.cs.ucr.edu/cs167-S22.ova).
+2. Download, and setup VirtualBox at [this link](https://www.virtualbox.org/wiki/Downloads).
+3. Follow the instructions on [this page](../../VirtualMachineSetup.md) to setup the virutal machine.
+
+If you have trouble with setting up the virtual machine, bring your questions to the lab.
 
 ## Lab Work
 
