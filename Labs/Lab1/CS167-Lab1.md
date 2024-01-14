@@ -330,9 +330,6 @@ Try the following method if you see red errors (likely on Windows).
 1. Replace the code in your App.java file with the following code but leave the package line as-is.
 
     ```java
-    // Replace [UCRNetID] with your UCR Net ID, not student ID.
-    package edu.ucr.cs.cs167.[UCRNetID];
-
     import java.io.IOException;
     import java.util.StringTokenizer;
 
