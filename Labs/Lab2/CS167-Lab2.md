@@ -103,7 +103,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 4. In this step, write a function that takes a range and a filter function. It should print all numbers in the range that satisfy the given filter. The function header is as follows.
 
     ```java
-    pub lic static void printNumbers(int from, int to, Function<Integer, Boolean> filter)
+    public static void printNumbers(int from, int to, Function<Integer, Boolean> filter)
     ```
 
     The function should first print the following line followed by each matching number in a separate line.
