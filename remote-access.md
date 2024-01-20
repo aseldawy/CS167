@@ -31,7 +31,7 @@ To make it easier to access your machine, we will set up password-less access.
 1. If you do not have an SSH key, generate one by running the command `ssh-keygen -t rsa -b 4096` on your local machine. Do **not** run this command on bolt or your CS167 machine.
 2. Copy your *public* key to bolt so that you can access bolt without a password.
     ```shell
-    cat ~/.ssh/id_rsa.pub | ssh [csusername]@bolt.cs.ucr.edu "cat >> ~/.ssh/authorized_keys"
+    cat ~/.ssh/id_rsa.pub | ssh [csusername]@bolt.cs.ucr.edu 'cat >> ~/.ssh/authorized_keys'
     ```
     If you run on Windows, run the following command in the command prompt:
     ```shell
