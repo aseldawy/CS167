@@ -35,7 +35,7 @@ To make it easier to access your machine, we will set up password-less access.
     ```
     If you run on Windows, run the following command in the command prompt:
     ```shell
-    type %USERPROFILE%\.ssh\id_rsa.pub | ssh [csusername]@bolt.cs.ucr.edu "cat >> ~/.ssh/
+    type %USERPROFILE%\.ssh\id_rsa.pub | ssh [csusername]@bolt.cs.ucr.edu 'cat >> ~/.ssh/'
     ```
     Make sure to replace `[csusername]` with your CS username.
     Enter your CS password when prompted.
