@@ -29,10 +29,10 @@ Follow the instructions below to complete this lab. If you have any questions, p
 1. Create a new Java project using Maven for lab 3 either from command line or from IntelliJ. The project name should be `[UCRNetID]_lab3` (Replace `[UCRNetID]` with your UCR Net ID).
 2. In `pom.xml` file, add dependencies for [`org.apache.hadoop:hadoop-common`](https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common/3.3.6) and [`org.apache.hadoop:hadoop-hdfs`](https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs/3.2.2) version 3.3.6.
 3. You need to have a CS account to login to the cluster. If you don't have have a cs account or have forgotton the password, you can set your password as follows:
-   a. If you are not in a UCR-Secure network, you need to connect to UCR GlobaProtect VPN. You can follow the instructions on [`this link`](`https://ucrsupport.service-now.com/ucr_portal/?id=kb_article&sys_id=47d747771bf47550f3444158dc4bcbdd&spa=1`) for that.
-   b. Once connected to UCR's GlobalProtect VPN or on UCR-Secure Wifi, load (`password.cs.ucr.edu`)[`https://password.cs.ucr.edu/`] in a web browser and follow the instructions to log in to our CS Password Reset page with your UCR R'Mail account.
-   c. A few minutes after successfully setting your CS password, you should be able to log in CS servers via SSH using your UCR NetID as the username and the CS password you set in the previous step.
-4. Follow the instruction here [`remote-access.md`](https://github.com/aseldawy/CS167/blob/lab3/remote-access.md) to setup remote access on your editor (VSCode).
+   - If you are not in a UCR-Secure network, you need to connect to UCR GlobaProtect VPN. You can follow the instructions on [`this link`](https://ucrsupport.service-now.com/ucr_portal/?id=kb_article&sys_id=47d747771bf47550f3444158dc4bcbdd&spa=1) for that.
+   - Once connected to UCR's GlobalProtect VPN or on UCR-Secure Wifi, load (`password.cs.ucr.edu`)[https://password.cs.ucr.edu/] in a web browser and follow the instructions to log in to our CS Password Reset page with your UCR R'Mail account.
+   - A few minutes after successfully setting your CS password, you should be able to log in CS servers via SSH using your UCR NetID as the username and the CS password you set in the previous step.
+4. Follow the instruction here [`remote-access.md`](https://github.com/aseldawy/CS167/blob/lab3/remote-access.md) to setup remote access to your virtual machine.
 
 
 ### II. Main Program (45 minutes) - In-home part
@@ -130,7 +130,7 @@ mvn --version
 Each of these commands should run and provide the version of Hadoop, Java, and Maven, respectively.
 
 ### V. Setup and run an HDFS cluster (30 minutes)
-1. Identify all members of your group.
+1. Identify all members of your group. You will find the group information in this [`link`](https://docs.google.com/spreadsheets/d/1PdQmX-rVydvSvrBM04_XMaIZZ4RJ-z63xql1fdotuSM/edit?usp=sharing). 
 2. Each member should find their machine name by running the command `hostname` after they are logged in to their machine. It should be in the format of `class-xxx`.
 3. By convention, we will use the machine with the lowest number as the namenode. All the others will be the datanodes.
 4. For all machines, namenode and datanodes, edit the file `$HADOOP_HOME/etc/hadoop/core-site.xml` and add the following property inside the configuration tag.
@@ -171,12 +171,12 @@ Each of these commands should run and provide the version of Hadoop, Java, and M
 8. Confirm that all datanodes can see the same HDFS contents.
 
 ### VI. Run Your Program with HDFS (20 minutes)
-1. Upload your runnable JAR file from Section III to your virtual machine, using this command:
+1. Upload your runnable JAR file generated in Section III to your virtual machine, using this command:
    ```shell
    scp -J [UCRNetID]@bolt.cs.ucr.edu [PATH_TO_COMPILED_JAR_FILE] cs167@class-###.cs.ucr.edu:~
    ```
    Note: class-### is the hostname of your virtual machine. 
-2. Download the file and save as `AREAWATER_[UCRNetID].csv` and decompress it using this:
+2. Download the file in your virtual machine and save as `AREAWATER_[UCRNetID].csv` and decompress it using this:
    ```shell
    wget http://bdlab.cs.ucr.edu/classes/AREAWATER.csv.bz2 -O AREAWATER_[UCRNetID].csv.bz2
    bzip2 -dk AREAWATER_[UCRNetID].csv.bz2
@@ -249,20 +249,19 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 
 ## Rubric
 
-Q1. +1 point
-Q2. +1 point
-Q3. +1 point
-Q4. +1 point
-Q5. +1 point
-Q6. +1 point
-Q7. +1 point
-Q8. +3 points
-Code: +4 points:
--> +1 validating input correctly
--> +1 open and read the file correctly
--> +2 writing the file correctly
-Following submission instructions: +1 point
-
+- Q1. +1 point
+- Q2. +1 point
+- Q3. +1 point
+- Q4. +1 point
+- Q5. +1 point
+- Q6. +1 point
+- Q7. +1 point
+- Q8. +3 points
+- Code: +4 points
+  - +1 validating input correctly
+  - +1 open and read the file correctly
+  - +2 writing the file correctly
+- Following submission instructions: +1 point
 
 ## Notes
 
