@@ -3,8 +3,8 @@ As part of this course, you will have access to a remote machine where you will 
 
 ## Part I: Prerequisites
 - Make sure that your OS has SSH installed. Recent operating systems come with SSH installed including Windows, Linux, and MacOS. If you run Windows and you do not have SSH installed, you can install it by navigating to Settings -> Apps & features -> Manage optional features -> Add a feature -> OpenSSH Client.
-- Create an SSH key on your local machine. If you already have a key, you can use it. If you do not have a key, you can create one by running the command `ssh-keygen -t rsa -b 4096`. Follow all the defaults by pressing Enter.
-- Have you CS Lab username and password handy. If you do not know your password, check [this page](https://www1.cs.ucr.edu/department-intranet) for instructions on how to reset your password.
+- Create an SSH key on your local machine. If you already have a key, you can use it. If you do not have a key, you can create one by running the command `ssh-keygen -t rsa -b 4096`. Accept all the defaults by pressing Enter.
+- Have your CS Lab username and password handy. If you do not know your password, check [this page](https://www1.cs.ucr.edu/department-intranet) for instructions on how to reset your password.
 - Install Visual Studio Code if you would like to use it to connect to your remote machine.
 
 ## Part II: Connect to your machine
