@@ -14,7 +14,7 @@
   * Linux: Run `tar xfj AREAWATER.csv.bz2` or `bzip2 -dk AREAWATER.csv.bz2` if previous one not work
   * macOS: Use Archive Utility, or run `bzip2 -dk AREAWATER.csv.bz2`
   * Windows: You may use 7-zip.
-* Make sure you know your CS password. You will need this to connect to your remote machine.
+* Make sure you know your CS password. You will need this to connect to your remote machine, see instructions in take .
 
 ## Overview
 
@@ -24,10 +24,16 @@ This lab asks you to write a program that simply copies a file using the HDFS AP
 
 Follow the instructions below to complete this lab. If you have any questions, please contact the TA in your lab. Make sure to answer any questions marked by the ***(Q)*** sign and submit the deliverables marked by the ***(S)*** sign.
 
-### I. Setup (10 minutes) - In-home part
+### I. Setup (30 minutes) - In-home part
 
 1. Create a new Java project using Maven for lab 3 either from command line or from IntelliJ. The project name should be `[UCRNetID]_lab3` (Replace `[UCRNetID]` with your UCR Net ID).
 2. In `pom.xml` file, add dependencies for [`org.apache.hadoop:hadoop-common`](https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common/3.3.6) and [`org.apache.hadoop:hadoop-hdfs`](https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs/3.2.2) version 3.3.6.
+3. You need to have a CS account to login to the cluster. If you don't have have a cs account or have forgotton the password, you can set your password as follows:
+   a. If you are not in a UCR-Secure network, you need to connect to UCR GlobaProtect VPN. You can follow the instructions on [`this link`](`https://ucrsupport.service-now.com/ucr_portal/?id=kb_article&sys_id=47d747771bf47550f3444158dc4bcbdd&spa=1`) for that.
+   b. Once connected to UCR's GlobalProtect VPN or on UCR-Secure Wifi, load (`password.cs.ucr.edu`)[`https://password.cs.ucr.edu/`] in a web browser and follow the instructions to log in to our CS Password Reset page with your UCR R'Mail account.
+   c. A few minutes after successfully setting your CS password, you should be able to log in CS servers via SSH using your UCR NetID as the username and the CS password you set in the previous step.
+4. Follow the instruction here [`remote-access.md`](https://github.com/aseldawy/CS167/blob/lab3/remote-access.md) to setup remote access on your editor (VSCode).
+
 
 ### II. Main Program (45 minutes) - In-home part
 
@@ -144,23 +150,42 @@ Each of these commands should run and provide the version of Hadoop, Java, and M
 5. Initialize the files for HDFS by running the command `hdfs namenode -format` on the namenode. Make sure that you run this command only on the namenode. None of the datanodes should run this command.
 6. On the namenode: start the namenode by running `hdfs namenode`. Wait a few seconds to make sure that the namenode has started.
 7. On each of the datanodes: start the data node by running `hdfs datanode`
+8. Run this command to check the status of the cluster
+ ```shell
+   hdfs dfsadmin -report
+   ```
+ * ***(Q4) Copy the output of this command.***
+
+ * ***(Q5) What is the total capacity of this cluster and how much of it is free? and how many live data nodes are there?***
 
 ### V. Use the Command-Line Interface (CLI) to Access HDFS (10 minutes)
 
 1. List the contents in HDFS under the root directory. `hdfs dfs -ls /`
 2. Create a home directory for yourself if it does not exist. `hdfs dfs -mkdir -p .`
-3. Upload a small file, e.g., a `README` file to your home directory in HDFS. `hdfs dfs -put <filename>`
-4. List the files in your home directory. `hdfs dfs -ls`
-5. List all available commands. `hdfs dfs`.
-6. Confirm that all datanodes can see the same HDFS contents.
+3. Create a new empty file with your NetID as the name `touch [UCRNetID].txt`
+4. Upload this file to your home directory in HDFS. `hdfs dfs -put [UCRNetID].txt`
+5. List the files in your home directory. `hdfs dfs -ls`
+ * ***(Q6) What is the output of this command?***
+
+7. List all available commands. `hdfs dfs`.
+8. Confirm that all datanodes can see the same HDFS contents.
 
 ### VI. Run Your Program with HDFS (20 minutes)
-
-1. Run your program again from the command line to copy the file. You will need to use the `hadoop` command as was shown in Lab 1.
-    * ***(Q4) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?***
-2. Run your program again, this time specify the full path to your local file (both input and output) and explicitly specify the local file system using [`file://`](https://en.wikipedia.org/wiki/File_URI_scheme) protocol.
-3. ***(Q5) Use your program to test the following cases and report the running time for each case.***
-    1. Copy a file from local file system to HDFS
+1. Upload your runnable JAR file from Section III to your virtual machine, using this command:
+   ```shell
+   scp -J [UCRNetID]@bolt.cs.ucr.edu [PATH_TO_COMPILED_JAR_FILE] cs167@class-###.cs.ucr.edu:~
+   ```
+   Note: class-### is the hostname of your virtual machine. 
+2. Download the file and save as `AREAWATER_[UCRNetID].csv` and decompress it using this:
+   ```shell
+   wget http://bdlab.cs.ucr.edu/classes/AREAWATER.csv.bz2 -O AREAWATER_[UCRNetID].csv.bz2
+   bzip2 -dk AREAWATER_[UCRNetID].csv.bz2
+   ```
+4. Run your program again from the command line to copy the file (``). You will need to use the `hadoop` command as was shown in Lab 1.
+    * ***(Q7) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?***
+5. Run your program again, this time specify the full path to your local file (both input and output) and explicitly specify the local file system using [`file://`](https://en.wikipedia.org/wiki/File_URI_scheme) protocol.
+6. ***(Q8) Use your program to test the following cases and report the running time for each case.***
+    1. Copy a file from local file system to HDFS.
     2. Copy a file from HDFS to local file system.
     3. Copy a file from HDFS to HDFS.
 
@@ -172,8 +197,8 @@ Note: to explicitly specify the HDFS file system, use the scheme `hdfs://` follo
     1. Make sure that the file already exists.
     2. Make 10,000 reads from the file at random positions. Each one should read 8,192 bytes. You can discard the bytes that you read immediately after they are read.
     3. Measure the total time needed to do the 10,000 reads.
-    * ***(Q6) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?***
-        * The file on the local file system and on HDFS should be the same file, and the file must be large enough. You may use `AREAWATER.csv` for this task.
+    * ***(Q9) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?***
+        * The file on the local file system and on HDFS should be the same file, and the file must be large enough. You may use `AREAWATER_[UCRNetID].csv` for this task.
 2. Update your `run.sh` script to run the AppB class after the previous one. Since a JAR file cannot have two main classes, you will need to modify your running commands to explicitly specify the main class in each case.
 Additionally, you will need to remove the main class in `maven-jar-plugin` plugin from your `pom.xml` configuration file.
 
@@ -181,25 +206,25 @@ Additionally, you will need to remove the main class in `maven-jar-plugin` plugi
 
 1. Add a `README.md` file ([template](CS167-Lab2-README.md)) and include all the answers to the questions above in the `README` file.
 2. Add a [table](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables) that shows the running time for copying the test file in the three or five cases mentioned above.
-    * 3 test cases for Q5.
-    * (Bonus) 2 test cases for Q6.
-3. Add a script `run.sh` that will compile your code and run the five cases on the input file `AREAWATER.csv`
+    * 3 test cases for Q7.
+    * (Bonus) 2 test cases for Q8.
+3. Add a script `run.sh` that will compile your code and run the five cases on the input file `AREAWATER_[UCRNetID].csv`
 4. ***(S) Submit your compressed file as the lab deliverable.***
 
 * Note 1: Don't forget to include your information in the README file.
 * Note 2: Don't forget to remove any unnecessary test or binary files.
-* Note 3: In your `run` script, you can access the current working directory to specify the full path correctly when you specify the copy command. Assuming that the input file `AREAWATER.csv` is in the current working directory, you can run one of the following commands.
+* Note 3: In your `run` script, you can access the current working directory to specify the full path correctly when you specify the copy command. Assuming that the input file `AREAWATER_[UCRNetID].csv` is in the current working directory, you can run one of the following commands.
 
 In a Linux shell script:
 
 ```shell
-hadoop jar <JARFILE> file://`pwd`/AREAWATER.csv hdfs:///AREAWATER.csv
+hadoop jar <JARFILE> file://`pwd`/AREAWATER_[UCRNetID].csv hdfs:///AREAWATER_[UCRNetID].csvcsv
 ```
 
 In a Windows PowerShell script:
 
 ```PowerShell
-hadoop jar <JARFILE> file:///$pwd/AREAWATER.csv hdfs:///AREAWATER.csv
+hadoop jar <JARFILE> file:///$pwd/AREAWATER_[UCRNetID].csv hdfs:///AREAWATER_[UCRNetID].csv
 ```
 
 Submission file format:
@@ -221,6 +246,23 @@ Requirements:
 * Do not include any other files/folders, otherwise points will be deducted.
 
 See how to create the archive file for submission at [here](../MakeArchive.md).
+
+## Rubric
+
+Q1. +1 point
+Q2. +1 point
+Q3. +1 point
+Q4. +1 point
+Q5. +1 point
+Q6. +1 point
+Q7. +1 point
+Q8. +3 points
+Code: +4 points:
+-> +1 validating input correctly
+-> +1 open and read the file correctly
+-> +2 writing the file correctly
+Following submission instructions: +1 point
+
 
 ## Notes
 
