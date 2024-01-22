@@ -14,7 +14,10 @@ Unless otherwise mentioned:
 
 ## Table of Contents
 
+* [Remote Access](remote-access.md): Setup remote access to your CS167 machine.
 * [Lab 1](Labs/Lab1/CS167-Lab1.md): Development Setup for Java.
+* [Lab 2](Labs/Lab2/CS167-Lab2.md): Functional Programming in Java.
+* [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Distributed File System (HDFS).
 
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/122516) (Only enrolled students will have access)
