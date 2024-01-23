@@ -158,7 +158,7 @@ Each of these commands should run and provide the version of Hadoop, Java, and M
 
  * ***(Q5) What is the total capacity of this cluster and how much of it is free? and how many live data nodes are there?***
 
-### V. Use the Command-Line Interface (CLI) to Access HDFS (10 minutes)
+### VI. Use the Command-Line Interface (CLI) to Access HDFS (10 minutes)
 
 1. List the contents in HDFS under the root directory. `hdfs dfs -ls /`
 2. Create a home directory for yourself if it does not exist. `hdfs dfs -mkdir -p .`
@@ -170,7 +170,7 @@ Each of these commands should run and provide the version of Hadoop, Java, and M
 7. List all available commands. `hdfs dfs`.
 8. Confirm that all datanodes can see the same HDFS contents.
 
-### VI. Run Your Program with HDFS (20 minutes)
+### VII. Run Your Program with HDFS (20 minutes)
 1. Upload your runnable JAR file generated in Section III to your virtual machine, using this command:
    ```shell
    scp -J [UCRNetID]@bolt.cs.ucr.edu [PATH_TO_COMPILED_JAR_FILE] cs167@class-###.cs.ucr.edu:~
@@ -191,7 +191,7 @@ Each of these commands should run and provide the version of Hadoop, Java, and M
 
 Note: to explicitly specify the HDFS file system, use the scheme `hdfs://` followed by the absolute path.
 
-### VII. Bonus Task (30 minutes) +3 points
+### VIII. Bonus Task (30 minutes) +3 points
 
 1. Build a separate main class `AppB` that takes one input file. The main class should do the following steps.
     1. Make sure that the file already exists.
@@ -202,7 +202,7 @@ Note: to explicitly specify the HDFS file system, use the scheme `hdfs://` follo
 2. Update your `run.sh` script to run the AppB class after the previous one. Since a JAR file cannot have two main classes, you will need to modify your running commands to explicitly specify the main class in each case.
 Additionally, you will need to remove the main class in `maven-jar-plugin` plugin from your `pom.xml` configuration file.
 
-### VIII. Submission (15 minutes)
+### IX. Submission (15 minutes)
 
 1. Add a `README.md` file ([template](CS167-Lab2-README.md)) and include all the answers to the questions above in the `README` file.
 2. Add a [table](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables) that shows the running time for copying the test file in the three or five cases mentioned above.
