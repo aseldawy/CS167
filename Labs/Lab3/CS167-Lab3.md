@@ -176,7 +176,10 @@ Now, it is time to use your program to benchmark the performance of the local fi
    scp -J [UCRNetID]@bolt.cs.ucr.edu [PATH_TO_COMPILED_JAR_FILE] cs167@class-###.cs.ucr.edu:~
    ```
    Note: class-### is the hostname of your virtual machine.
-   Alternatively, if you setup your Visual Studio Code envrionment correctly, you can just drag and drop the file to the home folder using its interface. Also, if your config file is setup, you can run this simpler command:
+
+   *Alternative 1:* if you setup your Visual Studio Code envrionment correctly, you can just drag and drop the file to the home folder using its interface.
+
+   *Alternative 2:* if your config file is setup correctly, you can run this simpler command:
    ```shell
    scp [PATH_TO_COMPILED_JAR_FILE] cs167:~
    ```
