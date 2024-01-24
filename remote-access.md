@@ -62,7 +62,7 @@ vim ~/.ssh/authorized_keys
     ```
     Make sure to replace `[csusername]` with your CS username and `class-###` with your machine name. You should be able to log in to your CS167 machine without asking for a password.
 
-## Part VI: Provide shortcut to access your CS167 machine
+## Part V: Provide shortcut to access your CS167 machine
 On your local machine, edit the file `~/.ssh/config` (or create one if it does not exist), and add the following configuration to it.
 ```text
 Host cs167
@@ -74,7 +74,7 @@ Make sure to replace `class-###` with your machine name and `[csusername]` with 
 
 To test that it works, on your local machine run the command `ssh cs167`. You should log in to your CS167 machine without a password.
 
-## Part VII: Use VS Code to copy files to your CS167 machine
+## Part VI: Use VS Code to copy files to your CS167 machine
 If you have Visual Studio Code, you can use it to connect to your CS167 machine and upload files there. You will need that to upload your compiled code and run it on the cluster.
 
 1. In Visual Studio Code, install the `Remote - SSH` extension from the extension menu.
@@ -88,7 +88,7 @@ If you have Visual Studio Code, you can use it to connect to your CS167 machine 
 ![Visual Studio Code Open Folder](vscode-open-folder.png)
 6. You can now upload files to that remote directory by simply dragging it into Visual Studio Code Explorer window.
 
-## Part VIII: Run commands in a screen
+## Part VII: Run commands in a screen
 When you run a command on the CS167 machine, this command will terminate if you lose your connection. This can be annoying if you want to keep the command running for a long time. A better way to do that is to run your commands in a screen. The screen will keep your commands running even if you close the SSH connection and reconnect. The following steps will guide you through screen setup.
 
 1. Connect to your CS167 machine.
