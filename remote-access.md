@@ -3,9 +3,9 @@ As part of this course, you will have access to a remote machine where you will 
 
 ## Part I: Prerequisites
 - Make sure that your OS has SSH installed. Recent operating systems come with SSH installed including Windows, Linux, and MacOS. If you run Windows and you do not have SSH installed, you can install it by navigating to Settings -> Apps & features -> Manage optional features -> Add a feature -> OpenSSH Client.
-- Create an SSH key on your local machine. If you already have a key, you can use it. If you do not have a key, you can create one by running the command `ssh-keygen -t rsa -b 4096`. Accept all the defaults by pressing Enter.
 - Have your CS Lab username and password handy. If you do not know your password, check [this page](https://www1.cs.ucr.edu/department-intranet) for instructions on how to reset your password.
 - Install Visual Studio Code if you would like to use it to connect to your remote machine.
+
 
 ## Part II: Connect to your machine
 The easiest way to connect to your machine is to first connect to `bolt.cs.ucr.edu` and then your machine.
@@ -20,6 +20,7 @@ The easiest way to connect to your machine is to first connect to `bolt.cs.ucr.e
     mkdir -p .ssh
     chmod 700 .ssh
     ```
+    If the folder already exists, do not delete it.
 3. Connect to your CS 167 machine:
     ```shell
     cs167_login
@@ -28,8 +29,9 @@ The easiest way to connect to your machine is to first connect to `bolt.cs.ucr.e
 
 ## Part III: Setup key access to bolt
 To make it easier to access your machine, we will set up password-less access.
-1. If you do not have an SSH key, generate one by running the command `ssh-keygen -t rsa -b 4096` on your local machine. Do **not** run this command on bolt or your CS167 machine.
-2. Copy your *public* key to bolt so that you can access bolt without a password.
+1. If you do not have an SSH key, generate one by running the command `ssh-keygen -t rsa -b 4096` on your local machine (your laptop). Do **not** run this command on bolt or your CS167 machine.
+   This means that you run this command after you open a new shell window, and before calling any other commands, such as commands that start with `ssh`.
+3. Copy your *public* key to bolt so that you can access bolt without a password.
     ```shell
     cat ~/.ssh/id_rsa.pub | ssh [csusername]@bolt.cs.ucr.edu 'cat >> ~/.ssh/authorized_keys'
     ```
@@ -40,7 +42,7 @@ To make it easier to access your machine, we will set up password-less access.
     Make sure to replace `[csusername]` with your CS username.
     Enter your CS password when prompted.
 
-3. To test that it works correctly, run the command `ssh [csusername]@bolt.cs.ucr.edu`. You should be logged in without a password.
+4. To test that it works correctly, run the command `ssh [csusername]@bolt.cs.ucr.edu`. You should be logged in without a password.
 
 ## Part IV: Setup key access to CS167 machine
 In this part, you will copy your *public* key to your CS167 machine. To do that, first connect to bolt and then to your CS167 machine as instructed in Part II. Next, follow this procedure.
@@ -51,7 +53,7 @@ vim ~/.ssh/authorized_keys
 2. If you make some mistakes in the following steps and don’t know how to fix them, press `ESC` several times, and then type `:q!` to force quit vim without saving.
 3. Copy the contents of `id_rsa.pub` from your local machine into the clipboard.
 4. On Vim, press `ESC` to get in the normal mode.
-5. Use arrow keys to move the cursor to the place you want to paste (usually at the end of the current content).
+5. Use arrow keys to move the cursor to the place you want to paste (usually at the end of the current content). Make sure that you paste in a new line, and don't modify any existing lines in the file.
 6. Use Shift+Insert to paste.
 7. Use `:wq` to save and quit Vim.
 8. Test that key based access is working by running the following command on your computer:
@@ -60,7 +62,7 @@ vim ~/.ssh/authorized_keys
     ```
     Make sure to replace `[csusername]` with your CS username and `class-###` with your machine name. You should be able to log in to your CS167 machine without asking for a password.
 
-## Part V: Provide shortcut to access your CS167 machine
+## Part VI: Provide shortcut to access your CS167 machine
 On your local machine, edit the file `~/.ssh/config` (or create one if it does not exist), and add the following configuration to it.
 ```text
 Host cs167
@@ -72,7 +74,7 @@ Make sure to replace `class-###` with your machine name and `[csusername]` with 
 
 To test that it works, on your local machine run the command `ssh cs167`. You should log in to your CS167 machine without a password.
 
-## Part VI: Use VS Code to copy files to your CS167 machine
+## Part VII: Use VS Code to copy files to your CS167 machine
 If you have Visual Studio Code, you can use it to connect to your CS167 machine and upload files there. You will need that to upload your compiled code and run it on the cluster.
 
 1. In Visual Studio Code, install the `Remote - SSH` extension from the extension menu.
@@ -86,7 +88,7 @@ If you have Visual Studio Code, you can use it to connect to your CS167 machine 
 ![Visual Studio Code Open Folder](vscode-open-folder.png)
 6. You can now upload files to that remote directory by simply dragging it into Visual Studio Code Explorer window.
 
-## Part VII: Run commands in a screen
+## Part VIII: Run commands in a screen
 When you run a command on the CS167 machine, this command will terminate if you lose your connection. This can be annoying if you want to keep the command running for a long time. A better way to do that is to run your commands in a screen. The screen will keep your commands running even if you close the SSH connection and reconnect. The following steps will guide you through screen setup.
 
 1. Connect to your CS167 machine.
