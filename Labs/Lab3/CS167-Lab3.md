@@ -190,6 +190,14 @@ Now, it is time to use your program to benchmark the performance of the local fi
    ```
 4. Run your program again from the command line to copy the file (``). You will need to use the `hadoop` command as was shown in Lab 1.
     * ***(Q7) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?***
+  
+*Note:*  If you get this error: "Exception in thread "main" java.lang.UnsupportedClassVersionError: edu/ucr/cs/cs167/[UCRNetID]/App has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0", you need to change your `pom.xml` file of your source code. Find the `<properties>` tag in the pom.xml and add the following blocks if not exist:
+```xml
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+```
+If these two blocks already exist in your `pom.xml` file, just replace the version number with 11. After that, run `mvn clean package` from the terminal, and repeat step 1 of this section to send the updated jar file to your remote virtual machine. 
+
 5. Run your program again, this time specify the full path to your local file (both input and output) and explicitly specify the local file system using [`file://`](https://en.wikipedia.org/wiki/File_URI_scheme) protocol.
 6. ***(Q8) Use your program to test the following cases and report the running time for each case.***
     1. Copy a file from local file system to HDFS.
