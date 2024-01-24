@@ -175,8 +175,12 @@ Now, it is time to use your program to benchmark the performance of the local fi
    ```shell
    scp -J [UCRNetID]@bolt.cs.ucr.edu [PATH_TO_COMPILED_JAR_FILE] cs167@class-###.cs.ucr.edu:~
    ```
-   Note: class-### is the hostname of your virtual machine. 
-2. Download the file in your virtual machine and save as `AREAWATER_[UCRNetID].csv` and decompress it using this:
+   Note: class-### is the hostname of your virtual machine.
+   Alternatively, if you setup your Visual Studio Code envrionment correctly, you can just drag and drop the file to the home folder using its interface. Also, if your config file is setup, you can run this simpler command:
+   ```shell
+   scp [PATH_TO_COMPILED_JAR_FILE] cs167:~
+   ```
+3. Download the file in your virtual machine and save as `AREAWATER_[UCRNetID].csv` and decompress it using this:
    ```shell
    wget http://bdlab.cs.ucr.edu/classes/AREAWATER.csv.bz2 -O AREAWATER_[UCRNetID].csv.bz2
    bzip2 -dk AREAWATER_[UCRNetID].csv.bz2
