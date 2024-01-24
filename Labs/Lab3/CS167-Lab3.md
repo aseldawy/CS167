@@ -42,45 +42,45 @@ Write a main function with the following specifications.
 1. It should take exactly two command-line arguments; the first for the *input* file and the second for the *output* file.
 2. If the number of command line arguments is incorrect, use the following code to print the error message and exit.
 
-```java
-System.err.println("Incorrect number of arguments! Expected two arguments.");
-System.exit(-1);
-```
+  ```java
+  System.err.println("Incorrect number of arguments! Expected two arguments.");
+  System.exit(-1);
+  ```
 
 3. Store the two arguments in local variables of type [`org.apache.hadoop.fs.Path`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/Path.html)
 4. Retrieve the correct file system for the two files and store in a variable of type [`org.apache.hadoop.fs.FileSystem`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html). *Hint*, use the function [Path#getFileSystem(Configuration)](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/Path.html#getFileSystem(org.apache.hadoop.conf.Configuration))
 5. Check whether the input file [exists](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html#exists(org.apache.hadoop.fs.Path)) or not. If it does not exist, use the following code to print the error message and exit.
 
-```java
-// `input` is a Path variable in step 3
-System.err.printf("Input file '%s' does not exist!\n", input);
-System.exit(-1);
-```
+  ```java
+  // `input` is a Path variable in step 3
+  System.err.printf("Input file '%s' does not exist!\n", input);
+  System.exit(-1);
+  ```
 
 6. Similarly, check whether the output file exists or not. If it already exists, use the following code to print the error message and exit.
 
-```java
-// `output` is a Path variable in step 3
-System.err.printf("Output file '%s' already exists!\n", output);
-System.exit(-1);
-```
+  ```java
+  // `output` is a Path variable in step 3
+  System.err.printf("Output file '%s' already exists!\n", output);
+  System.exit(-1);
+  ```
 
 7. Use FileSystem API to [open](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/fs/FileSystem.html#open(org.apache.hadoop.fs.Path)) the input file and copy all its contents to the output file. Measure the total time that it takes to do this step. *Hint: Use the method [System#nanoTime()](https://docs.oracle.com/javase/8/docs/api/java/lang/System.html#nanoTime--)*
 8. Write a message similar to the following to the standard output.
 
-```text
-Copied 1255 bytes from 'README' to 'README_copy' in 0.016095 seconds
-```
+  ```text
+  Copied 1255 bytes from 'README' to 'README_copy' in 0.016095 seconds
+  ```
 
-The message should show the correct size, input, output, and total time according to how the program ran. Make sure you use the same wording of the output above or you may lose points. You may use the following code.
-
-```java
-// `bytesCopied` is the actual number of bytes copied. You may need to use `long` type to avoid overflow.
-// `input` and `output` are Path in step 3.
-// `startTime` and `endTime` are the System.nanoTime() before and after the copy function.
-System.out.printf("Copied %d bytes from '%s' to '%s' in %f seconds\n",
-                    bytesCopied, input, output, (endTime - startTime) * 1E-9);
-```
+  The message should show the correct size, input, output, and total time according to how the program ran. Make sure you use the same wording of the output above or you may lose points. You may use the following code.
+  
+  ```java
+  // `bytesCopied` is the actual number of bytes copied. You may need to use `long` type to avoid overflow.
+  // `input` and `output` are Path in step 3.
+  // `startTime` and `endTime` are the System.nanoTime() before and after the copy function.
+  System.out.printf("Copied %d bytes from '%s' to '%s' in %f seconds\n",
+                      bytesCopied, input, output, (endTime - startTime) * 1E-9);
+  ```
 
 ### III. Benchmark Local File System performance (In lab) (10 minutes)
 
@@ -97,37 +97,37 @@ Now, it is time to use your program to benchmark the performance of the local fi
 ### IV. Setup your remote machine for Hadoop (15 minutes)
 1. Connect to your remote machine through SSH. Your machine is accessible through bolt.cs.ucr.edu.
 2. Connect to bolt.cs.ucr.edu by running the command:
-```
-ssh [UCRNetID]@bolt.cs.ucr.edu
-```
-Use your CS password when asked.
+  ```
+  ssh [UCRNetID]@bolt.cs.ucr.edu
+  ```
+  Use your CS password when asked.
 3. Once connected to bolt, run the command `cs167_login` to connect to your machine.
 4. Create a `setup.sh` file in your home directory as below:
-```shell
-# Setup directory
-mkdir $HOME/cs167
-cd $HOME/cs167
-echo export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 >> $HOME/.bashrc
-# Download Apache Maven
-curl https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz | tar -xz
-echo 'export PATH=$PATH:$HOME/cs167/apache-maven-3.9.6/bin' >> $HOME/.bashrc
-# Download Apache Hadoop
-curl https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz | tar -xz
-echo 'export HADOOP_HOME=$HOME/cs167/hadoop-3.3.6' >> $HOME/.bashrc
-echo 'export PATH=$PATH:$HADOOP_HOME/bin' >> $HOME/.bashrc
-```
+  ```shell
+  # Setup directory
+  mkdir $HOME/cs167
+  cd $HOME/cs167
+  echo export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 >> $HOME/.bashrc
+  # Download Apache Maven
+  curl https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz | tar -xz
+  echo 'export PATH=$PATH:$HOME/cs167/apache-maven-3.9.6/bin' >> $HOME/.bashrc
+  # Download Apache Hadoop
+  curl https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz | tar -xz
+  echo 'export HADOOP_HOME=$HOME/cs167/hadoop-3.3.6' >> $HOME/.bashrc
+  echo 'export PATH=$PATH:$HADOOP_HOME/bin' >> $HOME/.bashrc
+  ```
 5. Run the file you just created and reload `.bashrc` to update the environment variables.
-```shell
-bash setup.sh
-source $HOME/.bashrc
-```
+  ```shell
+  bash setup.sh
+  source $HOME/.bashrc
+  ```
 6. To verify that your machine is setup correctly, run the following commands:
-```shell
-hadoop version
-java -version
-mvn --version
-```
-Each of these commands should run and provide the version of Hadoop, Java, and Maven, respectively.
+  ```shell
+  hadoop version
+  java -version
+  mvn --version
+  ```
+  Each of these commands should run and provide the version of Hadoop, Java, and Maven, respectively.
 
 ### V. Setup and run an HDFS cluster (30 minutes)
 1. Identify all members of your group. You will find the group information in this [`link`](https://docs.google.com/spreadsheets/d/1PdQmX-rVydvSvrBM04_XMaIZZ4RJ-z63xql1fdotuSM/edit?usp=sharing). 
