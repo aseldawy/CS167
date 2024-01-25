@@ -221,8 +221,8 @@ Additionally, you will need to remove the main class in `maven-jar-plugin` plugi
 
 1. Add a `README.md` file ([template](CS167-Lab2-README.md)) and include all the answers to the questions above in the `README` file.
 2. Add a [table](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables) that shows the running time for copying the test file in the three or five cases mentioned above.
-    * 3 test cases for Q7.
-    * (Bonus) 2 test cases for Q8.
+    * 3 test cases for Q8.
+    * (Bonus) 2 test cases for Q9.
 3. Add a script `run.sh` that will compile your code and run the five cases on the input file `AREAWATER_[UCRNetID].csv`
 4. ***(S) Submit your compressed file as the lab deliverable.***
 
