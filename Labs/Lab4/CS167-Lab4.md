@@ -160,17 +160,17 @@ In this part, you will need to write a MapReduce program that produces the lines
 In this part, we will customize our program by taking the desired response code from the user as a command line argument.
 
 1. Uncomment the line `// String desiredResponse = args[2];` in the `main` function.
-2. Add the desired response code to the job configuration using the method [`Configuration#set`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html#set-java.lang.String-java.lang.String-).
+2. Add the desired response code to the job configuration using the method [`Configuration#set`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html#set-java.lang.String-java.lang.String-). Use a user-defined configuration entry with the key `code`.
 3. In the setup function, add a code that will read the desired response code from the job configuration and store it in an instance variable in the class `TokenizerMapper`.
     * Hint: Use [`org.apache.hadoop.mapreduce.Mapper.Context`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Mapper.html#setup-org.apache.hadoop.mapreduce.Mapper.Context-) and [`Configuration#get`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html#get-java.lang.String-).
 4. Modify the `map` function to use the user given response code rather than the hard-coded response code that we used in Part II.
-5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a command-line argument.
+5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a third command-line argument.
 6. Run it from IntelliJ IDEA on a file in your local file system. Try on both files `nasa_19950801.tsv` and `nasa_19950630.22-19950728.12.tsv`.
     * ***(Q5) How many files are produced in the output for each of the two files?***
     * ***(Q6) Explain this number based on the input file size and default block size.***
     * *Hint:* On the local file system, the default block size is configured to be 32 MB.
 
-Note: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode.
+Note: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode, similar to how it runs in IntelliJ.
 
 ### IV. Run in Distributed Mode (45 minutes)
 
@@ -178,7 +178,7 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
 
 *Note:* YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.
 1. Login to your CS167 machine.
-2. Among your group memebers that are present in lab, choose the node with the smallest number as the master node.
+2. Among your group members that are present in lab, choose the node with the smallest number as the master node.
 3. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
 
     ```xml
@@ -201,9 +201,9 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
     </property>
     ```
 
-    Note: If you do not have a `mapred-site.xml` file, maky a copy of `mapred-site.xml.template` and name it `mapred-site.xml`.
+    Note: If you do not have a `mapred-site.xml` file, make a copy of `mapred-site.xml.template` and name it `mapred-site.xml`.
 
-2. Edit the file `$HADOOP_HOME/etc/hadoop/yarn-site.xml` and add the following part.
+4. Edit the file `$HADOOP_HOME/etc/hadoop/yarn-site.xml` and add the following part.
 
     ```xml
     <property>
@@ -215,15 +215,15 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
         <value>class-###</value>
     </property>
     ```
-    *Note:* Replace `class-###` with the name of the master node.
-3. Start the HDFS namenode and datanodes as done in Lab 3.
-4. On the master node, and preferably in a screen, start the resource manager by running the command `yarn resourcemanager`. Leave the process running on that window.
-5. On each data node, and preferably in a screen, start the node manager (worker) by running the command `yarn nodemanager`. Leave the process running on that window.
-6. On your local machine, generate a JAR file for your program.
-7. Copy the JAR file to your CS167 machine using the command `scp target/*.jar cs167:~/` on your local machine.
-8. Copy the test files to your CS167 using the command `scp nasa_19950801.tsv cs167:~/` on your local machine. Copy both files.
-9. On the CS167 machine, copy both test files to your home directory using the command `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`. Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file.
-10. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
+    *Note:* Replace `class-###` with the name of the master node. If you want to run YARN on your local machine, replace `class-###` with `localhost`.
+5. Start the HDFS namenode and datanodes as done in Lab 3. *TL;DR* `hdfs namenode` on the NameNode and `hdfs datanode` on all data nodes. Check the bottom of this page for some common problems that you might face.
+6. On the master node, and preferably in a screen, start the resource manager by running the command `yarn resourcemanager`. Leave the process running on that window.
+7. On each data node, and preferably in a screen, start the node manager (worker) by running the command `yarn nodemanager`. Leave the process running on that window. Notice that while not common, you can use the nodemanager on the samenode as the resourcemanager.
+8. On your local machine, generate a JAR file for your program using the command `mvn clean package`.
+9. On your local machine, run the command `scp target/*.jar cs167:~/` to copy the JAR file to your CS167 machine.
+10. On your local machine, run the command `scp nasa_19950801.tsv cs167:~/` to copy the test file to your CS167 machine. Repeat for all test files you would like to copy.
+11. On the CS167 machine, copy both test files to your home directory using the command `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`. Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file since you all share the same HDFS home directory.
+12. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
 
     ```bash
     yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv 200
