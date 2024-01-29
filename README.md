@@ -18,7 +18,7 @@ Unless otherwise mentioned:
 * [Lab 1](Labs/Lab1/CS167-Lab1.md): Development Setup for Java.
 * [Lab 2](Labs/Lab2/CS167-Lab2.md): Functional Programming in Java.
 * [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Distributed File System (HDFS).
-* [Lab 4](Labs/Lab3/CS167-Lab4.md): Hadoop Distributed File System (HDFS).
+* [Lab 4](Labs/Lab4/CS167-Lab4.md): Hadoop Distributed File System (HDFS).
 
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/122516) (Only enrolled students will have access)
