@@ -4,14 +4,13 @@
 
 * Write a simple MapReduce program.
 * Customize the MapReduce program by accepting user input.
-* Run Hadoop MapReduce programs in standalone and pseudo-distributed modes.
+* Run Hadoop MapReduce programs in standalone and distributed modes.
 
 ## Prerequisites
 
 * Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md).
 * Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
   * If you unarchive the file downloaded from Google Drive (`nasa_19950630.22-19950728.12.tsv.gz`) and get `t19950630.23-19950801.00.tsv`, you can either rename this file to `nasa_19950630.22-19950728.12.tsv`, or replace `nasa_19950630.22-19950728.12.tsv` in all the commands below to `t19950630.23-19950801.00.tsv`.
-* For Windows users, install the Ubuntu app from Microsoft Store and set it up. We will need it to run YARN easily.
 
 ## Lab Work
 
@@ -24,14 +23,14 @@
 3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properties` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
     * Manually create `src/main/resources` if it does not exist.
 
-4. Place the two sample files in your project home directory.
+4. Place the two sample files in your project home directory, i.e., next to the `pom.xml` file.
 
 5. In `pom.xml` add the following dependencies.
 
     ```xml
     <properties>
       <!-- Change the version number below to match your installed Hadoop. -->
-      <hadoop.version>3.2.2</hadoop.version>
+      <hadoop.version>3.3.6</hadoop.version>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -59,7 +58,6 @@
         </dependency>
     </dependencies>
     ```
-6. Set up a local HDFS cluster with one namenode and one datanode as done in [Lab 2](../Lab2/CS167-Lab2.md). Make sure that the cluster is running by copying a file to HDFS and reading it back using the HDFS shell.
 
 ### II. Simple Filter Program - In-home (30 minutes)
 
@@ -67,12 +65,12 @@ In this part, you will need to write a MapReduce program that produces the lines
 
 1. Take a few minutes to look into the sample file and understand its format. You can import the file into Excel or other spreadsheet program to make it easier to understand.
 
-2. Create a new class named `Filter` in package `edu.ucr.cs.cs167.<UCRNetID>` and add a main function to it.
+2. Create a new class named `Filter` in package `edu.ucr.cs.cs167.[UCRNetID]` and add a main function to it.
 
 3. Add the following code stub in your filter class.
 
     ```java
-    package edu.ucr.cs.cs167.<UCRNetID>;
+    package edu.ucr.cs.cs167.[UCRNetID];
 
     import org.apache.hadoop.conf.Configuration;
     import org.apache.hadoop.fs.Path;
@@ -143,7 +141,7 @@ In this part, you will need to write a MapReduce program that produces the lines
         context.write(NullWritable.get(), value);
     ```
 
-    Notice that we use [`String#equals`](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#equals(java.lang.Object)) rather than the operator `==` since `String` is not a primitive value.
+    Notice that we use [`String#equals`](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#equals(java.lang.Object)) rather than the operator `==` since `String` is not a primitive value in Java.
 
 6. Run the code with the following command line arguments `nasa_19950801.tsv filter_output.tsv`. Make sure to delete the output directory before you run if you execute your program several times.
 
@@ -154,7 +152,7 @@ In this part, you will need to write a MapReduce program that produces the lines
 8. Compile and run your program from the command line using the `hadoop jar` command.
 
     ```console
-    hadoop jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter nasa_19950801.tsv filter_output.tsv
+    hadoop jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv
     ```
 
 ### III. Take User Input For the Filter (20 minutes)
@@ -171,21 +169,17 @@ In this part, we will customize our program by taking the desired response code 
     * ***(Q5) How many files are produced in the output for each of the two files?***
     * ***(Q6) Explain this number based on the input file size and default block size.***
     * *Hint:* On the local file system, the default block size is configured to be 32 MB.
-7. Run it from the command line on a file in HDFS.
-    * ***(Q7) How many files are produced in the output for each of the two files?***
-    * ***(Q8) Explain this number based on the input file size and default block size.***
-
-Note: Make sure that you run the namenode and datanode from the command line to access HDFS as explained in [Lab #2](../Lab2/CS167-Lab2.md). Alternatively, you can run from IntelliJ IDEA but you will need to provide a fully-qualified path to HDFS, i.e., starting with `hdfs://`.
 
 Note: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode.
 
-### IV. Run in Pseudo-distributed Mode (45 minutes)
+### IV. Run in Distributed Mode (45 minutes)
 
 To run your MapReduce program in pseudo-distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.
 
 *Note:* YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.
-
-1. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
+1. Login to your CS167 machine.
+2. Among your group memebers that are present in lab, choose the node with the smallest number as the master node.
+3. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
 
     ```xml
     <property>
@@ -216,31 +210,23 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
     </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>class-###</value>
+    </property>
     ```
+    *Note:* Replace `class-###` with the name of the master node.
+3. Start the HDFS namenode and datanodes as done in Lab 3.
+4. On the master node, and preferably in a screen, start the resource manager by running the command `yarn resourcemanager`. Leave the process running on that window.
+5. On each data node, and preferably in a screen, start the node manager (worker) by running the command `yarn nodemanager`. Leave the process running on that window.
+6. On your local machine, generate a JAR file for your program.
+7. Copy the JAR file to your CS167 machine using the command `scp target/*.jar cs167:~/` on your local machine.
+8. Copy the test files to your CS167 using the command `scp nasa_19950801.tsv cs167:~/` on your local machine. Copy both files.
+9. On the CS167 machine, copy both test files to your home directory using the command `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`. Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file.
+10. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
 
-3. Start the resource manager (Master). In a new command line window, run `yarn resourcemanager`. Leave the process running on that window.
-4. Start the node manager (Slave). In a new command line window, run `yarn nodemanager`. Leave the process running on that window.
-
-    Note: For Windows users, run the above two commands in an Ubuntu window rather than a regular command-line or PowerShell windows. For compatibility, run all the five processes in Ubuntu windows, that is, Resource Manager, Node Manager, Name Node, Data Node, and Driver command.
-
-5. Generate a JAR file for your program and run it using the command `yarn jar <*.jar> <main class> <input> <output> <code>`.
-
-    * Linux and macOS
-
-        ```bash
-        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter file://`pwd`/nasa_19950801.tsv file://`pwd`/filter_output.tsv 200
-        ```
-
-    * Windows
-
-        ```bash
-        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter file://$pwd/nasa_19950801.tsv file://$pwd/filter_output.tsv 200
-        ```
-
-6. If you did not do already, start HDFS as described in Lab 2 and run your program on an input file that is stored in HDFS and produce the output in HDFS. For example:
-
-    ```console
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter hdfs:///nasa_19950801.tsv hdfs:///filter_output.tsv 200
+    ```bash
+    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv 200
     ```
 
 ### V. Write an Aggregate Program (30 minutes)
@@ -319,10 +305,10 @@ In this part, we will create another MapReduce program that computes the total b
 
 2. Implement the **TODO** items to make the desired logic. Hint: look at the [WordCount example](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0).
 
-3. Run your program on the file `nasa_19950801.tsv` and check the output directory.
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:
 
     ```bash
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950801.tsv hdfs:///aggregation_nasa_19950801_output.tsv
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801.tsv aggregation_nasa_19950801_output.tsv
     ```
 
     * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
@@ -333,7 +319,7 @@ In this part, we will create another MapReduce program that computes the total b
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`.
 
     ```bash
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///aggregation_large_output.tsv
+    yarn jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12.tsv aggregation_large_output.tsv
     ```
 
     * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
@@ -343,13 +329,13 @@ In this part, we will create another MapReduce program that computes the total b
     1. Re-run `Filter` program on the file `nasa_19950630.22-19950728.12.tsv`.
 
         ```bash
-        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Filter hdfs:///nasa_19950630.22-19950728.12.tsv hdfs:///filter_large_output.tsv 200
+        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950630.22-19950728.12.tsv filter_large_output.tsv 200
         ```
 
     2. Run `Aggregation` program on the output **directory** of `Filter`: filter_nasa_19950630_output.tsv
 
         ```bash
-        yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.<UCRNetID>.Aggregation hdfs:///filter_large_output.tsv hdfs:///aggregation_filter_large_output.tsv
+        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output.tsv aggregation_filter_large_output.tsv
         ```
 
     * ***(Q13) How many files are produced in the output directory and how many lines are there in each file?***
@@ -363,7 +349,7 @@ In this part, we will create another MapReduce program that computes the total b
 Submission file format:
 
 ```console
-<UCRNetID>_lab4.{tar.gz | zip}
+[UCRNetID]_lab4.{tar.gz | zip}
   - src/
   - pom.xml
   - README.md
