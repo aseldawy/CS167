@@ -21,9 +21,9 @@
 
 * (Q6) Explain this number based on the input file size and default block size.
 
-* (Q7) How many files are produced in the output?
+* (Q7) How many files are produced in the output directory and how many lines are there in each file?
 
-* (Q8) Explain this number based on the input file size and default block size.
+* (Q8) Explain these numbers based on the number of reducers and number of response codes in the input file.
 
 * (Q9) How many files are produced in the output directory and how many lines are there in each file?
 
@@ -32,8 +32,4 @@
 * (Q11) How many files are produced in the output directory and how many lines are there in each file?
 
 * (Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.
-
-* (Q13) How many files are produced in the output directory and how many lines are there in each file?
-
-* (Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.
 

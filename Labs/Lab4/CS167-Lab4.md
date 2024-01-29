@@ -10,7 +10,7 @@
 
 * Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md).
 * Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
-  * If you unarchive the file downloaded from Google Drive (`nasa_19950630.22-19950728.12.tsv.gz`) and get `t19950630.23-19950801.00.tsv`, you can either rename this file to `nasa_19950630.22-19950728.12.tsv`, or replace `nasa_19950630.22-19950728.12.tsv` in all the commands below to `t19950630.23-19950801.00.tsv`.
+  * If you unarchive the file downloaded from Google Drive (`nasa_19950630.22-19950728.12.tsv.gz`) and get `t19950630.23-19950801.00.tsv`, you can either rename this file to `nasa_19950630.22-19950728.12.tsv`, or replace `nasa_19950630.22-19950728.12.tsv` in all the commands below to `t19950630.23-19950801.00.tsv`. To decompress the .gz file, you can simple run the command `gunzip [filename].gz` at the command line.
 
 ## Lab Work
 
@@ -152,7 +152,7 @@ In this part, you will need to write a MapReduce program that produces the lines
 8. Compile and run your program from the command line using the `hadoop jar` command.
 
     ```console
-    hadoop jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv
+    hadoop jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv
     ```
 
 ### III. Take User Input For the Filter (20 minutes)
@@ -226,7 +226,7 @@ To run your MapReduce program in pseudo-distributed mode, we will need to config
 10. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
 
     ```bash
-    yarn jar target/<UCRNetID>_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv 200
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv 200
     ```
 
 ### V. Write an Aggregate Program (30 minutes)
@@ -236,7 +236,7 @@ In this part, we will create another MapReduce program that computes the total b
 1. Create a new class `Aggregation` based on the following stub code.
 
     ```java
-    package edu.ucr.cs.cs167.<UCRNetID>;
+    package edu.ucr.cs.cs167.[UCRNetID];
 
     import org.apache.hadoop.conf.Configuration;
     import org.apache.hadoop.fs.Path;
@@ -305,25 +305,25 @@ In this part, we will create another MapReduce program that computes the total b
 
 2. Implement the **TODO** items to make the desired logic. Hint: look at the [WordCount example](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0).
 
-3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:
 
     ```bash
     yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801.tsv aggregation_nasa_19950801_output.tsv
     ```
 
-    * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q7) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q8) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
     * *Note:* The [hash function](https://github.com/apache/hadoop/blob/trunk/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/io/IntWritable.java#L71) of the class `IntWritable` is its integer value. The [default hash partitioner](https://github.com/apache/hadoop/blob/trunk/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/lib/HashPartitioner.java#L36) assigns a record to a partition using the function `hashCode mod #reducers`.
 
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`.
 
     ```bash
-    yarn jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12.tsv aggregation_large_output.tsv
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12.tsv aggregation_large_output.tsv
     ```
 
-    * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
 5. Run your program on the output of the `Filter` operation with response code `200` on the file `nasa_19950630.22-19950728.12.tsv`.
     1. Re-run `Filter` program on the file `nasa_19950630.22-19950728.12.tsv`.
@@ -338,8 +338,8 @@ In this part, we will create another MapReduce program that computes the total b
         yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output.tsv aggregation_filter_large_output.tsv
         ```
 
-    * ***(Q13) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q14) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
 ### VI. Submission (15 minutes)
 
@@ -421,3 +421,12 @@ hadoop fs -rm -f -r /dir1
 
     See also [https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits](https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits)
 
+* Error: When I run any HDFS command, I get an error related to safemode
+```
+Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
+```
+
+* Fix: Run the following command
+```shell
+hdfs dfsadmin -safemode leave
+```
