@@ -343,7 +343,7 @@ In this part, we will create another MapReduce program that computes the total b
 
 ### VI. Submission (15 minutes)
 
-1. Add a `README.md` file with all your answers ([template](https://raw.githubusercontent.com/aseldawy/CS167/master/Labs/Lab4/CS167-Lab4-README.md)).
+1. Add a `README.md` file with all your answers ([template](CS167-Lab4-README.md)).
 2. Add a `run.sh` script that runs compiles and runs your filter operation on the sample input file with response code `200`. Then, it should run the aggregation method on the same input file. The output files should be named `filter_output` and `aggregation_output` accordingly. Try the `run.sh` file before submission to make sure your code is correct.
 
 Submission file format:
@@ -430,3 +430,17 @@ Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name n
 ```shell
 hdfs dfsadmin -safemode leave
 ```
+
+* Error: When I run the datanode, I get the following error:
+
+```
+java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
+```
+
+* Fix: Do the following steps to ensure a fresh start of HDFS:
+
+1. Stop the namenode and all data nodes.
+2. Delete the directory `~/hadoop/dfs` on *the namenode and all datanodes*. `rm -rf ~/hadoop/dfs`.
+3. Reformat HDFS using the command `hdfs namenode -format`.
+4. Start the namenode using the command `hdfs namenode`.
+5. Start the datanode using the command `hdfs datanode`.
