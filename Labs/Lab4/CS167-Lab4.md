@@ -11,6 +11,7 @@
 * Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md).
 * Download these two sample files [sample file 1](nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download.
   * If you unarchive the file downloaded from Google Drive (`nasa_19950630.22-19950728.12.tsv.gz`) and get `t19950630.23-19950801.00.tsv`, you can either rename this file to `nasa_19950630.22-19950728.12.tsv`, or replace `nasa_19950630.22-19950728.12.tsv` in all the commands below to `t19950630.23-19950801.00.tsv`. To decompress the .gz file, you can simple run the command `gunzip [filename].gz` at the command line.
+  * Make sure you can access to your remote virtual machine. 
 
 ## Lab Work
 
@@ -174,7 +175,7 @@ Note: If you run your program from the command-line without setting up YARN (see
 
 ### IV. Run in Distributed Mode (45 minutes)
 
-To run your MapReduce program in pseudo-distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.
+To run your MapReduce program in distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.
 
 *Note:* YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.
 1. Login to your CS167 machine.
@@ -365,6 +366,12 @@ Requirements:
 * Do not include any other files/folders, otherwise points will be deducted.
 
 See how to create the archive file for submission at [here](../MakeArchive.md).
+## Rubrics
+- Q/A: +12 points (+1 point for each question)
+- Code: +2 points
+  - +1 for completing filter class
+  - +1 for completing aggregate class
+- Following submission instructions: +1 point
 
 ## Useful Hadoop Filesystem Commands
 
