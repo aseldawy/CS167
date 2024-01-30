@@ -95,8 +95,8 @@ In this part, you will need to write a MapReduce program that produces the lines
             String outputPath = args[1];
             // String desiredResponse = args[2];
             Configuration conf = new Configuration();
-            Job job = Job.getInstance(conf, "filter");
             // TODO pass the desiredResponse code to the MapReduce program
+            Job job = Job.getInstance(conf, "filter");
             job.setJarByClass(Filter.class);
             job.setMapperClass(TokenizerMapper.class);
             job.setNumReduceTasks(0);
@@ -223,11 +223,12 @@ To run your MapReduce program in distributed mode, we will need to configure Had
 8. On your local machine, generate a JAR file for your program using the command `mvn clean package`.
 9. On your local machine, run the command `scp target/*.jar cs167:~/` to copy the JAR file to your CS167 machine.
 10. On your local machine, run the command `scp nasa_19950801.tsv cs167:~/` to copy the test file to your CS167 machine. Repeat for all test files you would like to copy.
-11. On the CS167 machine, copy both test files to your home directory using the command `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`. Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file since you all share the same HDFS home directory.
-12. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
+11. On the CS167 machine, copy both test files to your HDFS home directory using the command `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`. Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file since you all share the same HDFS home directory. Repeat the same for the other test file to put that in HDFS.
+* *Note* If you get this error: `put: 'nasa_19950801_[UCRNetID].tsv': No such file or directory: 'hdfs://..../nasa_19950801_[UCRNetID].tsv'` first run this command: `hdfs dfs -mkdir -p .` and then run: `hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv`.
+13. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
 
     ```bash
-    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output.tsv 200
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801_[UCRNetID].tsv filter_output_[UCRNetID].tsv 200
     ```
 
 ### V. Write an Aggregate Program (30 minutes)
@@ -309,7 +310,7 @@ In this part, we will create another MapReduce program that computes the total b
 3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:
 
     ```bash
-    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801.tsv aggregation_nasa_19950801_output.tsv
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801_[UCRNetID].tsv aggregation_nasa_19950801_output_[UCRNetID].tsv
     ```
 
     * ***(Q7) How many files are produced in the output directory and how many lines are there in each file?***
@@ -320,7 +321,7 @@ In this part, we will create another MapReduce program that computes the total b
 4. Run your program on the file `nasa_19950630.22-19950728.12.tsv`.
 
     ```bash
-    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12.tsv aggregation_large_output.tsv
+    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12_[UCRNetID].tsv aggregation_large_output_[UCRNetID].tsv
     ```
 
     * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
@@ -330,13 +331,13 @@ In this part, we will create another MapReduce program that computes the total b
     1. Re-run `Filter` program on the file `nasa_19950630.22-19950728.12.tsv`.
 
         ```bash
-        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950630.22-19950728.12.tsv filter_large_output.tsv 200
+        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950630.22-19950728.12_[UCRNetID].tsv filter_large_output_[UCRNetID].tsv 200
         ```
 
-    2. Run `Aggregation` program on the output **directory** of `Filter`: filter_nasa_19950630_output.tsv
+    2. Run `Aggregation` program on the output **directory** of `Filter`: filter_nasa_19950630_output_[UCRNetID].tsv
 
         ```bash
-        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output.tsv aggregation_filter_large_output.tsv
+        yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output_[UCRNetID].tsv aggregation_filter_large_output_[UCRNetID].tsv
         ```
 
     * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
