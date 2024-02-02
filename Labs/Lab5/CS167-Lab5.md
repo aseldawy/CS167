@@ -12,7 +12,7 @@
 
 * Setup the development environment as explained in [Lab 1](../Lab1/CS167-Lab1.md).
 * Download [Apache Spark 3.5.0](https://spark.apache.org/downloads.html). Choose the package type **Pre-built with user-provided Apache Hadoop**.
-  * Direct link: [spark-3.5.0-bin-without-hadoop.tgz    ](https://www.apache.org/dyn/closer.lua/spark/spark-3.5.0/spark-3.5.0-bin-without-hadoop.tgz)
+  * Direct link: [spark-3.5.0-bin-without-hadoop.tgz](https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-without-hadoop.tgz)
 * Download these two sample files [sample file 1](../Lab4/nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download. These are the same files we used in [Lab 4](../Lab4/CS167-Lab4.md).
 ---
 
@@ -145,31 +145,88 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
 
 ---
 
-### IV. Run in Distributed Mode (Manual Configuration) (30 minutes)
+### IV. Run in Distributed Mode (30 minutes)
 
-Similar to Hadoop, we will run Spark in distributed mode on the cluster provided to you.
+In the followign part, we will configure Spark to run in distributed mode. Make sure that each group member has access to their CS167 machine before doing the following part.
 
-1. Among your group, elect a machine as the master. By convention, we will use the machine with the lowest number that you have access to during the lab.
+1. Before connecting to your CS167 machine, edit the file `$HOME/.ssh/config` (Linux and MacOS) or `%USERPROFILE%\.ssh\config` (Windows). Add the line `LocalForward 8080 class-###:8080` under `Host cs167` in your config file. Replace `class-###` with the name of the machine you elect to be the master node (not necessarily your own machine). So, the file should look something like the following
+    ```text
+    Host cs167
+        LocalForward 8080 class-777:8080
+        HostName class-888.cs.ucr.edu
+        User cs167
+        ProxyJump [UCRNetID]@bolt.cs.ucr.edu
+    ```
+    In this case, `class-777` is the master node and `class-888` is your own machine.
+    *Note:* If you were already connected to your CS167 while changing the configuration, you will need to close that session and start a new SSH session for the new configuration to take effect.
+1. On your CS167 machine, download and extract Spark to your `$HOME/cs167` using the command below.
+    ```shell
+    curl https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-without-hadoop.tgz | tar -xvz -C $HOME/cs167
+    ```
+2. Set the environment variables `$SPARK_HOME` and `$PATH` as follows:
+    ```shell
+    echo 'export SPARK_HOME=$HOME/cs167/spark-3.5.0-bin-without-hadoop' >> ~/.bashrc
+    echo 'export PATH=$PATH:$SPARK_HOME/bin' >> ~/.bashrc
+    ```
+3. Configure Spark to use Hadoop classes that we installed in Lab 3.
+    1. Go to `$SPARK_HOME/conf`, make a copy of `spark-env.sh.template` to `spark-env.sh`.
+         ```shell
+         cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
+         ```
+    2. Edit the file using vim
+        ```shell
+        vim $SPARK_HOME/conf/spark-env.sh
+        ```
+    3. Add `export SPARK_DIST_CLASSPATH=$(hadoop classpath)` to the end of `spark-env.sh`.
+4. Reload the configuration by running `source ~/.bashrc`.
+5. Test that Spark works correctly by running the command `spark-submit --version`. The output should look something like the following.
+    ```text
+            Welcome to
+          ____              __
+         / __/__  ___ _____/ /__
+         _\ \/ _ \/ _ `/ __/  '_/
+        /___/ .__/\_,_/_/ /_/\_\   version 3.5.0
+            /_/
+
+        Using Scala version 2.12.18, OpenJDK 64-Bit Server VM, 11.0.21
+        Branch HEAD
+        Compiled by user ubuntu on 2023-09-09T01:41:38Z
+        Revision ce5ddad990373636e94071e7cef2f31021add07b
+        Url https://github.com/apache/spark
+        Type --help for more information.
+    ```
+
+The following part will configure a Spark cluster.
+
+1. Among your group, elect a machine as the master. By convention, we will use the machine with the lowest number that you have access to during the lab. In the following part we will call it `class-###`.
+2. Set `spark.master` in your configuration file.
+    1. If you don't have a file `$SPARK_HOME/conf/spark-defaults.conf` create one by running the command:
+    ```shell
+    cp $SPARK_HOME/conf/spark-defaults.conf.template $SPARK_HOME/conf/spark-defaults.conf
+    ```
+    2. Edit the file using `vim $SPARK_HOME/conf/spark-defaults.conf`.
+    3. Uncomment the line that starts with `spark.master` and change the value to `class-###:7077` where `class-###` is the name of the master node.
+    4. Save the file and exit.
 1. Start the master node by running the command:
 
     ```bash
     $SPARK_HOME/sbin/start-master.sh --host class-###
     ```
-
 2. Make sure that the master is running by navigating to the [http://localhost:8080](http://localhost:8080) at your browser. You should see a page similar to the following one. Notice that there are no worker nodes since we did not start any yet.
     ![Spark master with no worker nodes](images/spark-master-no-workers.png)
 3. On each worker node, run the following command.
 
     ```bash
-    $SPARK_HOME/sbin/start-worker.sh --host 0.0.0.0 spark://class-###:7077
+    $SPARK_HOME/sbin/start-worker.sh spark://class-###:7077
     ```
 
-    Notice: you can find the correct host and bind address from the web interface. Replace `class-###` with the name of the master node.
-4. Now, if you refresh the master web interface, you should be able to see one worker node.
+    Notice: you can find the correct bind address from the web interface. Replace `class-###` with the name of the master node.
+4. Now, if you refresh the master web interface, you should be able to see one or more worker nodes.
     ![Spark master with one worker node](images/spark-master-one-worker.png)
-5. Now, go back to your program and run the JAR file using the same `spark-submit` command that you had earlier.
+5. Start HDFS namenode and datanodes as instructed earlier. You might want to delete the `$HOME/hadoop/dfs` directory on all machines and reformat HDFS before doing this to ensure you have a consistent state across machines, i.e. no leftover temporary files from previous lab.
+5. Now, go back to your program (on your local machine), compile the JAR file and copy it to your CS167 machine. Use the same `spark-submit` command that you had earlier.
 
-    ***(Q1) Do you think it will use your local cluster? Why or why not?***
+    ***(Q1) Do you think it will use your cluster? Why or why not?***
 
     Hint: To find out, check the [web interface](http://localhost:8080) and observe any new applications that get listed.
 
@@ -360,6 +417,7 @@ In this part, we will run an aggregation function to count number of records for
                 for (Map.Entry<String, Long> entry : counts.entrySet()) {
                     System.out.printf("Code '%s' : number of entries %d\n", entry.getKey(), entry.getValue());
                 }
+                System.in.read();
             }
         }
     }
