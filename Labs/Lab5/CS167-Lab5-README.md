@@ -26,3 +26,7 @@
 * (Q8) Explain why we get these numbers.
 
 * (Q9) What can you do to the current code to ensure that the file is read only once?
+
+* (Q10) How many stages does your program have, and what are the steps in each stage? 
+
+* (Q11) Why does your program have two stages?
