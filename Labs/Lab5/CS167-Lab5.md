@@ -342,9 +342,8 @@ In the next part, we will extend the program to use more Spark functions. We wil
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
     ```
 
-   Now, we want to know the number of partitions created for the input file and how much time it took to process each one.
-   To do that, we need to look at the printed logs from Spark. We add the option `--conf spark-log.level=INFO` to the command, and we search for the phrase `TaskSetManager - Finished`. The number of tasks printed at each stage is the same as the number of outputs.
-
+   Now, we want to know the number of tasks created for the input file and how much time it took to process each task.
+   To do that, we need to look at the printed logs from Spark. We add the option `--conf spark-log.level=INFO` to the command, and we search for the phrase `TaskSetManager - Finished`. The number of tasks printed at each stage is the same as the number of outputs. 
    Our command looks like this:
 
    ```bash
@@ -353,6 +352,8 @@ In the next part, we will extend the program to use more Spark functions. We wil
    Based on the output of the previous command, answer the following question:
    
    ***(Q5) For the previous command that prints the number of matching lines, how many tasks were created, and how much time it took to process each task.***
+
+   *Note:* You can count the total number of unique TIDs from the output log to get the total number of tasks. 
 
 6. In addition to counting the lines, let us also write the matching lines to another file. Add the following part at the beginning of the `main` function.
 
@@ -386,9 +387,9 @@ In the next part, we will extend the program to use more Spark functions. We wil
    
    Hint: you can modify your command similar to how you did to get the answer for Q5, and count the total number of unique TID.
 
-       ```bash
+   ```bash
     spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200  2>&1 | grep "TaskSetManager - Finished"
-    ```
+   ```
 
 
     ***(Q7) Compare this number to the one you got earlier.***
