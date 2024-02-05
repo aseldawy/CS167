@@ -22,7 +22,7 @@
 
 Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Other versions might come with different default configuration that make it hard to debug the problems that you might face.
 
-1. Expand the downloaded Apache Spark to your home/cs167 directory.
+1. Extract the downloaded Apache Spark to your $HOME/cs167 directory.
 2. Set the environment variable `SPARK_HOME` to the expanded Spark directory. Add `$SPARK_HOME/bin` to the `PATH` environment variable. See [Lab 1](../Lab1/CS167-Lab1.md) for details on how to do it.
 
     * Linux and macOS
@@ -32,7 +32,7 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
 
             ```bash
             # Linux, MacOS
-            export SPARK_HOME="$HOME/cs167/spark-3.3.1-bin-hadoop3"
+            export SPARK_HOME="$HOME/cs167/spark-3.5.0-bin-without-hadoop"
             ```
 
         2. Add `$SPARK_HOME/bin:` to `PATH` variable like
@@ -45,7 +45,7 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
     * Windows
         1. Add a new variable under **User variables for xxx**:
             * Variable name: `SPARK_HOME`
-            * Variable value: `%USERPROFILE%\cs167\spark-3.3.1-bin-hadoop3`
+            * Variable value: `%USERPROFILE%\cs167\spark-3.5.0-bin-without-hadoop`
         2. Add `%SPARK_HOME%\bin` to `Path` variable
 
 3. Configure Spark to use your previsouly installed Hadoop. Reference: [Using Spark's "Hadoop Free" Build
@@ -83,6 +83,7 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
 1. Create a new empty project using Maven for Lab 5. See [Lab 1](../Lab1/CS167-Lab1.md) for more details.
 2. Import your project into IntelliJ IDEA.
 3. Copy the file `$SPARK_HOME/conf/log4j.properties.template` to your project directory under `src/main/resources/log4j.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
+  * Manually create `src/main/resources` if it does not exist.
 4. Place the two sample files in your project home directory.
 5. In `pom.xml` add the following configuration.
 
@@ -116,7 +117,7 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
     public class App {
         public static void main(String[] args) {
             final String inputPath = args[0];
-            try (JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5")) {
+            try (JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5-App-[UCRNetID]")) {
                 JavaRDD<String> logFile = spark.textFile(inputPath);
                 System.out.printf("Number of lines in the log file %d\n", logFile.count());
             }
@@ -124,17 +125,18 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
     }
     ```
 
-2. Run the `main` function in IntelliJ IDEA. The command line argument should be `nasa_19950801.tsv`. You should see the following line in the output.
+2. Replace the [UCRNetID] of ```
+    JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5-App-[UCRNetID]")``` 
+    with your own NetID, Run the `main` function in IntelliJ IDEA. The command line argument should be `nasa_19950801.tsv`. You should see the following line in the output.
 
     ```text
     Number of lines in the log file 30970
     ```
 
 3. Switch to the command line. Compile your code using the command `mvn package`.
-4. Run your program from command line using the following command. Do not forget to replace `[UCRNetID]` with the correct one. Also, make sure hdfs namenode and datanode are running. If you have error shows as no such hdfs host, then using file path start with `hdfs://localhost:9000/`
-
+4. Run your program from command line using the following command. Do not forget to replace `[UCRNetID]` with the correct one. 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar nasa_19950801.tsv
     ```
 
     Hint: You may use the following command to only print the needed line (Linux and macOS only).
@@ -225,25 +227,25 @@ The following part will configure a Spark cluster.
 4. Now, if you refresh the master web interface, you should be able to see one or more worker nodes.
     ![Spark master with one worker node](images/spark-master-one-worker.png)
 5. Start HDFS namenode and datanodes as instructed earlier. You might want to delete the `$HOME/hadoop/dfs` directory on all machines and reformat HDFS before doing this to ensure you have a consistent state across machines, i.e. no leftover temporary files from previous lab.
-5. Now, go back to your program (on your local machine), compile the JAR file and copy it to your CS167 machine. Use the same `spark-submit` command that you had earlier.
+5. Now, go back to your program (on your local machine), compile the JAR file and copy it to your CS167 machine. Use the same `spark-submit` command that you had earlier. Note that, you need to have the input file also in your CS167 machine and put that file into HDFS before running the `spark-submit` command.
 
     ***(Q1) Do you think it will use your cluster? Why or why not?***
 
     Hint: To find out, check the [web interface](http://localhost:8080) and observe any new applications that get listed.
 
-6. To use the pseudo-cluster that we just started, change the following code from
+6. To use the cluster that we just started, change the following code from
 
     ```java
-    JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5")
+    JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5-App-[UCRNetID]")
     ```
 
     to
 
     ```java
-    JavaSparkContext spark = new JavaSparkContext("spark://class-###:7077", "CS167-Lab5");
+    JavaSparkContext spark = new JavaSparkContext("spark://class-###:7077", "CS167-Lab5-App-[UCRNetID]");
     ```
-
-7. Now, compile and then run your program from command line as you did before. Make sure to run it from WSL (Windows users).
+* Note: class-### is the hostname of the master node. 
+7. Now, save the file and compile it with `mvn clean package`. Run your program in cs167 machine as you did before. (*Note*: This updated code will not run on your local machine, so you just need to build the jar, send the jar to cs167 machine, and run the jar there using `spark-submit` command.)
 
     ***(Q2) Does the application use the cluster that you started? How did you find out?***
 
@@ -278,28 +280,27 @@ We do not want to change the code every time we switch between local and cluster
 
     This code first creates a [SparkConf](https://spark.apache.org/docs/latest/api/java/org/apache/spark/SparkConf.html) instance using the default configuration. If Spark master is already configured, it will use the default configuraiton. If not, it will use the local mode.
 
-2. Edit your `$SPARK_HOME/conf/spark-defaults.conf` and add the line `spark.master spark://class-###:7077`. The configurations in this file are automatically loaded when you use spark-submit and instantiate a new instance of SparkConf using the default constructor.
 
 3. Run the code from IntelliJ IDEA.
 
     ***(Q3) What is the Spark master printed on the standard output on IntelliJ IDEA?***
 
-4. Compile the code from command line and run using `spark-submit`.
+4. Compile the code from command line using `mvn clean package` and then run the jar in your cs167 machine using `spark-submit`.
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
     ```
+* Note: if you get file not found exception and you are sure the file is uploaded to HDFS, try using the full path like hdfs://class-xxx:9000/user/cs167/nasa_19950801.tsv, where class-xxx is your name node.
 
     ***(Q4) What is the Spark master printed on the standard output on the terminal?***
 
 5. You can manually override the master on the `spark-submit` command. Try the following line and observe what the master is.
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master local[2] target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master local[2] [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
     ```
 
     Note: `local[2]` means that it runs on the local mode with two cores.
-    Note: if you get file not found exception and you are sure the file is uploaded to HDFS, try using the full path like `hdfs://class-xxx:9000/user/cs167/nasa_19950801.tsv`, where `class-xxx` is your name node.
 
 ---
 
@@ -329,23 +330,23 @@ In the next part, we will extend the program to use more Spark functions. We wil
 
     is called lambda expression. It is a shorthand to write an anonymous inner class with one function. After compilation, it will be similar to the map function that we used to write in Hadoop which was a class with one function called `map`.
 
-4. Run your program using the file `nasa_19950801.tsv`. The output should look similar to the following.
+4. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run your program in your CS167 machine using the file `nasa_19950801.tsv`. The output should look similar to the following.
 
     ```text
     The file 'nasa_19950801.tsv' contains 27972 lines with response code 200
     ```
 
-    Hint: You may use the following command to only print the needed line (Linux and macOS only).
+    Hint: You may use the following command to only print the needed line.
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
     ```
     ***(Q5) For the previous command that prints the number of matching lines, list all the processed input splits.***
 
     Hint: Search for the patterm `HadoopRDD: Input split` in the output on the console. The input splits is printed as `path:start+length`. On Linux or macOS, you may try the following command
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "HadoopRDD: Input split"
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "HadoopRDD: Input split"
     ```
 
     If the above command shows no result, it is because the actual logs were generated on the worker node and not printed in the main terminal. You can find those lines in the log file from the [web interface](http://localhost:8080).
@@ -364,16 +365,18 @@ In the next part, we will extend the program to use more Spark functions. We wil
     matchingLines.saveAsTextFile(outputPath);
     ```
 
-7. Run your program again with the following parameters `hdfs:///nasa_19950801.tsv hdfs:///filter_output 200`.
+7. Run your program again in your CS167 machine with the following parameters `hdfs:///nasa_19950801.tsv hdfs:///filter_output 200`.
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output 200
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200
     ```
+
+    * Note: Replcae [UCRNetID] with your own NetID.
 
     You can use the following command to count the total number of lines in the output files.
 
     ```bash
-    hdfs dfs -cat /filter_output/part-"*" | wc -l
+    hdfs dfs -cat /filter_output_[UCRNetID]/part-"*" | wc -l
     ```
 
     ***(Q6) For the previous command that counts the lines and prints the output, how many splits were generated?***
@@ -438,7 +441,7 @@ In this part, we will run an aggregation function to count number of records for
     Note 1: The entry with the code `response` corresponds to the header file. We can easily filter this value at the end but we will leave it like this for simplicity.
     Note 2: You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine.
    
-   You can run your code using this commadn:
+   You can run your code using this command in your CS167 machine:
 
     ```bash
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Aggregation [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
