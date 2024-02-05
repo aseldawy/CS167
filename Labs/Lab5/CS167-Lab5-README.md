@@ -17,9 +17,9 @@
 
 * (Q4) What is the Spark master printed on the standard output on the terminal?
 
-* (Q5) For the previous command that prints the number of matching lines, list all the processed input splits.
-
-* (Q6) For the previous command that counts the lines and prints the output, how many splits were generated?
+* (Q5) For the previous command that prints the number of matching lines, how many tasks were created, and how much time it took to process each task.
+  
+* (Q6) For the previous command that counts the lines and prints the output, how many tasks in total were generated?
 
 * (Q7) Compare this number to the one you got earlier.
 
