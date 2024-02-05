@@ -384,7 +384,7 @@ In the next part, we will extend the program to use more Spark functions. We wil
 
     ***(Q6) For the previous command that counts the lines and prints the output, how many tasks in total were generated?***
    
-   Hint: you can modify your command similar to how you did to get the answer for Q5.
+   Hint: you can modify your command similar to how you did to get the answer for Q5, and count the total number of unique TID.
 
        ```bash
     spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200  2>&1 | grep "TaskSetManager - Finished"
