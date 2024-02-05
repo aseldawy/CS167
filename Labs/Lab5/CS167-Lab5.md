@@ -82,7 +82,7 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
 
 1. Create a new empty project using Maven for Lab 5. See [Lab 1](../Lab1/CS167-Lab1.md) for more details.
 2. Import your project into IntelliJ IDEA.
-3. Copy the file `$SPARK_HOME/conf/log4j.properties.template` to your project directory under `src/main/resources/log4j.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
+3. Copy the file `$SPARK_HOME/conf/log4j2.properties.template` to your project directory under `src/main/resources/log4j2.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA.
   * Manually create `src/main/resources` if it does not exist.
 4. Place the two sample files in your project home directory.
 5. In `pom.xml` add the following configuration.
@@ -341,17 +341,20 @@ In the next part, we will extend the program to use more Spark functions. We wil
     ```bash
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
     ```
-    ***(Q5) For the previous command that prints the number of matching lines, list all the processed input splits.***
 
-    Hint: Search for the patterm `HadoopRDD: Input split` in the output on the console. The input splits is printed as `path:start+length`. On Linux or macOS, you may try the following command
+   Now, we want to know the number of partitions created for the input file and how much time it took to process each one.
+   To do that, we need to look at the printed logs from Spark. We add the option `--conf spark-log.level=INFO` to the command, and we search for the phrase `TaskSetManager - Finished`. The number of tasks printed at each stage is the same as the number of outputs.
 
-    ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "HadoopRDD: Input split"
+   Our command looks like this:
+
+       ```bash
+    spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "TaskSetManager - Finished"
     ```
+   Based on the output of the previous command, answer the following question:
+   
+   ***(Q5) For the previous command that prints the number of matching lines, how many tasks were created, and how much time it took to process each task.***
 
-    If the above command shows no result, it is because the actual logs were generated on the worker node and not printed in the main terminal. You can find those lines in the log file from the [web interface](http://localhost:8080).
-
-5. In addition to counting the lines, let us also write the matching lines to another file. Add the following part at the beginning of the `main` function.
+6. In addition to counting the lines, let us also write the matching lines to another file. Add the following part at the beginning of the `main` function.
 
     ```java
     final String inputPath = args[0];
@@ -359,13 +362,13 @@ In the next part, we will extend the program to use more Spark functions. We wil
     final String desiredCode = args[2];
     ```
 
-6. After the `printf` command the prints the number of matching lines, add the following line:
+7. After the `printf` command the prints the number of matching lines, add the following line:
 
     ```java
     matchingLines.saveAsTextFile(outputPath);
     ```
 
-7. Run your program again in your CS167 machine with the following parameters `hdfs:///nasa_19950801.tsv hdfs:///filter_output 200`.
+8. Run your program again in your CS167 machine with the following parameters `hdfs:///nasa_19950801.tsv hdfs:///filter_output 200`.
 
     ```bash
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200
@@ -376,10 +379,16 @@ In the next part, we will extend the program to use more Spark functions. We wil
     You can use the following command to count the total number of lines in the output files.
 
     ```bash
-    hdfs dfs -cat /filter_output_[UCRNetID]/part-"*" | wc -l
+    hdfs dfs -cat filter_output_[UCRNetID]/part-"*" | wc -l
     ```
 
-    ***(Q6) For the previous command that counts the lines and prints the output, how many splits were generated?***
+    ***(Q6) For the previous command that counts the lines and prints the output, how many tasks in total were generated?***
+   Hint: you can modify your command similar to how you did to get the answer for Q5.
+
+       ```bash
+    spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200  2>&1 | grep "TaskSetManager - Finished"
+    ```
+
 
     ***(Q7) Compare this number to the one you got earlier.***
 
