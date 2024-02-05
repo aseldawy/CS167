@@ -383,6 +383,7 @@ In the next part, we will extend the program to use more Spark functions. We wil
     ```
 
     ***(Q6) For the previous command that counts the lines and prints the output, how many tasks in total were generated?***
+   
    Hint: you can modify your command similar to how you did to get the answer for Q5.
 
        ```bash
