@@ -19,6 +19,7 @@ Unless otherwise mentioned:
 * [Lab 2](Labs/Lab2/CS167-Lab2.md): Functional Programming in Java.
 * [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Distributed File System (HDFS).
 * [Lab 4](Labs/Lab4/CS167-Lab4.md): Hadoop MapReduce.
+* [Lab 5](Labs/Lab5/CS167-Lab5.md): Spark RDD.
 
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/122516) (Only enrolled students will have access)
