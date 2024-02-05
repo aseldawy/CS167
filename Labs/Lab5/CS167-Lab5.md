@@ -149,10 +149,11 @@ Note: We recommend that you use the standard Apache Spark 3.5.0 in this lab. Oth
 
 In the followign part, we will configure Spark to run in distributed mode. Make sure that each group member has access to their CS167 machine before doing the following part.
 
-1. Before connecting to your CS167 machine, edit the file `$HOME/.ssh/config` (Linux and MacOS) or `%USERPROFILE%\.ssh\config` (Windows). Add the line `LocalForward 8080 class-###:8080` under `Host cs167` in your config file. Replace `class-###` with the name of the machine you elect to be the master node (not necessarily your own machine). So, the file should look something like the following
+1. Before connecting to your CS167 machine, edit the file `$HOME/.ssh/config` (Linux and MacOS) or `%USERPROFILE%\.ssh\config` (Windows). Add the line `LocalForward 8080 class-###:8080` and `LocalForward 4040 class-$$$:4040` under `Host cs167` in your config file. Replace `class-###` with the name of the machine you elect to be the master node (not necessarily your own machine) and `class-$$$` is your own machine. So, the file should look something like the following
     ```text
     Host cs167
         LocalForward 8080 class-777:8080
+        LocalForward 4040 class-888:4040
         HostName class-888.cs.ucr.edu
         User cs167
         ProxyJump [UCRNetID]@bolt.cs.ucr.edu
@@ -298,6 +299,7 @@ We do not want to change the code every time we switch between local and cluster
     ```
 
     Note: `local[2]` means that it runs on the local mode with two cores.
+    Note: if you get file not found exception and you are sure the file is uploaded to HDFS, try using the full path like `hdfs://class-xxx:9000/user/cs167/nasa_19950801.tsv`, where `class-xxx` is your name node.
 
 ---
 
@@ -338,7 +340,6 @@ In the next part, we will extend the program to use more Spark functions. We wil
     ```bash
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Filter target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
     ```
-
     ***(Q5) For the previous command that prints the number of matching lines, list all the processed input splits.***
 
     Hint: Search for the patterm `HadoopRDD: Input split` in the output on the console. The input splits is printed as `path:start+length`. On Linux or macOS, you may try the following command
@@ -372,7 +373,7 @@ In the next part, we will extend the program to use more Spark functions. We wil
     You can use the following command to count the total number of lines in the output files.
 
     ```bash
-    hadoop fs -cat /filter_output/part-"*" | wc -l
+    hdfs dfs -cat /filter_output/part-"*" | wc -l
     ```
 
     ***(Q6) For the previous command that counts the lines and prints the output, how many splits were generated?***
@@ -399,11 +400,11 @@ In this part, we will run an aggregation function to count number of records for
     import org.apache.spark.api.java.JavaRDD;
     import org.apache.spark.api.java.JavaSparkContext;
     import scala.Tuple2;
-
+    import java.io.IOException;
     import java.util.Map;
 
     public class Aggregation {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException {
             final String inputPath = args[0];
             SparkConf conf = new SparkConf();
             if (!conf.contains("spark.master"))
@@ -425,7 +426,7 @@ In this part, we will run an aggregation function to count number of records for
 
 2. Create a [JavaPairRDD<String, Integer>](https://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/api/java/JavaPairRDD.html) that contains key-value pairs. The key is the response code (as a string) and the value is 1. You will use the [mapToPair](https://spark.apache.org/docs/latest/api/java/org/apache/spark/api/java/JavaRDDLike.html#mapToPair-org.apache.spark.api.java.function.PairFunction-) transformation and the [Tuple2](https://www.scala-lang.org/api/current/scala/Tuple2.html) class (Complete `// To do 1`).
 3. To count the number of records per response code, use the action [countByKey](https://spark.apache.org/docs/latest/api/java/org/apache/spark/api/java/JavaPairRDD.html#countByKey--) (Complete `// To do 2`).
-4. Write the aggregate values to the standard output. The output should look similar to the following.
+4. Write the aggregate values to the standard output. The output should look similar to the following:
 
     ```text
     Code '302' : number of entries 355
@@ -434,20 +435,29 @@ In this part, we will run an aggregation function to count number of records for
     Code '304' : number of entries 2421
     Code '200' : number of entries 27972
     ```
-
-    Note: The entry with the code `response` corresponds to the header file. We can easily filter this value at the end but we will leave it like this for simplicity.
-
-    Command:
+    Note 1: The entry with the code `response` corresponds to the header file. We can easily filter this value at the end but we will leave it like this for simplicity.
+    Note 2: You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine.
+   
+   You can run your code using this commadn:
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Aggregation target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Aggregation [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv
     ```
 
     To print the desired output only:
 
     ```bash
-    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Aggregation target/[UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
+    spark-submit --class edu.ucr.cs.cs167.[UCRNetID].Aggregation [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>/dev/null
     ```
+ 5. While your program runs, keep the window open and visit `http://localhost:4040`
+ 6. On that page, click on the name of your job, like the following screenshot:
+    ![Finding active job to visualize dag](images/screenshot_10.png)
+ 7. On the next page, the expand the `Dag Visualization` section. You will see a graph visualizing the stages and all the steps off your Spark job.
+    Based on this DAG, answer the following questions:
+    ***(Q10) How many stages does your program have, and what are the steps in each stage?***
+    ***(Q11) Why does your program have two stages?***
+    
+
 
 ---
 
@@ -481,6 +491,12 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 
 ---
 
+### Ruberic
+Q1-Q10: +11 points (+1 point for each questions)
+Code: +3 points
+    +1 filte class
+    +2 aggregation class
+Following submission instructions: +1 point
 ### IX. Cleanup
 
 Do not forget to stop Spark master and worker using the following commands.
