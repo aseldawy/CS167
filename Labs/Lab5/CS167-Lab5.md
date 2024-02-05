@@ -347,9 +347,9 @@ In the next part, we will extend the program to use more Spark functions. We wil
 
    Our command looks like this:
 
-       ```bash
-    spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "TaskSetManager - Finished"
-    ```
+   ```bash
+   spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv 2>&1 | grep "TaskSetManager - Finished"
+   ```
    Based on the output of the previous command, answer the following question:
    
    ***(Q5) For the previous command that prints the number of matching lines, how many tasks were created, and how much time it took to process each task.***
