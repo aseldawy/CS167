@@ -505,7 +505,7 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 
 ---
 
-### Ruberic
+### Rubric
 Q1-Q10: +11 points (+1 point for each questions)
 Code: +3 points
     +1 filte class
@@ -520,3 +520,25 @@ $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/stop-master.sh
 # Also stop hdfs datanode and namenode
 ```
+
+
+
+## Common Issues
+
+- *Problem*: When I run my program in IntelliJ, I get the following error:
+```Exception in thread "main" java. lang.IllegalAccessError Create breakpoint: class org.apache.spark.torage.StorageUtils$```
+
+- *Solution*: Edit your run configuration and add the following to VM Options:
+```text
+--add-opens java.base/java.nio=ALL-UNNAMED
+--add-opens java.base/java.util=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
+--add-opens java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens java.base/java.lang.invoke=ALL-UNNAMED
+```
+
+Below is how to add VM options to run configuration.
+
+![Open Run Configuration](images/open-run-configuration.png)
+
+![Add VM Options](images/add-vm-options.png)
