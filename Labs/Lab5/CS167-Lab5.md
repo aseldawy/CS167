@@ -385,7 +385,7 @@ In the next part, we will extend the program to use more Spark functions. We wil
 
     ***(Q6) For the previous command that counts the lines and prints the output, how many tasks in total were generated?***
    
-   Hint: you can modify your command similar to how you did to get the answer for Q5, and count the total number of unique TID.
+   Hint: you can modify your command similar to how you did to get the answer for Q5, and count the total number of unique TID. Note that: You need to delete the generated output directory from HDFS using the command ```hdfs dfs -rm -r hdfs:///filter_output_[UCRNetID]``` before running the following ```spark-submit``` command each time.
 
    ```bash
     spark-submit --conf spark.log.level=INFO  --class edu.ucr.cs.cs167.[UCRNetID].Filter [UCRNetID]_lab5-1.0-SNAPSHOT.jar hdfs:///nasa_19950801.tsv hdfs:///filter_output_[UCRNetID] 200  2>&1 | grep "TaskSetManager - Finished"
@@ -468,7 +468,9 @@ In this part, we will run an aggregation function to count number of records for
     ![Finding active job to visualize dag](images/screenshot_10.png)
  7. On the next page, the expand the `Dag Visualization` section. You will see a graph visualizing the stages and all the steps off your Spark job.
     Based on this DAG, answer the following questions:
+    
     ***(Q10) How many stages does your program have, and what are the steps in each stage?***
+    
     ***(Q11) Why does your program have two stages?***
     
 
@@ -506,11 +508,11 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 ---
 
 ### Rubric
-Q1-Q10: +11 points (+1 point for each questions)
-Code: +3 points
-    +1 filte class
-    +2 aggregation class
-Following submission instructions: +1 point
+- Q1-Q11: +11 points (+1 point for each questions)
+- Code: +3 points
+   - +1 filter class
+   - +2 aggregation class
+- Following submission instructions: +1 point
 ### IX. Cleanup
 
 Do not forget to stop Spark master and worker using the following commands.
