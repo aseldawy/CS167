@@ -12,15 +12,11 @@
 
 * Setup the development environment as explained in [Lab 1](../Lab1/CS167-Lab1.md).
 * Same as [Lab 5](../Lab5/CS167-Lab5.md).
-  * Download [Apache Spark 3.2.1](https://spark.apache.org/downloads.html). Choose the package type **Pre-built with user-provided Apache Hadoop**.
-    * Direct link: [spark-3.2.1-bin-without-hadoop.tgz](https://www.apache.org/dyn/closer.lua/spark/spark-3.2.1/spark-3.2.1-bin-without-hadoop.tgz)
+  * Download [Apache Spark 3.5.0](https://spark.apache.org/downloads.html). Choose the package type **Pre-built with user-provided Apache Hadoop**.
+    * Direct link: [spark-3.5.0-bin-without-hadoop.tgz](https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-without-hadoop.tgz)
   * Download these two sample files [sample file 1](../Lab4/nasa_19950801.tsv), [sample file 2](https://drive.google.com/open?id=1pDNwfsx5jrAqaSy8AKEZyfubCE358L2p). Decompress the second file after download. These are the same files we used in [Lab 4](../Lab4/CS167-Lab4.md).
     * Depending on how you extract the second file, it could be named either `nasa_19950630.22-19950728.12.tsv` or `19950630.23-19950801.00.tsv`. In this lab, we will use these two names interchangeably.
-  * For Windows users, install the [Ubuntu app](https://ubuntu.com/wsl) from Microsoft Store and set it up to use Windows Subsystem for Linux. Part of this lab cannot run natively on Windows.
-    * Check [this link](../Lab5/WSL.md) for detailed instructions.
 * To add Scala language support to IntelliJ, you can install the [Scala plugin](https://plugins.jetbrains.com/plugin/1347-scala). Please check the [plugin management page](https://www.jetbrains.com/help/idea/managing-plugins.html) to see the details about installing and managing plugins in Intellij. Make sure you restart IntelliJ after installing the plugin.
-
-  <p align="center"><img src="images/idea-scala-plugin.png" style="width:912px;"/></p>
 
 * If you are not yet familiar with Scala, please check [this tutorial](https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html) to help with the transition from Java to Scala.
 
@@ -45,10 +41,10 @@ We will follow a slightly modified version of the instructions on the [official 
 1. To generate a new Maven project that works with Scala, use the following command:
 
     ```bash
-    mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DgroupId=edu.ucr.cs.cs167.<UCRNetID> -DartifactId=<UCRNetID>_lab6 -B
+    mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DgroupId=edu.ucr.cs.cs167.[UCRNetID] -DartifactId=[UCRNetID]_lab6 -B
     ```
 
-    Note: Do not forget to replace `<UCRNetID>` with your UCR Net ID.
+    Note: Do not forget to replace `[UCRNetID]` with your UCR Net ID.
 
     If you cannot run the above command, check [Create Lab 6 Project from IntelliJ](#create-lab-6-project-from-intellij).
 
@@ -58,8 +54,8 @@ We will follow a slightly modified version of the instructions on the [official 
 
     ```xml
     <properties>
-      <spark.version>3.2.1</spark.version>
-      <scala.compat.version>2.12</scala.compat.version>
+      <spark.version>3.5.0</spark.version>
+      <scala.compat.version>2.13</scala.compat.version>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -75,8 +71,6 @@ We will follow a slightly modified version of the instructions on the [official 
     ```
 
     Click the floating ***m*** icon to load all dependencies.
-
-    <p align="left"><img src="images/mvn-reload.png" style="width:69px;"/></p>
 
 4. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
 
@@ -479,11 +473,11 @@ Note: To create a new Scala object, check the following instructions.
 
   1. Right click your package name in the project browser. Select `New`, then select `Scala Class`.
 
-      <p align="center"><img src="images/new-scala-class.png" style="width:831px;"/></p>
+      ![New Scala class](images/new-scala-class.png)
 
   2. In the popped up `Create New Scala Class` dialog, type `AppSQL`, then select `Object`.
 
-      <p align="center"><img src="images/new-scala-object.png" style="width:376px;"/></p>
+      ![New Scala object](images/new-scala-object.png)
 
 Note: A Scala object is a Singleton class with one object instantiated automatically. All methods inside the object are treated as static methods.
 
@@ -823,23 +817,23 @@ You can use the following commands for testing.
 
 ```bash
 # Part A
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar count-all nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar code-filter nasa_19950801.tsv 200
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar time-filter nasa_19950801.tsv 807274014 807283738
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar count-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar sum-bytes-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar avg-bytes-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.App --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar top-host nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar count-all nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar code-filter nasa_19950801.tsv 200
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar time-filter nasa_19950801.tsv 807274014 807283738
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar count-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar sum-bytes-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar avg-bytes-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar top-host nasa_19950801.tsv
 
 # Part B
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar count-all nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar code-filter nasa_19950801.tsv 200
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar time-filter nasa_19950801.tsv 807274014 807283738
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar count-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar sum-bytes-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar avg-bytes-by-code nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar top-host nasa_19950801.tsv
-spark-submit --class edu.ucr.cs.cs167.<UCRNetID>.AppSQL --master "local[*]" target/<UCRNetID>_lab6-1.0-SNAPSHOT.jar comparison nasa_19950801.tsv 807295758
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar count-all nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar code-filter nasa_19950801.tsv 200
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar time-filter nasa_19950801.tsv 807274014 807283738
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar count-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar sum-bytes-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar avg-bytes-by-code nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar top-host nasa_19950801.tsv
+spark-submit --class edu.ucr.cs.cs167.[UCRNetID].AppSQL --master "local[*]" target/[UCRNetID]_lab6-1.0-SNAPSHOT.jar comparison nasa_19950801.tsv 807295758
 ```
 
 Hint: Add `2>/dev/null` to the end of each command to hide logging information from Spark.
@@ -853,36 +847,36 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 2. Copy the unzipped `runConfigurations` directory. Shortcut is `Ctrl + C` on Linux and Windows, `Command + C` on macOS.
 
 3. In your project browser in IntelliJ, right click `.idea` directory, select `Paste`. Shortcut is `Ctrl + V` on Linux and Windows, `Command + V` on macOS (Make sure you have `.idea` directory selected).
-    <p align="center"><img src="images/idea-paste-config.png" style="width:418px;"/></p>
+    ![Paste config](images/idea-paste-config.png)
 
 4. A `Copy` dialog will show, you don't need to change anything. Click `OK` to continue.
-    <p align="center"><img src="images/copy-dialog.png" style="width:746px;"/></p>
+    ![Copy dialog](images/copy-dialog.png)
 
-5. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, which replace `<UCRNetID>` to your actual UCR Net ID.
-    <p align="center"><img src="images/config-xml-before-replace.png" style="width:1259px;"/></p>
+5. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, which replace `[UCRNetID]` to your actual UCR Net ID.
+    ![Run configuration](images/config-xml-before-replace.png)
 
-6. Open every XML file, do a **replace** (shortcut is `Ctrl + R` on Linux and Windows, `Command + R` on macOS). Type `<UCRNetID>` in the upper text field, and your actual UCR Net ID in the lower text field. Then click `Replace All`.
-    <p align="center"><img src="images/config-xml-replace.png" style="width:979px;"/></p>
+6. Open every XML file, do a **replace** (shortcut is `Ctrl + R` on Linux and Windows, `Command + R` on macOS). Type `[UCRNetID]` in the upper text field, and your actual UCR Net ID in the lower text field. Then click `Replace All`.
+    ![Replace](images/config-xml-replace.png)
 
     <p align="center">&#8595;</p>
 
-    <p align="center"><img src="images/config-xml-after-replace.png" style="width:974px;"/></p>
+    ![XML after replace](images/config-xml-after-replace.png)
 
 7. Repeat step 6 for all the 15 XML files.
 
 8. Save all modified XML files. You can do this in a batch by right clicking the XML file's tab and select `Close All Tabs`.
 
 9. Click the `Add Configuration...` button next to the green hammer icon.
-    <p align="center"><img src="images/idea-add-config.png" style="width:389px;"/></p>
+    [Add configuration](images/idea-add-config.png)
 
 10. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
-    <p align="center"><img src="images/run-debug-config.png" style="width:1152px;"/></p>
+    ![Debug configuration](images/run-debug-config.png)
 
 11. You can open a configuration to check its content. Make sure it is using `java 8`. Click `OK` to close this window if you are done.
-    <p align="center"><img src="images/config-preview.png" style="width:1152px;"/></p>
+    ![Config preview](images/config-preview.png)
 
 12. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
-    <p align="center"><img src="images/run-config.png" style="width:387px;"/></p>
+    [Run config](images/run-config.png)
 
 ---
 
@@ -914,7 +908,7 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 Submission file format:
 
 ```console
-<UCRNetID>_lab6.{tar.gz | zip}
+[UCRNetID]_lab6.{tar.gz | zip}
   - src/
   - pom.xml
   - README.md
@@ -948,26 +942,26 @@ The following reading material could help you with your lab.
 ## Create Lab 6 Project from IntelliJ
 
 1. Create `New Project` from IntelliJ.
-    <p align="center"><img src="images/idea-new-project.png" style="width:912px;"/></p>
+    [New project](images/idea-new-project.png)
 
 2. In the popped up `New Project` window, click `Add` for **Archetype:**.
-    <p align="center"><img src="images/idea-add-archetype-1.png" style="width:912px;"/></p>
+    ![Add Archetype](images/idea-add-archetype-1.png)
 
 3. In the popped up `Add Archetype` dialog, fill the following information and then click `Add`.
     * `GroupId` &rarr; `net.alchim31.maven`
     * `ArtifactId` &rarr; `scala-archetype-simple`
     * `Version` &rarr; `1.7`
 
-    <p align="center"><img src="images/idea-add-archetype-2.png" style="width:482px;"/></p>
+    ![Idea archetype info](images/idea-add-archetype-2.png)
 
 4. In the `New Project` window:
     1. Chcek if `Archetype` is `net.alchim31.maven:scala-archetype-simple` and `Version` is `1.7`.
     2. Check if `JDK` is `1.8` and showing `Oracle`. If not, change it to Oracle JDK 1.8.
-    3. Expand `Advanced Settings`, and fill the following information (Replace `<UCRNetID>` with your UCR Net ID):
-        * `GroupId` &rarr; `edu.ucr.cs.cs167.<UCRNetID>`
-        * `ArtifactId` &rarr; `<UCRNetID>_lab6`
+    3. Expand `Advanced Settings`, and fill the following information (Replace `[UCRNetID]` with your UCR Net ID):
+        * `GroupId` &rarr; `edu.ucr.cs.cs167.[UCRNetID]`
+        * `ArtifactId` &rarr; `[UCRNetID]_lab6`
 
-    <p align="center"><img src="images/idea-new-project-config.png" style="width:912px;"/></p>
+    ![New project config](images/idea-new-project-config.png)
 
 ---
 
@@ -982,8 +976,8 @@ The following reading material could help you with your lab.
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <encoding>UTF-8</encoding>
-        <scala.version>2.12.6</scala.version>
-        <scala.compat.version>2.12</scala.compat.version>
+        <scala.version>2.13.8</scala.version>
+        <scala.compat.version>2.13</scala.compat.version>
         <spec2.version>4.2.0</spec2.version>
         <spark.version>3.2.1</spark.version>
       </properties>
@@ -1093,7 +1087,7 @@ The following reading material could help you with your lab.
 
 * Q: IntelliJ IDEA does not show the green run arrow next to the `App` class.
 
-    A: Check if there is a message at the top asking you to set up Scala SDK. Click on that button and follow the instructions to install the default SDK version 2.12.
+    A: Check if there is a message at the top asking you to set up Scala SDK. Click on that button and follow the instructions to install the default SDK version 2.13.
 
 * Q: IntelliJ IDEA does not recognize Scala code.
 
