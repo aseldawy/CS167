@@ -872,10 +872,7 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 10. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
     ![Debug configuration](images/run-debug-config.png)
 
-11. You can open a configuration to check its content. Make sure it is using `java 8`. Click `OK` to close this window if you are done.
-    ![Config preview](images/config-preview.png)
-
-12. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
+11. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
     [Run config](images/run-config.png)
 
 ---
