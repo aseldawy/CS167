@@ -52,7 +52,7 @@ We will follow a slightly modified version of the instructions on the [official 
 
 3. In your `pom.xml` replace the properties section with the following configuration in `pom.xml`:
 
-    ```xml
+```xml
   <properties>
     <spark.version>3.5.0</spark.version>
     <scala.compat.version>2.13</scala.compat.version>
@@ -64,7 +64,7 @@ We will follow a slightly modified version of the instructions on the [official 
   </properties>
 ```
 4. To configure your project with Spark, add the following dependency:
-      ```xml
+   ```xml
       <dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-core_${scala.compat.version}</artifactId>
@@ -938,7 +938,7 @@ The following reading material could help you with your lab.
 ## Create Lab 6 Project from IntelliJ
 
 1. Create `New Project` from IntelliJ.
-    [New project](images/idea-new-project.png)
+    ![New project](images/idea-new-project.png)
 
 2. In the popped up `New Project` window, click `Add` for **Archetype:**.
     ![Add Archetype](images/idea-add-archetype-1.png)
@@ -952,7 +952,7 @@ The following reading material could help you with your lab.
 
 4. In the `New Project` window:
     1. Chcek if `Archetype` is `net.alchim31.maven:scala-archetype-simple` and `Version` is `1.7`.
-    2. Check if `JDK` is `1.8` and showing `Oracle`. If not, change it to Oracle JDK 1.8.
+    2. Check if `JDK` is `17` and showing `Oracle`. If not, change it to Oracle JDK 17.
     3. Expand `Advanced Settings`, and fill the following information (Replace `[UCRNetID]` with your UCR Net ID):
         * `GroupId` &rarr; `edu.ucr.cs.cs167.[UCRNetID]`
         * `ArtifactId` &rarr; `[UCRNetID]_lab6`
