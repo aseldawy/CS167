@@ -74,7 +74,6 @@ We will follow a slightly modified version of the instructions on the [official 
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
-
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>
@@ -101,8 +100,7 @@ We will follow a slightly modified version of the instructions on the [official 
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-    ```
+```
     Click the floating ***m*** icon to load all dependencies.
 
 4. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
