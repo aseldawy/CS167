@@ -50,7 +50,7 @@ We will follow a slightly modified version of the instructions on the [official 
 
 2. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles.
 
-3. In your `pom.xml` replace the properties section with the following configuration in `pom.xml`:
+3. In your `pom.xml` replace the properties and depdendencies sections with the following configurations:
 
 ```xml
   <properties>
@@ -60,23 +60,54 @@ We will follow a slightly modified version of the instructions on the [official 
     <maven.compiler.target>1.8</maven.compiler.target>   
     <encoding>UTF-8</encoding>
     <scala.version>2.13.12</scala.version>
-    <spec2.version>4.2.0</spec2.version>
+    <spec2.version>4.20.5</spec2.version>
   </properties>
-```
-4. To configure your project with Spark, add the following dependency:
-   ```xml
-      <dependency>
-        <groupId>org.apache.spark</groupId>
-        <artifactId>spark-core_${scala.compat.version}</artifactId>
-        <version>${spark.version}</version>
-        <scope>compile</scope>
-      </dependency>
+ <dependencies>
+   <dependency>
+       <groupId>org.apache.spark</groupId>
+       <artifactId>spark-core_${scala.compat.version}</artifactId>
+       <version>${spark.version}</version>
+       <scope>compile</scope>
+     </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.compat.version}</artifactId>
+      <version>3.0.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.specs2</groupId>
+      <artifactId>specs2-core_${scala.compat.version}</artifactId>
+      <version>${spec2.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.specs2</groupId>
+      <artifactId>specs2-junit_${scala.compat.version}</artifactId>
+      <version>${spec2.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
     ```
     Click the floating ***m*** icon to load all dependencies.
 
-5. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
+4. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
 
-6. Because this lab contains many tests with different arguments, you have two options to simplify your work:
+5. Because this lab contains many tests with different arguments, you have two options to simplify your work:
     * Run all tests via command line, all commands can be found at [Commands](#commands).
     * Run all tests inside IntelliJ, you will need to create a configuration for each test, check [IntelliJ Configurations](#intellij-configurations) for pre-defined configurations.
 
