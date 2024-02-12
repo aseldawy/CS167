@@ -50,31 +50,33 @@ We will follow a slightly modified version of the instructions on the [official 
 
 2. Import your project into IntelliJ IDEA in the same way you did in previous labs and make sure it compiles.
 
-3. To configure your project with Spark, merge the following configuration in `pom.xml`.
+3. In your `pom.xml` replace the properties section with the following configuration in `pom.xml`:
 
     ```xml
-    <properties>
-      <spark.version>3.5.0</spark.version>
-      <scala.compat.version>2.13</scala.compat.version>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-    <dependencies>
+  <properties>
+    <spark.version>3.5.0</spark.version>
+    <scala.compat.version>2.13</scala.compat.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>   
+    <encoding>UTF-8</encoding>
+    <scala.version>2.13.12</scala.version>
+    <spec2.version>4.2.0</spec2.version>
+  </properties>
+```
+4. To configure your project with Spark, add the following dependency:
+      ```xml
       <dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-core_${scala.compat.version}</artifactId>
         <version>${spark.version}</version>
         <scope>compile</scope>
       </dependency>
-    </dependencies>
     ```
-
     Click the floating ***m*** icon to load all dependencies.
 
-4. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
+5. Run the main function in `App` class in Intellij to make sure it works. Also, in the command line, change into the project directory and type `mvn package` once to make sure that it compiles.
 
-5. Because this lab contains many tests with different arguments, you have two options to simplify your work:
+6. Because this lab contains many tests with different arguments, you have two options to simplify your work:
     * Run all tests via command line, all commands can be found at [Commands](#commands).
     * Run all tests inside IntelliJ, you will need to create a configuration for each test, check [IntelliJ Configurations](#intellij-configurations) for pre-defined configurations.
 
@@ -852,27 +854,24 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 4. A `Copy` dialog will show, you don't need to change anything. Click `OK` to continue.
     ![Copy dialog](images/copy-dialog.png)
 
-5. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, which replace `[UCRNetID]` to your actual UCR Net ID.
+5. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, by replacing `<UCRNetID>` to your actual UCR Net ID.
     ![Run configuration](images/config-xml-before-replace.png)
 
-6. Open every XML file, do a **replace** (shortcut is `Ctrl + R` on Linux and Windows, `Command + R` on macOS). Type `[UCRNetID]` in the upper text field, and your actual UCR Net ID in the lower text field. Then click `Replace All`.
-    ![Replace](images/config-xml-replace.png)
+6. On IntelliJ Right-CLick on the `runConfigurations` and select `Replace in Files`.
+    ![Replace in Files](images/replace_in_files_menu.png)
 
-    <p align="center">&#8595;</p>
+7. On the window that appears put `<UCRNetID>` on the first field, and your UCRNetID on the second field `msaee007` on this example, as shown on the screenshot. Then, click on `Replace All`.
+   ![Replace in Files](images/replace_in_files_window.png)
 
-    ![XML after replace](images/config-xml-after-replace.png)
+9. This should update all the `runConfiguration` files with your UCRNetID.
 
-7. Repeat step 6 for all the 15 XML files.
+10. Click the `Add Configuration...` button next to the green hammer icon.
+    ![Add configuration](images/idea-add-config.png)
 
-8. Save all modified XML files. You can do this in a batch by right clicking the XML file's tab and select `Close All Tabs`.
-
-9. Click the `Add Configuration...` button next to the green hammer icon.
-    [Add configuration](images/idea-add-config.png)
-
-10. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
+11. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
     ![Debug configuration](images/run-debug-config.png)
 
-11. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
+12. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
     [Run config](images/run-config.png)
 
 ---
