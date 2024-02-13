@@ -875,9 +875,7 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 
 1. Download [runConfigurations.zip](./runConfigurations.zip) and unzip it.
   
-   Note, if you needed to add the VM Options in your configuraiton because you encountered this exception `Exception in thread "main" java. lang.IllegalAccessError Create breakpoint: class org.apache.spark.torage.StorageUtils$
-
-` in the previous lab, you will need to download this file instead [runConfigurations_with_vmoptions.zip](./runConfigurations_with_vmoptions.zip).
+   Note, if you needed to add the VM Options in your configuraiton because you encountered this exception `Exception in thread "main" java. lang.IllegalAccessError Create breakpoint: class org.apache.spark.torage.StorageUtils$` in the previous lab, you will need to download this file instead [runConfigurations_with_vmoptions.zip](./runConfigurations_with_vmoptions.zip).
 
 4. Copy the unzipped `runConfigurations` directory. Shortcut is `Ctrl + C` on Linux and Windows, `Command + C` on macOS.
 
