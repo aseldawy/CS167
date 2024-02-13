@@ -55,11 +55,11 @@ We will follow a slightly modified version of the instructions on the [official 
 ```xml
   <properties>
     <spark.version>3.5.0</spark.version>
-    <scala.compat.version>2.13</scala.compat.version>
+    <scala.compat.version>2.12</scala.compat.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>   
     <encoding>UTF-8</encoding>
-    <scala.version>2.13.12</scala.version>
+    <scala.version>2.12.18</scala.version>
     <spec2.version>4.20.5</spec2.version>
   </properties>
  <dependencies>
@@ -874,33 +874,37 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 ## IntelliJ Configurations
 
 1. Download [runConfigurations.zip](./runConfigurations.zip) and unzip it.
+  
+   Note, if you needed to add the VM Options in your configuraiton because you encountered this exception `Exception in thread "main" java. lang.IllegalAccessError Create breakpoint: class org.apache.spark.torage.StorageUtils$
 
-2. Copy the unzipped `runConfigurations` directory. Shortcut is `Ctrl + C` on Linux and Windows, `Command + C` on macOS.
+` in the previous lab, you will need to download this file instead [runConfigurations_with_vmoptions.zip](./runConfigurations_with_vmoptions.zip).
 
-3. In your project browser in IntelliJ, right click `.idea` directory, select `Paste`. Shortcut is `Ctrl + V` on Linux and Windows, `Command + V` on macOS (Make sure you have `.idea` directory selected).
+4. Copy the unzipped `runConfigurations` directory. Shortcut is `Ctrl + C` on Linux and Windows, `Command + C` on macOS.
+
+5. In your project browser in IntelliJ, right click `.idea` directory, select `Paste`. Shortcut is `Ctrl + V` on Linux and Windows, `Command + V` on macOS (Make sure you have `.idea` directory selected).
     ![Paste config](images/idea-paste-config.png)
 
-4. A `Copy` dialog will show, you don't need to change anything. Click `OK` to continue.
+6. A `Copy` dialog will show, you don't need to change anything. Click `OK` to continue.
     ![Copy dialog](images/copy-dialog.png)
 
-5. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, by replacing `<UCRNetID>` to your actual UCR Net ID.
+7. Expand `.idea` directory, then expand `runConfigurations` directory. You will find some XML files. You will need to make some simple changes to **ALL** these XML files, by replacing `<UCRNetID>` to your actual UCR Net ID.
     ![Run configuration](images/config-xml-before-replace.png)
 
-6. On IntelliJ Right-CLick on the `runConfigurations` and select `Replace in Files`.
+8. On IntelliJ Right-CLick on the `runConfigurations` and select `Replace in Files`.
     ![Replace in Files](images/replace_in_files_menu.png)
 
-7. On the window that appears put `<UCRNetID>` on the first field, and your UCRNetID on the second field `msaee007` on this example, as shown on the screenshot. Then, click on `Replace All`.
+9. On the window that appears put `<UCRNetID>` on the first field, and your UCRNetID on the second field `msaee007` on this example, as shown on the screenshot. Then, click on `Replace All`.
    ![Replace in Files](images/replace_in_files_window.png)
 
-9. This should update all the `runConfiguration` files with your UCRNetID.
+10. This should update all the `runConfiguration` files with your UCRNetID.
 
-10. Click the `Add Configuration...` button next to the green hammer icon.
+11. Click the `Add Configuration...` button next to the green hammer icon.
     ![Add configuration](images/idea-add-config.png)
 
-11. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
+12. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
     ![Debug configuration](images/run-debug-config.png)
 
-12. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
+13. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
     [Run config](images/run-config.png)
 
 ---
