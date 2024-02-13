@@ -1005,10 +1005,10 @@ The following reading material could help you with your lab.
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <encoding>UTF-8</encoding>
-        <scala.version>2.13.8</scala.version>
-        <scala.compat.version>2.13</scala.compat.version>
+        <scala.version>2.12.18</scala.version>
+        <scala.compat.version>2.12</scala.compat.version>
         <spec2.version>4.2.0</spec2.version>
-        <spark.version>3.2.1</spark.version>
+        <spark.version>3.5.0</spark.version>
       </properties>
 
 
@@ -1029,7 +1029,11 @@ The following reading material could help you with your lab.
           <artifactId>spark-sql_${scala.compat.version}</artifactId>
           <version>${spark.version}</version>
        </dependency>
-
+       <dependency>
+         <groupId>org.apache.spark</groupId>
+         <artifactId>spark-sql_${scala.compat.version}</artifactId>
+         <version>${spark.version}</version>
+       </dependency>
         <!-- Test -->
         <dependency>
           <groupId>junit</groupId>
