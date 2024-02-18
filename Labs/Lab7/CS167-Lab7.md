@@ -332,7 +332,7 @@ The schema is now much smaller than the original one.
 With the following lines:
 
 ```
-(place.country_code AS country_code, place.name AS name, place.place_type AS place_type) AS place,
+       (place.country_code AS country_code, place.name AS name, place.place_type AS place_type) AS place,
        (user.followers_count AS followers_count, user.statuses_count AS statuses_count, user.id AS id) AS user,
        timestamp(cast(timestamp_ms as long)/1000) AS time,
        getHashtagTexts(entities.hashtags) AS hashtags,
@@ -438,7 +438,7 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTwee
 
 B.3.1) To start with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with  (language, count) pair.
 
-B.3.2) Use the `explode` function on the `top_lang` column. You can use the following two line:
+B.3.2) Use the `explode` function on the `top_lang` column. You can use the following line:
 ```scala
 df = df.withColumn("top_langs", explode($"top_langs"))
 ```
