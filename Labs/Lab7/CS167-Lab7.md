@@ -232,7 +232,6 @@ object AnalyzeTweets {
           df.show(25)
         case "corr" =>
           // TODO: B.4) compute the correlation between the `user_followers_count` and `retweet_count`
-          println(df.stat.corr("user.statuses_count", "user.followers_count"))
         case "top-hashtags" =>
           // TODO: B.5) Get the hashtags with the most tweets 
           // B.5.1) explode the hashtags columns
@@ -283,14 +282,14 @@ Note: You may consider `root` to be at nesting level 0, and `element` represents
 
 2. Let's now select a smaller subset of these columns, only those that will be relevant to our analysis. We are only interested in the following columns:
 
-`id`, `text`, `retweet_count`, `reply_count`, `lang`, `place`, `user.followers_count`, `timestamp_ms`, `entities.hashtags`
+`id`, `text`, `retweet_count`, `reply_count`, `lang`, `place`, `user`, `timestamp_ms`, `entities.hashtags`
 
-We can use a SQL query to select these columns, but first we need to create a view (TODO A.2.1):
+We can use a SQL query to select these columns, but first we need to create a view (`TODO A.2.1`):
 ```scala
 df.createOrReplaceTempView("tweets")
 ```
 
-You can now select those columns with the following query (TODO A.2.2):
+You can now select those columns with the following query (`TODO A.2.2`):
 
 ```scala
 df = spark.sql(
@@ -305,7 +304,7 @@ df = spark.sql(
        FROM tweets""")
 ```
 
-Now, print the schema of the updated dataframe (TODO A.2.3):
+Now, print the schema of the updated dataframe (`TODO A.2.3`):
 ```scala
 df.printSchema()
 ```
@@ -321,7 +320,7 @@ The schema is now much smaller than the original one.
 3. We will now apply some transformations to these columns.
 
 
-(TODO A.3.[1-4]) In the previous SQL query, replace these line:
+(`TODO A.3.[1-4]`) In the previous SQL query, replace these line:
 
 ```
        place,
@@ -344,7 +343,7 @@ This first two lines will select only the nested columns that we want from the `
 
 This will change the data type of the time column.
 
-Now, print the schema of this dataframe (TODO A.3.5).
+Now, print the schema of this dataframe (`TODO A.3.5`).
 
 ***Q4: Based on this new schema answer the following:***
 *how many fields does the `place` column contain?*
@@ -352,7 +351,7 @@ Now, print the schema of this dataframe (TODO A.3.5).
 *what is the datatype of the `time` column?*
 *what is the datatype of the `hashtags` column?*
 
-5. You can show the dataframe to see a sample of rows (TODO A.5):
+5. You can show the dataframe to see a sample of rows (`TODO A.5`):
 
 ```scala
 df.show()
@@ -360,13 +359,13 @@ df.show()
 
 6. We can now save this dataframe in different format.
 
-First, save it in JSON format, using this command (TODO A.6):
+First, save it in JSON format, using this command (`TODO A.6`):
 
 ```scala
  df.write.mode("overwrite").json(outputfile + ".json")
 ```
 
-Then, save it in Parquet format, using this command (TODO A.7):
+Then, save it in Parquet format, using this command (`TODO A.7`):
 
 ```scala
 df.write.mode("overwrite").parquet(outputfile + ".parquet")
@@ -376,7 +375,7 @@ These two commands will create two folders, one for each format.
 
 ***Q5: What is the size of each folder? Can you explain the difference in size, knowing that the two folders `Tweets.json` and `Tweets.parquet` contain the exact same dataframe?***
 
-Now, try to save the dataframe in `CSV` format, using the following line (TODO A.8):
+Now, try to save the dataframe in `CSV` format, using the following line (`TODO A.8`):
 ```scala
 df.write.mode("overwrite").parquet(outputfile + ".csv")
 ```
