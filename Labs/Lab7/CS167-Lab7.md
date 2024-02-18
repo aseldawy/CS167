@@ -506,19 +506,14 @@ Note: to get the score for this question both your output must be correct and yo
 ### IX. Submission (30 minutes)
 1. Add a `README` file with all your answers.
 2. Include the running time of all the operations you ran on the three files. The table will look similar to the following.
-
+```
 | Command               | Tweets_1m.json | tweets.json | tweets.parquet |
-
 | top-country           |                |             |                |
-
 | top-lang              |                |             |                |
-
 | top-country-with-lang |                |             |                |
-
 | corr                  |                |             |                |
-
 | top-hashtags          |  N/A           |             |                |
-
+```
 
 3. Add a `run.sh` script that compiles your code and then runs the following set of operations in order.
 * Run the preprocessor on the `Tweets_1m.json` file.
