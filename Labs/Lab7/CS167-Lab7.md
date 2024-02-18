@@ -526,6 +526,9 @@ Note: to get the score for this question both your output must be correct and yo
 ## Rubric
 
 Q1-12: +12 points (+1 point for each question; a point is counted only if the corresponding part is correctly implemented)
+
 Code compiles correctly: +1 point
+
 Full table of run-time by input format: +1 point
+
 Following submission instructions: +1 point
