@@ -2,193 +2,55 @@
 
 ## Objectives
 
-* Run analytic queries on Parquet files.
+* Run SQL queries using SparkSQL and work with more complex schema.
 * Understand the performance gains of working with Parquet files.
-* Run SQL queries using SparkSQL
+* Run analytic queries on Parquet files.
 
 ## Prerequisites
 * Setup the development environment as explained in [Lab 6](../Lab6/CS167_Lab6.md).
-* Download the following sample file [Chicago Crimes](https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD).
+* Download the following sample file [Tweets_1m.json.zip](https://drive.google.com/file/d/12-Mmv6JPgeWqp_EDurmePBqeaK1URyFv/view?usp=sharing), and decompress it in your Lab 7 directory.
 
 ## Lab Work
 
-### I. Project Setup (10 minutes)
+### I. Project Setup (10 minutes) (In home)
 Setup a new Scala project similar to [Lab 6](../Lab6/CS167_Lab6.md). Make sure to change the project name to Lab 7.
 
-### II. Initialize a SparkSession (5 minutes)
-In this part, you will initialize your project with SparkSession to access SparkSQL and the DataFrame API.
-1. In `App` class, add the following stub code.
-```scala
-import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.SparkConf
 
-object App {
+Make sure your `pom.xml` file contains the following by replacing the `properties` and `dependencies` sections:
 
-  def main(args : Array[String]) {
-    val operation: String = args(0)
-    val inputfile: String = args(1)
-
-    val conf = new SparkConf
-    if (!conf.contains("spark.master"))
-      conf.setMaster("local[*]")
-    println(s"Using Spark master '${conf.get("spark.master")}'")
-
-    val spark = SparkSession
-      .builder()
-      .appName("CS167 Lab7")
-      .config(conf)
-      .getOrCreate()
-
-    try {
-      import spark.implicits._
-      // TODO Load input
-
-      input.show()
-      input.printSchema()
-
-      val t1 = System.nanoTime
-      operation match {
-        case "write-parquet" =>
-          // TODO Write the input dataset to a parquet file. The file name is passed in args(2)
-        case "write-parquet-partitioned" =>
-          // TODO Write the input dataset to a partitioned parquet file by District. The file name is passed in args(2)
-        case "top-crime-types" =>
-          // TODO Print out the top five crime types by count "Primary_Type"
-        case "find" =>
-          // TODO Find a record by Case_Number in args(2)
-        case "stats" =>
-          // TODO Compute the number of arrests, domestic crimes, and average beat per district.
-          // Save the output to a new parquet file named "stats.parquet"
-        case "stats-district"  =>
-          // TODO Compute number of arrests, domestic crimes, and average beat for one district (args(2))
-          // Write the result to the standard output
-      }
-
-      val t2 = System.nanoTime
-      println(s"Operation $operation on file '$inputfile' finished in ${(t2-t1)*1E-9} seconds")
-    } finally {
-      spark.stop
-    }
-  }
-}
-```
-
-### III. Explore the data (15 minutes)
-Check out the [dashboard](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5cd6-ry5g) provided by the City of Chicago to explore how the data can be used. (Q1) What are the top five crime types?
-
-
-### IV. Load the input file (15 minutes)
-The first step is to load the input file. In this lab, we will work with two types of files, CSV and Parquet files. We will distinguish them by inputfile extension (`.csv` or `.parquet`).
-1. Replace the TODO item of loading the input using the correct format, either CSV or Parquet. To read a Parquet file is loaded using the command `spark.read.parquet()`.
-2. In addition, since Parquet cannot deal with attribute names with spaces in them, you will need to rename all attibutes with spaces. In this lab, we will replace any space in an attribute name with an underscore `_`. You can do that using the operation `input.withColumnRenamed(old_name, new_name)`. The attributes that need to be renamed are `Case Number`, `Primary Type`, `Location Description`, `Community Area`, `FBI Code`, `X Coordinate`, `Y Coordinate`, and `Updated On`. Make sure to do that only when loading the CSV file.
-
-### V. Convert a CSV file to Parquet (20 minutes)
-To see the difference between processing the CSV file and processing Parquet, the first step is to convert the CSV file to Parquet.
-1. Implement the command `write-parquet` which writes the input as a Parquet file. The output filename is passed in `args(2)`.
-2. (Q2) Compare the sizes of the CSV file and the resulting Parquet file? What do you notice? Explain.
-
-Note: You will be able to see the inferred schema of the Parquet file at the output. It will look similar to the following snippet:
-```text
-message spark_schema {
-  optional int32 ID;
-  optional binary Case_Number (UTF8);
-  optional binary Date (UTF8);
-  optional binary Block (UTF8);
-  optional binary IUCR (UTF8);
-  ...
-```
-
-3. (Q3) How many times do you see the schema the output? How does this relate to the number of files in the output directory? What do you make of that?
-
-### VI. Create a partitioned Parquet file (10 minutes)
-SparkSQL allows you to write a partitioned file to speed up filters on specific attributes. Consider this a cheap and poor index that might sometimes help.
-1. Implement the operation `write-parquet-partitioned` that writes the input to a parquet file after partitioning it by `District`.
-2. The code will look like the following but you will need to specify the partitioning attribute and the output file name `input.write.partitionBy().parquet`.
-3. (Q4) How does the output look like? How many files were generated?
-
-### VII. Create a view to run SQL queries (20 miutes)
-1. For this lab, you need to implement all analysis queries using SQL. To do so, you first need to create a temporary view out of your input and run the SQL query on it.
-2. To create a temporary view, use the following statement with your input data frame `.createTempView()`.
-3. After creating the temp view, you can run the SQL query using the method `spark.sql(...)`.
-4. Try a simple SQL query to make sure it works correct, e.g., `SELECT COUNT(*) FROM ...`.
-
-
-Note: For each operation from this point on, you should run it three times, on the original CSV file, on the non-partitioned Parquet file, and on the partitioned Parquet file. Make sure that they all produce the same output. Record all the running times and include them in your README file.
-
-### VIII. `top-crime-types` (10 minutes)
-1. Add the operation `top-crime-types` that lists the top five crime types by count.
-2. You can use SparkSQL to process run the top-k query as we did in the previous lab.
-3. Compare your results to the one shown in the [dashboard](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5cd6-ry5g).
-
-### VI. Find a record (10 minutes)
-1. Add a operation `filter` that locates a crime record by `Case-Number` and writes the entire record.
-2. (Q5) Explain an efficient way to run this query on a column store.
-3. Try your code with the Case Number `HY413923` on the three file variations.
-
-### VII. Stats (10 minutes)
-1. Add a operation `stats` that computes the total number of arrests, total number of domestic crimes, and the average beat for each district.
-2. Write the output of this operation to a file named `stats.parquet`. Needless to say, it is a parquet file.
-
-Hint: In SparkSQL, when you write the result to a file, you can automatically overwrite the file using the method `mode("overwrite")` when writing the file. I'll let you figure out how to use it. If you do not want to use this option, you can still delete the file after each run.
-
-### VIII. Stats for one district (20 minutes)
-1. Similar to the previous operation, this operation will compute the same statistics but for only one district. The district ID is given as a command line argument `args(2)`.
-2. (Q6) Which of the three input files you think will be processed faster using this operation?
-3. Test your command with District ID 8.
-
-### IX. Submission (30 minutes)
-1. Add a `README` file with all your answers.
-2. Include the running time of all the operations you ran on the three files. The table will look similar to the following.
-
-| Command           | Time on CSV | Time on non-partitioned Parquet | Time on partitioned Parquet |
-| ----------------- | ----------- | ------------------------------- | --------------------------- |
-| top-crime-types   |             |                                 |                             |
-| find              |             |                                 |                             |
-| stats             |             |                                 |                             |
-| stats-district    |             |                                 |                             |
-
-3. Add a `run` script that compiles your code and then runs the following set of operations in order.
-* Convert the CSV file to a non-partitioned Parquet file.
-* Convert the CSV file to a partitioned Parquet file.
-* Run the `top-crime-types` operation on the three files.
-* Run the `find` operation with Case Number `HY413923` on the three files.
-* Run the `stats` operation on the three files.
-* Run the `stats-district` operation with District ID `8` on the three files.
-
-## Further Readings
-The folllowing reading material could help you with your lab.
-* [Spark SQL Programming Guide](http://spark.apache.org/docs/latest/sql-getting-started.html)
-* [Dataset API Docs](hhttp://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset)
-
-## FAQ
-* Q: My code does not compile using `mvn package`.
-* Q: IntelliJ IDEA does not show the green run arrow next to the `App` class.
-* A: Check your `pom.xml` file and make sure that the following sections are there in your file.
 ```xml
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <encoding>UTF-8</encoding>
-    <scala.version>2.12.6</scala.version>
+    <spark.version>3.5.0</spark.version>
     <scala.compat.version>2.12</scala.compat.version>
-    <spec2.version>4.2.0</spec2.version>
-    <spark.version>2.4.5</spark.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>   
+    <encoding>UTF-8</encoding>
+    <scala.version>2.12.18</scala.version>
+    <spec2.version>4.20.5</spec2.version>
   </properties>
-
-
-  <dependencies>
+ <dependencies>
+   <dependency>
+       <groupId>org.apache.spark</groupId>
+       <artifactId>spark-core_${scala.compat.version}</artifactId>
+       <version>${spark.version}</version>
+       <scope>compile</scope>
+     </dependency>
+     <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.compat.version}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+   <!-- new dependency for lab 07, required for code to run in IntelliJ -->
+   <dependency>
+     <groupId>com.fasterxml.jackson.core</groupId>
+     <artifactId>jackson-core</artifactId>
+     <version>2.16.1</version>
+   </dependency>
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.12</artifactId>
-      <version>${spark.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>
@@ -199,7 +61,7 @@ The folllowing reading material could help you with your lab.
     <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_${scala.compat.version}</artifactId>
-      <version>3.0.5</version>
+      <version>3.0.8</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -216,59 +78,454 @@ The folllowing reading material could help you with your lab.
     </dependency>
   </dependencies>
 
-  <build>
-    <sourceDirectory>src/main/scala</sourceDirectory>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <!-- see http://davidb.github.com/scala-maven-plugin -->
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>3.3.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <args>
-                <arg>-dependencyfile</arg>
-                <arg>${project.build.directory}/.scala_dependencies</arg>
-              </args>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
-        <configuration>
-          <!-- Tests will be run with scalatest-maven-plugin instead -->
-          <skipTests>true</skipTests>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <version>2.0.0</version>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <junitxml>.</junitxml>
-          <filereports>TestSuiteReport.txt</filereports>
-          <!-- Comma separated list of JUnit test class names to execute -->
-          <jUnitClasses>samples.AppTest</jUnitClasses>
-        </configuration>
-        <executions>
-          <execution>
-            <id>test</id>
-            <goals>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 ```
+
+### II. Initialize Spark Session (10 minutes) (In home)
+
+For this lab, we will use two files: `PreprocessTweets.scala` and `AnalyzeTweets.scala`.
+
+1. Create a new scala file named `PreprocessTweets.scala` and use the following as your starter code:
+
+```scala
+package edu.ucr.cs.cs167.<UCRNetId>
+
+import org.apache.spark.SparkConf
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
+import org.apache.spark.sql.expressions.UserDefinedFunction
+import org.apache.spark.sql.functions.udf
+
+import scala.collection.mutable
+
+
+object PreprocessTweets {
+  def main(args: Array[String]): Unit = {
+    val inputfile: String = args(0)
+    val outputfile: String = "tweets"
+
+    val getHashtagTexts: UserDefinedFunction = udf((x: mutable.WrappedArray[GenericRowWithSchema]) => {
+      x match {
+        case x: mutable.WrappedArray[GenericRowWithSchema] => x.map(_.getAs[String]("text"))
+        case _ => null
+      }
+    })
+
+    val conf = new SparkConf
+    if (!conf.contains("spark.master"))
+      conf.setMaster("local[*]")
+    println(s"Using Spark master '${conf.get("spark.master")}'")
+
+    val spark = SparkSession
+      .builder()
+      .appName("CS167 Lab7 - Preprocessor")
+      .config(conf)
+      .getOrCreate()
+    spark.udf.register("getHashtagTexts", getHashtagTexts)
+
+    try {
+      import spark.implicits._
+      // TODO: A.1) read file and print schema
+      //           A.1.1 read json file
+      //           A.1.2 print dataframe schema
+
+      // TODO: A.2) use SQL to select relevant columns
+      //           A.2.1 createOrReplaceTempView
+      //           A.2.2 use Spark SQL select query
+      //           A.2.3 print schema of new dataframe
+      // TODO: A.3) apply functions to some columns, by modifying the previous SQL command as follows:
+      //           A.3.1 drop some nested columns from `place`
+      //           A.3.2 drop some nested columns `user`
+      //           A.3.3 transform `timestamp` to the appropriate datatype
+      //           A.3.4 simplify the structure of the `hashtags` column
+      //           A.3.5 print schema of new dataframe
+      // TODO: A.5) show the dataframe
+      // TODO: A.6) save the dataframe in JSON format
+      // TODO: A.7) save the file in Parquet format
+      // TODO: A.8) save the file in CSV format
+    } finally {
+      spark.stop
+    }
+  }
+}
+```
+
+2. Create a new scala file named `AnalyzeTweets.scala` and use the following as your starter code:
+```scala
+package edu.ucr.cs.cs167.<UCRNetId>
+
+import org.apache.spark.SparkConf
+import org.apache.spark.sql.expressions.UserDefinedFunction
+import org.apache.spark.sql.functions.{explode, udf}
+import org.apache.spark.sql.{DataFrame, SparkSession}
+
+import scala.collection.mutable
+
+object AnalyzeTweets {
+
+  def main(args: Array[String]) {
+    val operation: String = args(0)
+    val inputfile: String = args(1)
+
+    val conf = new SparkConf
+    if (!conf.contains("spark.master"))
+      conf.setMaster("local[*]")
+
+    println(s"Using Spark master '${conf.get("spark.master")}'")
+
+    val spark = SparkSession
+      .builder()
+      .appName("CS167 Lab7 - SQL")
+      .config(conf)
+      .getOrCreate()
+
+    val getTopLangs : UserDefinedFunction = udf((x: mutable.WrappedArray[String]) => {
+      val orderedLangCount = x.groupBy(identity).map { case (x, y) => x -> y.size }.toArray.sortBy(-1 * _._2)
+      orderedLangCount.take(5.min(orderedLangCount.length))
+    })
+    spark.udf.register("getTopLangs", getTopLangs)
+
+    if (!(inputfile.endsWith(".json") || inputfile.endsWith(".parquet"))) {
+      Console.err.println(s"Unexpected input format. Expected file name to end with either '.json' or '.parquet'.")
+    }
+    var df : DataFrame = if (inputfile.endsWith(".json")) {
+      spark.read.json(inputfile)
+    } else {
+        spark.read.parquet(inputfile)
+    }
+    df.createOrReplaceTempView("tweets")
+
+    try {
+      import spark.implicits._
+      var valid_operation = true
+      val t1 = System.nanoTime
+      operation match {
+        case "top-country" =>
+          // TODO: B.1) print out the top 5 countries by count
+          df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> DESC LIMIT 5")
+          df.show()
+        case "top-lang" =>
+        // TODO: B.2) print out the top 5 languages by count
+          df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> LIMIT 5")
+          df.show()
+        case "top-country-with-lang" =>
+          // TODO: B.3) print out the top 5 countries by count, and the top five languages in each of them by percentage
+
+          // TODO: B.3.1) start by copying the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword.
+          df = spark.sql(s"SELECT ..., getTopLangs(collect_list(lang)) AS top_langs FROM tweets ... LIMIT 5")
+
+          println("Schema after step B.3.1:")
+          df.printSchema()
+
+          // TODO B.3.2) Use the `explode` function on the `top_lang` column
+
+
+          println("\nSchema after step B.3.2:")
+          df.printSchema()
+          // Create a view for the new dataframe
+          df.createOrReplaceTempView("tweets")
+
+          // TODO B.3.3) update this command to get the table in the expected output
+          df = spark.sql(s"SELECT <YOUR_SELECTED_COLUMNS> FROM tweets ORDER BY <YOUR_ORDER_COLUMNS>")
+
+          println("\nSchema after step B.3.3:")
+          df.printSchema()
+          df.show(25)
+        case "corr" =>
+          // TODO: B.4) compute the correlation between the `user_followers_count` and `retweet_count`
+          println(df.stat.corr("user.statuses_count", "user.followers_count"))
+        case "top-hashtags" =>
+          // TODO: B.5) Get the hashtags with the most tweets 
+          // B.5.1) explode the hashtags columns
+          // B.5.2) create a view for the new dataframe
+          // B.5.3) use a sql query to get the top 10 hashtags with the most tweets.
+          // B.5.4) show the final result
+        case _ => valid_operation = false
+      }
+      val t2 = System.nanoTime
+      if (valid_operation)
+        println(s"Operation $operation on file '$inputfile' finished in ${(t2 - t1) * 1E-9} seconds")
+      else
+        Console.err.println(s"Invalid operation '$operation'")
+    } finally {
+      spark.stop
+    }
+  }
+}
+
+```
+
+### III. Data Pre-processing (40 minutes) (In home)
+
+In this part, you will complete the implementation of the `PreprocessTweets.scala` file which takes the path to the `Tweets_100k.json` file as input and will save a cleaner version in different formats. Note, in this part all of the code is implemented for. You'll have to follow the instructions to fill all the `TODO` parts, and check the console outputs to answer the questions.
+
+To run this file, you can use the following command:
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.PreprocessTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar ./Tweets_1m.json
+```
+
+1. First, read the input data file in JSON format, and print its schema. (`TODO A1`)
+
+To read a `JSONLines` file in Spark you can use the following command:
+```scala
+var df = spark.read.json(inputfile)
+```
+
+To print the schema of a dataframe, you can use the following:
+```scala
+df.printSchema()
+```
+
+Do you notice how large the schema of this data is? Take some time to explore this schema, and think about its nesting levels, 
+***Q1: What is the nested level of this column `root.entities.hashtags.element.text`?***
+Note: You may consider `root` to be at nesting level 0, and `element` represents an element in an array and doesn't add to the nesting levels.
+
+***Q2: In Parquet, would this field be stored as a repeated column? Explain your answer.***
+
+2. Let's now select a smaller subset of these columns, only those that will be relevant to our analysis. We are only interested in the following columns:
+
+`id`, `text`, `retweet_count`, `reply_count`, `lang`, `place`, `user.followers_count`, `timestamp_ms`, `entities.hashtags`
+
+We can use a SQL query to select these columns, but first we need to create a view (TODO A.2.1):
+```scala
+df.createOrReplaceTempView("tweets")
+```
+
+You can now select those columns with the following query (TODO A.2.2):
+
+```scala
+df = spark.sql(
+        """SELECT
+       id,
+       text,
+       place,
+       user,
+       timestamp_ms AS time,
+       entities.hashtags AS hashtags,
+       lang
+       FROM tweets""")
+```
+
+Now, print the schema of the updated dataframe (TODO A.2.3):
+```scala
+df.printSchema()
+```
+
+The schema is now much smaller than the original one.
+
+***Q3: Based on this schema answer the following:***
+*how many fields does the `place` column contain?*
+*how many fields does the `user` column contain?*
+*what is the datatype of the `time` column?*
+*what is the datatype of the `hashtags` column?*
+
+3. We will now apply some transformations to these columns.
+
+
+(TODO A.3.[1-4]) In the previous SQL query, replace these line:
+
+```
+       place,
+       user,
+       timestamp_ms,
+       entities.hashtags AS hashtags,
+```
+
+With the following lines:
+
+```
+(place.country_code AS country_code, place.name AS name, place.place_type AS place_type) AS place,
+       (user.followers_count AS followers_count, user.statuses_count AS statuses_count, user.id AS id) AS user,
+       timestamp(cast(timestamp_ms as long)/1000) AS time,
+       getHashtagTexts(entities.hashtags) AS hashtags,
+```
+
+This first two lines will select only the nested columns that we want from the `place` and `user` columns, respectively. The third line converts the `timestamp_ms` column. The last line extracts only the hashtag text from the hashtags structure. We are using a custom function to do this transformation, which is already implemented for you.
+
+
+This will change the data type of the time column.
+
+Now, print the schema of this dataframe (TODO A.3.5).
+
+***Q4: Based on this new schema answer the following:***
+*how many fields does the `place` column contain?*
+*how many fields does the `user` column contain?*
+*what is the datatype of the `time` column?*
+*what is the datatype of the `hashtags` column?*
+
+5. You can show the dataframe to see a sample of rows (TODO A.5):
+
+```scala
+df.show()
+```
+
+6. We can now save this dataframe in different format.
+
+First, save it in JSON format, using this command (TODO A.6):
+
+```scala
+ df.write.mode("overwrite").json(outputfile + ".json")
+```
+
+Then, save it in Parquet format, using this command (TODO A.7):
+
+```scala
+df.write.mode("overwrite").parquet(outputfile + ".parquet")
+```
+
+These two commands will create two folders, one for each format.
+
+***Q5: What is the size of each folder? Can you explain the difference in size, knowing that the two folders `Tweets.json` and `Tweets.parquet` contain the exact same dataframe?***
+
+Now, try to save the dataframe in `CSV` format, using the following line (TODO A.8):
+```scala
+df.write.mode("overwrite").parquet(outputfile + ".csv")
+```
+
+This line will produce an error.
+
+***Q6: What is the error that you see? Why is Spark not able to write this dataframe in the CSV format?***
+
+
+
+This is the end of this part. Now, we have three different files: `Tweets_1m.json`, `tweets.json` and `tweets.parquet`. We will use all three in the next section to learn how the different formats affect performance.
+
+### III. Analyzing Data (30 minutes)
+
+#### B.1) Print the top 5 countriers by number of tweets
+
+1. Run a SQL query on the tweets table, that first groups by the country_code and counts the rows for each country. Simply modify `<YOUR_SELECTED_COLUMNS>`, `<YOUR_GROUP_BY_COLUMN>`,  and `<YOUR_ORDER_COLUMN>` with the appropriate values, and make sure that the final result is in descending order.
+
+2. Compile your code using `mvn compile` and then run the following commands:
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./tweets.parquet
+```
+
+Each command will run the same operation on one of the files we have from the previous section.
+
+***Q7: What do you see in the output? Copy it here.***
+Note: to get the score for this question both your output must be correct and your implementation must also be correct.
+
+***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is fastest? Can you explain your observation?.***
+
+
+#### B.2) Print the top 5 languages by number of tweets
+
+1. Run a SQL query on the tweets table, that first groups by the `lang` and counts the rows for each language. Simply modify `<YOUR_SELECTED_COLUMNS>`, `<YOUR_GROUP_BY_COLUMN>`,  and `<YOUR_ORDER_COLUMN>` with the appropriate values, and make sure that the final result is in descending order.
+
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.parquet
+```
+
+***Q7.1: What are the top languages that you see? Copy the output here.***
+Note: to get the score for this question both your output must be correct and your implementation must also be correct.
+
+***Q7.2: Do you also observe the same perfroamnce for the different file formats?***
+
+
+#### B.3) Print the top 5 countries, and the percentage of tweets posted in their top languages.
+
+For this operation, we want to run a little more complex query. You will also use this command for this operation:
+
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.parquet
+```
+
+
+B.3.1) To start with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with  (language, count) pair.
+
+B.3.2) Use the `explode` function on the `top_lang` column. You can use the following two line:
+```scala
+df = df.withColumn("top_langs", explode($"top_langs"))
+```
+
+B.3.4) After this part, we expect the output to have the following schema:
+
+```
+root
+ |-- country: string (nullable = true)
+ |-- tweets_count: long (nullable = false)
+ |-- lang: string (nullable = true)
+ |-- lang_percent: double (nullable = true)
+
+```
+The name of your columns might slightly be different. It should not be an issue as long as they represent the same data we expect.
+
+Use the provided SQL command template, and update `<YOUR_SELECTED_COLUMNS>` to select the relavant columns. To select the langauge code, you can use `top_langs._1 AS lang` and you can also select the language count similarly `top_langs._2` but you will need to divide it by the `count` column to get the percentage, and give it the name `lang_percent`.
+
+Next, you will also need to update how the rows are sorted, by replacing `<YOUR_ORDER_COLUMNS>`. You will need to sort by two columns, the `count` column, and the `lang_percent` column, respectivley, both in descending order.
+
+
+***Q8: After step B.3.2, how did the schema change? What was the effect of the `explode` function?***
+
+***Q9: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
+
+
+#### B.4) For this part, we want to find if there is any correlation between a user's `statuses_count` and their `follower_count`. We can do this with the following line:
+
+```
+println(df.stat.corr("user.statuses_count", "user.followers_count"))
+```
+
+You can run it using these commands:
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./tweets.parquet
+```
+
+***Q10: Does the observed statistical value show any correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
+
+
+#### B.5) Print top 10 hashtags by tweet count
+
+In this part, we want to know the most used hashtags in our dataset.
+
+You can run this operation using these commands:
+```bash
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.parquet
+```
+
+B.5.1) First, you can explode the hashtags columns, similar to how you did in part B.3.2.
+B.5.2) Then, you'll need to create a new view for this dataframe.
+B.5.3) Apply a SQL query on the new dataframe to get the top 10 hashtags with the most tweets.
+B.5.4) show the final result
+
+***Q11: What are the top 10 hashtags? Copy paste your output here.***
+Note: to get the score for this question both your output must be correct and your implementation must also be correct.
+
+
+***Q12: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
+
+
+### IX. Submission (30 minutes)
+1. Add a `README` file with all your answers.
+2. Include the running time of all the operations you ran on the three files. The table will look similar to the following.
+
+| Command               | Tweets_1m.json | tweets.json | tweets.parquet |
+| top-country           |                |             |                |
+| top-lang              |                |             |                |
+| top-country-with-lang |                |             |                |
+| corr                  |                |             |                |
+| top-hashtags          |  N/A           |             |                |
+
+3. Add a `run.sh` script that compiles your code and then runs the following set of operations in order.
+* Run the preprocessor on the `Tweets_1m.json` file.
+* Run the `top-country` operation on the three files.
+* Run the `top-lang` operation on the three files.
+* Run the `top-country-with-lang` operation on the three files.
+* Run the `corr` operation on the three files.
+* Run the `top-hashtags` operation on the two files: `tweets.json` and `tweets.parquet`.
+
+## Rubric
+
+Q1-12: +12 points (+1 point for each question; a point is counted only if the corresponding part is correctly implemented)
+Code compiles correctly: +1 point
+Full table of run-time by input format: +1 point
+Following submission instructions: +1 point
