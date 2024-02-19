@@ -21,5 +21,6 @@ Unless otherwise mentioned:
 * [Lab 4](Labs/Lab4/CS167-Lab4.md): Hadoop MapReduce.
 * [Lab 5](Labs/Lab5/CS167-Lab5.md): Spark RDD.
 * [Lab 6](Labs/Lab6/CS167-Lab6.md): Spark RDD and Spark SQL using Scala
+* [Lab 7](Labs/Lab7/CS167-Lab7.md): Spark SQL and Parquet
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/122516) (Only enrolled students will have access)
