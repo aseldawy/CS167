@@ -12,6 +12,8 @@
 
 ## Note
 The instructions given in this lab are in Scala but you are allowed to use Java if you prefer.
+You will find some templates that might help you at the end of this page.
+Whenever you implement an item, you can remove the word `TODO` but leave the comments to mamke it easier to refer to each part of the code.
 
 ## Lab Work
 
@@ -539,6 +541,232 @@ Code compiles correctly: +1 point
 Full table of run-time by input format: +1 point
 
 Following submission instructions: +1 point
+
+## Java templates
+If you prefer to use Java, you can find the following templates helpful.
+
+###  PreprocessTweets.java
+
+```java
+package edu.ucr.cs.cs167.[UCRNetID];
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.sql.*;
+import org.apache.spark.sql.functions;
+import org.apache.spark.sql.types.DataTypes;
+
+import org.apache.spark.sql.api.java.UDF1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PreprocessTweets {
+  public static void main(String[] args) {
+    String inputfile = args[0];
+    String outputfile = "tweets";
+
+    SparkConf conf = new SparkConf();
+    if (!conf.contains("spark.master")) {
+      conf.setMaster("local[*]");
+    }
+    System.out.println("Using Spark master '" + conf.get("spark.master") + "'");
+
+    SparkSession spark = SparkSession.builder()
+        .appName("CS167 Lab7 - Preprocessor")
+        .config(conf)
+        .getOrCreate();
+    spark.udf().register("getHashtagTexts", (UDF1<Object, List<String>>) PreprocessTweets::getHashtagTexts, DataTypes.createArrayType(DataTypes.StringType));
+
+    try {
+      // TODO: A.1. read file and print schema
+      //          A.1.1 read json file
+      //          A.1.2 print dataframe schema
+
+      // TODO: A.2. use SQL to select relevant columns
+      //          A.2.1 createOrReplaceTempView
+      //          A.2.2 use Spark SQL select query
+      //          A.2.3 print schema of new dataframe
+
+      // TODO: A.3. apply functions to some columns
+      //           A.3.1 drop some nested columns from `place`
+      //           A.3.2 drop some nested columns `user`
+      //           A.3.3 transform `timestamp` to the appropriate datatype
+      //           A.3.4 simplify the structure of the `hashtags` column
+      //           A.3.5 print schema of new dataframe
+
+      // TODO: A.5. show the dataframe
+      // TODO: A.6. save the dataframe in JSON format
+      // TODO: A.7. save the file in Parquet format
+      // TODO: A.8. save the file in CSV format
+
+    } finally {
+      spark.stop();
+    }
+  }
+
+  public static List<String> getHashtagTexts(Object obj) {
+    if (obj == null) {
+      return null;
+    }
+
+    List<String> hashtags = new ArrayList<>();
+    try {
+      WrappedArray<Row> rows = (WrappedArray<Row>) obj;
+      rows.foreach(row -> hashtags.add(row.getAs("text")));
+    } catch (ClassCastException e) {
+      // Handle the case where obj is not of type List<Row>
+      e.printStackTrace();
+      return null;
+    }
+    return hashtags;
+  }
+}
+```
+
+### AnalayzeTweets.java
+
+```java
+package edu.ucr.cs.cs167.[UCRNetID];
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.sql.*;
+import org.apache.spark.sql.api.java.UDF1;
+import org.apache.spark.sql.types.DataTypes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.explode;
+
+public class AnalayzeTweets {
+
+  public static void main(String[] args) {
+    String operation = args[0];
+    String inputfile = args[1];
+
+    SparkConf conf = new SparkConf();
+    if (!conf.contains("spark.master"))
+      conf.setMaster("local[*]");
+
+    System.out.println("Using Spark master '" + conf.get("spark.master") + "'");
+
+    SparkSession spark = SparkSession
+        .builder()
+        .appName("CS167 Lab7 - SQL")
+        .config(conf)
+        .getOrCreate();
+
+    // Register UDF
+    spark.udf().register("getTopLangs", (UDF1<Object, List<Tuple2<String, Integer>>>) AnalayzeTweets2::getTopLangs, DataTypes.createArrayType(DataTypes.createStructType(new org.apache.spark.sql.types.StructField[]{
+        DataTypes.createStructField("_1", DataTypes.StringType, false),
+        DataTypes.createStructField("_2", DataTypes.IntegerType, false)
+    })));
+
+    DataFrameReader reader = spark.read();
+    Dataset<Row> df;
+    if (inputfile.endsWith(".json")) {
+      df = reader.json(inputfile);
+    } else if (inputfile.endsWith(".parquet")) {
+      df = reader.parquet(inputfile);
+    } else {
+      System.err.println("Unexpected input format. Expected file name to end with either '.json' or '.parquet'.");
+      return;
+    }
+    df.createOrReplaceTempView("tweets");
+
+    try {
+      boolean valid_operation = true;
+      long t1 = System.nanoTime();
+      switch (operation) {
+        case "top-country":
+          // TODO: B.1. print out the top 5 countries by count
+          df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> DESC LIMIT 5");
+          df.show();
+          break;
+        case "top-lang":
+          // TODO: B.2. print out the top 5 languages by count
+          df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> LIMIT 5");
+          df.show();
+          break;
+        case "top-country-with-lang":
+          // TODO: B.3. print out the top 5 countries by count, and the top five languages in each of them by percentage
+
+          // TODO: B.3.1. start by copying the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword.
+          df = spark.sql("SELECT ..., getTopLangs(collect_list(lang)) AS top_langs FROM tweets ... LIMIT 5");
+
+          System.out.println("Schema after step B.3.1:");
+          df.printSchema();
+          
+          // TODO B.3.2. Use the `explode` function on the `top_lang` column
+          System.out.println("\nSchema after step B.3.2:");
+          df.printSchema();
+          // Create a view for the new dataframe
+          df.createOrReplaceTempView("tweets");
+
+          // TODO B.3.3. update this command to get the table in the expected output
+          df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets ORDER BY <YOUR_ORDER_COLUMNS>");
+          System.out.println("\nSchema after step B.3.3:");
+          df.printSchema();
+          df.show(25);
+          break;
+        case "corr":
+          // TODO: B.4. compute the correlation between the `user_followers_count` and `retweet_count`
+          break;
+        case "top-hashtags":
+          // TODO: B.5. Get the hashtags with the most tweets 
+          // B.5.1. explode the hashtags columns
+          // B.5.2. create a view for the new dataframe
+          // B.5.3. use a sql query to get the top 10 hashtags with the most tweets.
+          // B.5.4. show the final result
+          break;
+        default:
+          valid_operation = false;
+      }
+      long t2 = System.nanoTime();
+      if (valid_operation)
+        System.out.println("Operation " + operation + " on file '" + inputfile + "' finished in " + (t2 - t1) * 1E-9 + " seconds");
+      else
+        System.err.println("Invalid operation '" + operation + "'");
+    } finally {
+      spark.stop();
+    }
+  }
+
+   public static List<Tuple2<String, Integer>> getTopLangs(Object obj) {
+    if (obj == null) {
+      return null;
+    }
+
+    List<Tuple2<String, Integer>> langs = new ArrayList<>();
+    try {
+      WrappedArray<String> langList = (WrappedArray<String>) obj;
+
+      // Count occurrences of each language
+      scala.collection.immutable.Map<String, Integer> langCounts = langList
+          .groupBy(s -> s)
+          .mapValues(TraversableOnce::size);
+
+      // Sort by count in descending order
+      scala.collection.immutable.List<Tuple2<String, Integer>> sortedLangCounts = langCounts.toList();
+      sortedLangCounts.sortWith((Tuple2<String, Integer> e1, Tuple2<String, Integer> e2) -> e1._2() < e2._2());
+
+      // Take top 5 languages or all if less than 5
+      int limit = Math.min(sortedLangCounts.size(), 5);
+      for (int i = 0; i < limit; i++) {
+        langs.add(new Tuple2(sortedLangCounts.apply(i)._1(), sortedLangCounts.apply(i)._2()));
+      }
+    } catch (ClassCastException e) {
+      // Handle the case where obj is not of type List<String>
+      return null;
+    }
+    return langs;
+  }
+}
+
+```
 
 ## Common Issues
 
