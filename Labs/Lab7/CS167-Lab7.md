@@ -7,14 +7,16 @@
 * Run analytic queries on Parquet files.
 
 ## Prerequisites
-* Setup the development environment as explained in [Lab 6](../Lab6/CS167_Lab6.md).
+* Setup the development environment as explained in [Lab 6](../Lab6/CS167-Lab6.md).
 * Download the following sample file [Tweets_1m.json.zip](https://drive.google.com/file/d/12-Mmv6JPgeWqp_EDurmePBqeaK1URyFv/view?usp=sharing), and decompress it in your Lab 7 directory.
+
+## Note
+The instructions given in this lab are in Scala but you are allowed to use Java if you prefer.
 
 ## Lab Work
 
 ### I. Project Setup (10 minutes) (In home)
-Setup a new Scala project similar to [Lab 6](../Lab6/CS167_Lab6.md). Make sure to change the project name to Lab 7.
-
+Setup a new Scala project similar to [Lab 6](../Lab6/CS167-Lab6.md). Make sure to change the project name to Lab 7.
 
 Make sure your `pom.xml` file contains the following by replacing the `properties` and `dependencies` sections:
 
@@ -87,7 +89,7 @@ For this lab, we will use two files: `PreprocessTweets.scala` and `AnalyzeTweets
 1. Create a new scala file named `PreprocessTweets.scala` and use the following as your starter code:
 
 ```scala
-package edu.ucr.cs.cs167.<UCRNetId>
+package edu.ucr.cs.cs167.[UCRNetID]
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
@@ -124,24 +126,24 @@ object PreprocessTweets {
 
     try {
       import spark.implicits._
-      // TODO: A.1) read file and print schema
+      // TODO: A.1. read file and print schema
       //           A.1.1 read json file
       //           A.1.2 print dataframe schema
 
-      // TODO: A.2) use SQL to select relevant columns
+      // TODO: A.2. use SQL to select relevant columns
       //           A.2.1 createOrReplaceTempView
       //           A.2.2 use Spark SQL select query
       //           A.2.3 print schema of new dataframe
-      // TODO: A.3) apply functions to some columns, by modifying the previous SQL command as follows:
+      // TODO: A.3. apply functions to some columns, by modifying the previous SQL command as follows:
       //           A.3.1 drop some nested columns from `place`
       //           A.3.2 drop some nested columns `user`
       //           A.3.3 transform `timestamp` to the appropriate datatype
       //           A.3.4 simplify the structure of the `hashtags` column
       //           A.3.5 print schema of new dataframe
-      // TODO: A.5) show the dataframe
-      // TODO: A.6) save the dataframe in JSON format
-      // TODO: A.7) save the file in Parquet format
-      // TODO: A.8) save the file in CSV format
+      // TODO: A.5. show the dataframe
+      // TODO: A.6. save the dataframe in JSON format
+      // TODO: A.7. save the file in Parquet format
+      // TODO: A.8. save the file in CSV format
     } finally {
       spark.stop
     }
@@ -151,7 +153,7 @@ object PreprocessTweets {
 
 2. Create a new scala file named `AnalyzeTweets.scala` and use the following as your starter code:
 ```scala
-package edu.ucr.cs.cs167.<UCRNetId>
+package edu.ucr.cs.cs167.[UCRNetID]
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.expressions.UserDefinedFunction
@@ -190,7 +192,7 @@ object AnalyzeTweets {
     var df : DataFrame = if (inputfile.endsWith(".json")) {
       spark.read.json(inputfile)
     } else {
-        spark.read.parquet(inputfile)
+      spark.read.parquet(inputfile)
     }
     df.createOrReplaceTempView("tweets")
 
@@ -200,44 +202,43 @@ object AnalyzeTweets {
       val t1 = System.nanoTime
       operation match {
         case "top-country" =>
-          // TODO: B.1) print out the top 5 countries by count
+          // TODO: B.1. print out the top 5 countries by count
           df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> DESC LIMIT 5")
           df.show()
         case "top-lang" =>
-        // TODO: B.2) print out the top 5 languages by count
+          // TODO: B.2. print out the top 5 languages by count
           df = spark.sql("SELECT <YOUR_SELECTED_COLUMNS> FROM tweets GROUP BY <YOUR_GROUP_BY_COLUMN> ORDER BY <YOUR_ORDER_COLUMN> LIMIT 5")
           df.show()
         case "top-country-with-lang" =>
-          // TODO: B.3) print out the top 5 countries by count, and the top five languages in each of them by percentage
+          // TODO: B.3. print out the top 5 countries by count, and the top five languages in each of them by percentage
 
-          // TODO: B.3.1) start by copying the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword.
+          // TODO: B.3.1. start by copying the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword.
           df = spark.sql(s"SELECT ..., getTopLangs(collect_list(lang)) AS top_langs FROM tweets ... LIMIT 5")
 
           println("Schema after step B.3.1:")
           df.printSchema()
 
-          // TODO B.3.2) Use the `explode` function on the `top_lang` column
-
+          // TODO B.3.2. Use the `explode` function on the `top_lang` column
 
           println("\nSchema after step B.3.2:")
           df.printSchema()
           // Create a view for the new dataframe
           df.createOrReplaceTempView("tweets")
 
-          // TODO B.3.3) update this command to get the table in the expected output
+          // TODO B.3.3. update this command to get the table in the expected output
           df = spark.sql(s"SELECT <YOUR_SELECTED_COLUMNS> FROM tweets ORDER BY <YOUR_ORDER_COLUMNS>")
 
           println("\nSchema after step B.3.3:")
           df.printSchema()
           df.show(25)
         case "corr" =>
-          // TODO: B.4) compute the correlation between the `user_followers_count` and `retweet_count`
+          // TODO: B.4. compute the correlation between the `user_followers_count` and `retweet_count`
         case "top-hashtags" =>
-          // TODO: B.5) Get the hashtags with the most tweets 
-          // B.5.1) explode the hashtags columns
-          // B.5.2) create a view for the new dataframe
-          // B.5.3) use a sql query to get the top 10 hashtags with the most tweets.
-          // B.5.4) show the final result
+          // TODO: B.5. Get the hashtags with the most tweets 
+          // B.5.1. explode the hashtags columns
+          // B.5.2. create a view for the new dataframe
+          // B.5.3. use a sql query to get the top 10 hashtags with the most tweets.
+          // B.5.4. show the final result
         case _ => valid_operation = false
       }
       val t2 = System.nanoTime
@@ -259,7 +260,7 @@ In this part, you will complete the implementation of the `PreprocessTweets.scal
 
 To run this file, you can use the following command:
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.PreprocessTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].PreprocessTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar ./Tweets_1m.json
 ```
 
 1. First, read the input data file in JSON format, and print its schema. (`TODO A1`)
@@ -275,7 +276,7 @@ df.printSchema()
 ```
 
 Do you notice how large the schema of this data is? Take some time to explore this schema, and think about its nesting levels, 
-***Q1: What is the nested level of this column `root.entities.hashtags.element.text`?***
+***Q1: What is the nesting level of this column `root.entities.hashtags.element.text`?***
 Note: You may consider `root` to be at nesting level 0, and `element` represents an element in an array and doesn't add to the nesting levels.
 
 ***Q2: In Parquet, would this field be stored as a repeated column? Explain your answer.***
@@ -322,7 +323,7 @@ The schema is now much smaller than the original one.
 
 (`TODO A.3.[1-4]`) In the previous SQL query, replace these line:
 
-```
+```SQL
        place,
        user,
        timestamp_ms,
@@ -331,7 +332,7 @@ The schema is now much smaller than the original one.
 
 With the following lines:
 
-```
+```SQL
        (place.country_code AS country_code, place.name AS name, place.place_type AS place_type) AS place,
        (user.followers_count AS followers_count, user.statuses_count AS statuses_count, user.id AS id) AS user,
        timestamp(cast(timestamp_ms as long)/1000) AS time,
@@ -384,23 +385,21 @@ This line will produce an error.
 
 ***Q6: What is the error that you see? Why is Spark not able to write this dataframe in the CSV format?***
 
-
-
 This is the end of this part. Now, we have three different files: `Tweets_1m.json`, `tweets.json` and `tweets.parquet`. We will use all three in the next section to learn how the different formats affect performance.
 
 ### III. Analyzing Data
 
 In this part, you will work on the `AnalyzeTweets.scala` file. You will implement different operations on the data we obtained after the pre-processing.
 
-#### B.1) Print the top 5 countriers by number of tweets (20 minutes)
+#### B.1. Print the top 5 countriers by number of tweets (20 minutes)
 
 1. Run a SQL query on the tweets table, that first groups by the country_code and counts the rows for each country. Simply modify `<YOUR_SELECTED_COLUMNS>`, `<YOUR_GROUP_BY_COLUMN>`,  and `<YOUR_ORDER_COLUMN>` with the appropriate values, and make sure that the final result is in descending order.
 
-2. Compile your code using `mvn compile` and then run the following commands:
+2. Compile your code using `mvn package` and then run the following commands:
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./Tweets_1m.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./tweets.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country ./tweets.parquet
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country ./tweets.parquet
 ```
 
 Each command will run the same operation on one of the files we have from the previous section.
@@ -411,14 +410,14 @@ Note: to get the score for this question both your output must be correct and yo
 ***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Can you explain your observation?.***
 
 
-#### B.2) Print the top 5 languages by number of tweets
+#### B.2. Print the top 5 languages by number of tweets
 
 1. Run a SQL query on the tweets table, that first groups by the `lang` and counts the rows for each language. Simply modify `<YOUR_SELECTED_COLUMNS>`, `<YOUR_GROUP_BY_COLUMN>`,  and `<YOUR_ORDER_COLUMN>` with the appropriate values, and make sure that the final result is in descending order.
 
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./Tweets_1m.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.parquet
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-lang ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.parquet
 ```
 
 ***Q7.1: What are the top languages that you see? Copy the output here.***
@@ -427,25 +426,25 @@ Note: to get the score for this question both your output must be correct and yo
 ***Q7.2: Do you also observe the same perfroamnce for the different file formats?***
 
 
-#### B.3) Print the top 5 countries, and the percentage of tweets posted in their top languages.
+#### B.3. Print the top 5 countries, and the percentage of tweets posted in their top languages.
 
 For this operation, we want to run a little more complex query. You will also use this command for this operation:
 
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./Tweets_1m.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.parquet
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-country-with-lang ./tweets.parquet
 ```
 
 
-B.3.1) To start with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with  (language, count) pair.
+B.3.1. To start with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with  (language, count) pair.
 
-B.3.2) Use the `explode` function on the `top_lang` column. You can use the following line:
+B.3.2. Use the `explode` function on the `top_lang` column. You can use the following line:
 ```scala
 df = df.withColumn("top_langs", explode($"top_langs"))
 ```
 
-B.3.4) After this part, we expect the output to have the following schema:
+B.3.4. After this part, we expect the output to have the following schema:
 
 ```
 root
@@ -467,7 +466,7 @@ Next, you will also need to update how the rows are sorted, by replacing `<YOUR_
 ***Q9: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
 
 
-#### B.4) For this part, we want to find if there is any correlation between a user's `statuses_count` and their `follower_count`. We can do this with the following line:
+#### B.4. For this part, we want to find if there is any correlation between a user's `statuses_count` and their `follower_count`. We can do this with the following line:
 
 ```
 println(df.stat.corr("user.statuses_count", "user.followers_count"))
@@ -475,28 +474,28 @@ println(df.stat.corr("user.statuses_count", "user.followers_count"))
 
 You can run it using these commands:
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./Tweets_1m.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./tweets.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar corr ./tweets.parquet
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar corr ./Tweets_1m.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar corr ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar corr ./tweets.parquet
 ```
 
 ***Q10: Does the observed statistical value show any correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
 
 
-#### B.5) Print top 10 hashtags by tweet count
+#### B.5. Print top 10 hashtags by tweet count
 
 In this part, we want to know the most used hashtags in our dataset.
 
 You can run this operation using these commands:
 ```bash
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.json
-spark-submit --master "local[*]" --class edu.ucr.cs.cs167.<UCRNetId>.AnalyzeTweets ./target/<UCRNetId>_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.parquet
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.json
+spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-hashtags ./tweets.parquet
 ```
 
-B.5.1) First, you can explode the hashtags columns, similar to how you did in part B.3.2.
-B.5.2) Then, you'll need to create a new view for this dataframe.
-B.5.3) Apply a SQL query on the new dataframe to get the top 10 hashtags with the most tweets.
-B.5.4) show the final result
+B.5.1. First, you can explode the hashtags columns, similar to how you did in part B.3.2.
+B.5.2. Then, you'll need to create a new view for this dataframe.
+B.5.3. Apply a SQL query on the new dataframe to get the top 10 hashtags with the most tweets.
+B.5.4. show the final result
 
 ***Q11: What are the top 10 hashtags? Copy paste your output here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
