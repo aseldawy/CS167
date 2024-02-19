@@ -31,20 +31,20 @@
 
 * (Q6) What is the error that you see? Why isn't Spark able to write this dataframe in the CSV format?
 
-* (Q7) What do you see in the output? Copy it here.
+* (Q7.1) What do you see in the output? Copy it here.
 
-* (Q8) What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Explain your observation?.
+* (Q7.2) What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Explain your observation?.
 
-* (Q9.1) What are the top languages that you see? Copy the output here.
+* (Q8.1) What are the top languages that you see? Copy the output here.
 
-* (Q9.2) Do you also observe the same perfroamnce for the different file formats?
+* (Q8.2) Do you also observe the same perfroamnce for the different file formats?
 
-* (Q10) After step B.3.2, how did the schema change? What was the effect of the `explode` function?
+* (Q9) After step B.3.2, how did the schema change? What was the effect of the `explode` function?
 
-* (Q11) For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.
+* (Q10) For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.
 
-* (Q12) Does the observed statistical value show a strong correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.
+* (Q11) Does the observed statistical value show a strong correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.
 
-* (Q13) What are the top 10 hashtags? Copy paste your output here.
+* (Q12.1) What are the top 10 hashtags? Copy paste your output here.
 
-* (Q14) For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.
+* (Q12.2) For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.
