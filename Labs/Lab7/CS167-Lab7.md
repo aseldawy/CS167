@@ -258,7 +258,7 @@ object AnalyzeTweets {
 
 In this part, you will complete the implementation of the `PreprocessTweets.scala` file which takes the path to the `Tweets_1m.json` file as input and will save a cleaner version in different formats. Note, in this part all of the code is implemented for. You'll have to follow the instructions to fill all the `TODO` parts, and check the console outputs to answer the questions.
 
-To run this file, you can use the following command:
+To run this file, you can use the following command after you create a JAR file for your project:
 ```bash
 spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].PreprocessTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar ./Tweets_1m.json
 ```
@@ -275,7 +275,8 @@ To print the schema of a dataframe, you can use the following:
 df.printSchema()
 ```
 
-Do you notice how large the schema of this data is? Take some time to explore this schema, and think about its nesting levels, 
+Do you notice how large the schema of this data is? Take some time to explore this schema, and think about its nesting levels.
+
 ***Q1: What is the nesting level of this column `root.entities.hashtags.element.text`?***
 Note: You may consider `root` to be at nesting level 0, and `element` represents an element in an array and doesn't add to the nesting levels.
 
@@ -313,13 +314,12 @@ df.printSchema()
 The schema is now much smaller than the original one.
 
 ***Q3: Based on this schema answer the following:***
-*how many fields does the `place` column contain?*
-*how many fields does the `user` column contain?*
-*what is the datatype of the `time` column?*
-*what is the datatype of the `hashtags` column?*
+ - *How many fields does the `place` column contain?*
+ - *How many fields does the `user` column contain?*
+ - *What is the datatype of the `time` column?*
+ - *What is the datatype of the `hashtags` column?*
 
 3. We will now apply some transformations to these columns.
-
 
 (`TODO A.3.[1-4]`) In the previous SQL query, replace these line:
 
@@ -341,16 +341,18 @@ With the following lines:
 
 This first two lines will select only the nested columns that we want from the `place` and `user` columns, respectively. The third line converts the `timestamp_ms` column. The last line extracts only the hashtag text from the hashtags structure. We are using a custom function to do this transformation, which is already implemented for you.
 
+*Note:* Leave the query in A.2.2 as-is and write only one new query with all the four changes in A.3.
+
 
 This will change the data type of the time column.
 
 Now, print the schema of this dataframe (`TODO A.3.5`).
 
 ***Q4: Based on this new schema answer the following:***
-*how many fields does the `place` column contain?*
-*how many fields does the `user` column contain?*
-*what is the datatype of the `time` column?*
-*what is the datatype of the `hashtags` column?*
+ - *How many fields does the `place` column contain?*
+ - *How many fields does the `user` column contain?*
+ - *What is the datatype of the `time` column?*
+ - *What is the datatype of the `hashtags` column?*
 
 5. You can show the dataframe to see a sample of rows (`TODO A.5`):
 
@@ -374,7 +376,7 @@ df.write.mode("overwrite").parquet(outputfile + ".parquet")
 
 These two commands will create two folders, one for each format.
 
-***Q5: What is the size of each folder? Can you explain the difference in size, knowing that the two folders `tweets.json` and `tweets.parquet` contain the exact same dataframe?***
+***Q5: What is the size of each folder? Explain the difference in size, knowing that the two folders `tweets.json` and `tweets.parquet` contain the exact same dataframe?***
 
 Now, try to save the dataframe in `CSV` format, using the following line (`TODO A.8`):
 ```scala
@@ -383,7 +385,9 @@ df.write.mode("overwrite").parquet(outputfile + ".csv")
 
 This line will produce an error.
 
-***Q6: What is the error that you see? Why is Spark not able to write this dataframe in the CSV format?***
+***Q6: What is the error that you see? Why isn't Spark able to write this dataframe in the CSV format?***
+
+After answering this question, comment that last line to avoid the error.
 
 This is the end of this part. Now, we have three different files: `Tweets_1m.json`, `tweets.json` and `tweets.parquet`. We will use all three in the next section to learn how the different formats affect performance.
 
@@ -407,7 +411,7 @@ Each command will run the same operation on one of the files we have from the pr
 ***Q7: What do you see in the output? Copy it here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
-***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Can you explain your observation?.***
+***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Explain your observation?.***
 
 
 #### B.2. Print the top 5 languages by number of tweets
@@ -420,10 +424,10 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.parquet
 ```
 
-***Q7.1: What are the top languages that you see? Copy the output here.***
+***Q9.1: What are the top languages that you see? Copy the output here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
-***Q7.2: Do you also observe the same perfroamnce for the different file formats?***
+***Q9.2: Do you also observe the same perfroamnce for the different file formats?***
 
 
 #### B.3. Print the top 5 countries, and the percentage of tweets posted in their top languages.
@@ -437,14 +441,14 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 ```
 
 
-B.3.1. To start with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with  (language, count) pair.
+B.3.1. To begin with, copy the same query from part B.1, but add `, getTopLangs(collect_list(lang))` before the `FROM` keyword. We made this custom function to make it easier to get the expected output. It collects the language code for all records for a country and converts to an array with (language, count) pair. Replace the `...` with the corresponding part from the previous query.
 
 B.3.2. Use the `explode` function on the `top_lang` column. You can use the following line:
 ```scala
 df = df.withColumn("top_langs", explode($"top_langs"))
 ```
 
-B.3.4. After this part, we expect the output to have the following schema:
+B.3.3, B.3.4. After this part, we expect the output to have the following schema:
 
 ```
 root
@@ -460,10 +464,12 @@ Use the provided SQL command template, and update `<YOUR_SELECTED_COLUMNS>` to s
 
 Next, you will also need to update how the rows are sorted, by replacing `<YOUR_ORDER_COLUMNS>`. You will need to sort by two columns, the `count` column, and the `lang_percent` column, respectivley, both in descending order.
 
+*Note:* The field `top_lang` is a struct with two nested attributes, `_1` and `_2`, which represent the language and the number of tweets in that language. To access the nested attributes, use the `.` notation similar to C or Java.
 
-***Q8: After step B.3.2, how did the schema change? What was the effect of the `explode` function?***
 
-***Q9: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
+***Q10: After step B.3.2, how did the schema change? What was the effect of the `explode` function?***
+
+***Q11: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
 
 
 #### B.4. For this part, we want to find if there is any correlation between a user's `statuses_count` and their `follower_count`. We can do this with the following line:
@@ -479,7 +485,7 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar corr ./tweets.parquet
 ```
 
-***Q10: Does the observed statistical value show any correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
+***Q12: Does the observed statistical value show a strong correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
 
 
 #### B.5. Print top 10 hashtags by tweet count
@@ -497,11 +503,11 @@ B.5.2. Then, you'll need to create a new view for this dataframe.
 B.5.3. Apply a SQL query on the new dataframe to get the top 10 hashtags with the most tweets.
 B.5.4. show the final result
 
-***Q11: What are the top 10 hashtags? Copy paste your output here.***
+***Q13: What are the top 10 hashtags? Copy paste your output here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
 
-***Q12: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
+***Q14: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
 
 
 ### IX. Submission (30 minutes)
@@ -533,3 +539,23 @@ Code compiles correctly: +1 point
 Full table of run-time by input format: +1 point
 
 Following submission instructions: +1 point
+
+## Common Issues
+
+- *Problem*: When I run my program in IntelliJ, I get the following error:
+```Exception in thread "main" java. lang.IllegalAccessError Create breakpoint: class org.apache.spark.torage.StorageUtils$```
+
+- *Solution*: Edit your run configuration and add the following to VM Options:
+```text
+--add-opens java.base/java.nio=ALL-UNNAMED
+--add-opens java.base/java.util=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
+--add-opens java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens java.base/java.lang.invoke=ALL-UNNAMED
+```
+
+Below is how to add VM options to run configuration.
+
+![Open Run Configuration](../Lab5/images/open-run-configuration.png)
+
+![Add VM Options](../Lab5/images/add-vm-options.png)
