@@ -410,10 +410,10 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 
 Each command will run the same operation on one of the files we have from the previous section.
 
-***Q7: What do you see in the output? Copy it here.***
+***Q7.1: What do you see in the output? Copy it here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
-***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Explain your observation?.***
+***Q7.2: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Explain your observation?.***
 
 
 #### B.2. Print the top 5 languages by number of tweets
@@ -426,10 +426,10 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar top-lang ./tweets.parquet
 ```
 
-***Q9.1: What are the top languages that you see? Copy the output here.***
+***Q8.1: What are the top languages that you see? Copy the output here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
-***Q9.2: Do you also observe the same perfroamnce for the different file formats?***
+***Q8.2: Do you also observe the same perfroamnce for the different file formats?***
 
 
 #### B.3. Print the top 5 countries, and the percentage of tweets posted in their top languages.
@@ -469,9 +469,9 @@ Next, you will also need to update how the rows are sorted, by replacing `<YOUR_
 *Note:* The field `top_lang` is a struct with two nested attributes, `_1` and `_2`, which represent the language and the number of tweets in that language. To access the nested attributes, use the `.` notation similar to C or Java.
 
 
-***Q10: After step B.3.2, how did the schema change? What was the effect of the `explode` function?***
+***Q9: After step B.3.2, how did the schema change? What was the effect of the `explode` function?***
 
-***Q11: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
+***Q10: For the country with the most tweets, what is the fifth most used language? Also, copy the entire output table here.***
 
 
 #### B.4. For this part, we want to find if there is any correlation between a user's `statuses_count` and their `follower_count`. We can do this with the following line:
@@ -487,7 +487,7 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTweets ./target/[UCRNetID]_lab7-1.0-SNAPSHOT.jar corr ./tweets.parquet
 ```
 
-***Q12: Does the observed statistical value show a strong correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
+***Q11: Does the observed statistical value show a strong correlation between the two columns? Note: a value close to 1 or -1 means there is high correlation, but a value that is close to 0 means there is no correlation.***
 
 
 #### B.5. Print top 10 hashtags by tweet count
@@ -505,11 +505,11 @@ B.5.2. Then, you'll need to create a new view for this dataframe.
 B.5.3. Apply a SQL query on the new dataframe to get the top 10 hashtags with the most tweets.
 B.5.4. show the final result
 
-***Q13: What are the top 10 hashtags? Copy paste your output here.***
+***Q12.1: What are the top 10 hashtags? Copy paste your output here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
 
-***Q14: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
+***Q12.2: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
 
 
 ### IX. Submission (30 minutes)
