@@ -345,9 +345,6 @@ This first two lines will select only the nested columns that we want from the `
 
 *Note:* Leave the query in A.2.2 as-is and write only one new query with all the four changes in A.3.
 
-
-This will change the data type of the time column.
-
 Now, print the schema of this dataframe (`TODO A.3.5`).
 
 ***Q4: Based on this new schema answer the following:***
@@ -362,7 +359,7 @@ Now, print the schema of this dataframe (`TODO A.3.5`).
 df.show()
 ```
 
-6. We can now save this dataframe in different format.
+6. We can now save this dataframe in different formats.
 
 First, save it in JSON format, using this command (`TODO A.6`):
 
