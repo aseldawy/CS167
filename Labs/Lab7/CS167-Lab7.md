@@ -255,7 +255,7 @@ object AnalyzeTweets {
 
 ### III. Data Pre-processing (40 minutes) (In home)
 
-In this part, you will complete the implementation of the `PreprocessTweets.scala` file which takes the path to the `Tweets_100k.json` file as input and will save a cleaner version in different formats. Note, in this part all of the code is implemented for. You'll have to follow the instructions to fill all the `TODO` parts, and check the console outputs to answer the questions.
+In this part, you will complete the implementation of the `PreprocessTweets.scala` file which takes the path to the `Tweets_1m.json` file as input and will save a cleaner version in different formats. Note, in this part all of the code is implemented for. You'll have to follow the instructions to fill all the `TODO` parts, and check the console outputs to answer the questions.
 
 To run this file, you can use the following command:
 ```bash
