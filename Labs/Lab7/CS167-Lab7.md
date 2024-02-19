@@ -373,7 +373,7 @@ df.write.mode("overwrite").parquet(outputfile + ".parquet")
 
 These two commands will create two folders, one for each format.
 
-***Q5: What is the size of each folder? Can you explain the difference in size, knowing that the two folders `Tweets.json` and `Tweets.parquet` contain the exact same dataframe?***
+***Q5: What is the size of each folder? Can you explain the difference in size, knowing that the two folders `tweets.json` and `tweets.parquet` contain the exact same dataframe?***
 
 Now, try to save the dataframe in `CSV` format, using the following line (`TODO A.8`):
 ```scala
