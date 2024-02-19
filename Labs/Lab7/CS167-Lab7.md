@@ -388,9 +388,11 @@ This line will produce an error.
 
 This is the end of this part. Now, we have three different files: `Tweets_1m.json`, `tweets.json` and `tweets.parquet`. We will use all three in the next section to learn how the different formats affect performance.
 
-### III. Analyzing Data (30 minutes)
+### III. Analyzing Data
 
-#### B.1) Print the top 5 countriers by number of tweets
+In this part, you will work on the `AnalyzeTweets.scala` file. You will implement different operations on the data we obtained after the pre-processing.
+
+#### B.1) Print the top 5 countriers by number of tweets (20 minutes)
 
 1. Run a SQL query on the tweets table, that first groups by the country_code and counts the rows for each country. Simply modify `<YOUR_SELECTED_COLUMNS>`, `<YOUR_GROUP_BY_COLUMN>`,  and `<YOUR_ORDER_COLUMN>` with the appropriate values, and make sure that the final result is in descending order.
 
@@ -406,7 +408,7 @@ Each command will run the same operation on one of the files we have from the pr
 ***Q7: What do you see in the output? Copy it here.***
 Note: to get the score for this question both your output must be correct and your implementation must also be correct.
 
-***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is fastest? Can you explain your observation?.***
+***Q8: What do you observe in terms of run time for each file? Which file is slowest and which is the fastest? Can you explain your observation?.***
 
 
 #### B.2) Print the top 5 languages by number of tweets
