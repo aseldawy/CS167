@@ -379,7 +379,7 @@ These two commands will create two folders, one for each format.
 
 Now, try to save the dataframe in `CSV` format, using the following line (`TODO A.8`):
 ```scala
-df.write.mode("overwrite").parquet(outputfile + ".csv")
+df.write.mode("overwrite").csv(outputfile + ".csv")
 ```
 
 This line will produce an error.
