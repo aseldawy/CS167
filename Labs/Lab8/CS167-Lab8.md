@@ -120,7 +120,7 @@ cp -r $HOME/cs167/mongosh-2.1.5-linux-x64/bin/* $HOME/cs167/mongodb-linux-x86_64
 8. Insert the following documen to the collection.
 
     ```json
-    {id: Long('921633456941121354'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz3', followers_count: {last_month: 550, this_month: 2200}, statuses_count: 112000}, hashtags: [ ‘art’, ‘tour’ ], lang: 'ja'
+    {id: Long('921633456941121354'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz3', followers_count: {last_month: 550, this_month: 2200}, statuses_count: 112000}, hashtags: [ 'art', 'tour' ], lang: 'ja'
     }
     ```
     * ***(Q9) What is your command to insert this record?***
@@ -147,7 +147,7 @@ cp -r $HOME/cs167/mongosh-2.1.5-linux-x64/bin/* $HOME/cs167/mongodb-linux-x86_64
 
 ---
 ### III.  Identify Tweets with Selected Hashtags
-In this part, you need to find all tweets that include any of the following hashtags: 'technology', 'innovation', or 'science'. The query should return the tweet text (text field), the associated hashtags, and the associated user's user_name, followers_count for each matching document in the **ascending** order of user's follower's count. 
+In this part, you need to find all tweets that include any of the following hashtags: 'job', 'hiring', or 'IT'. The query should return the tweet text (text field), the associated hashtags, and the associated user's user_name, followers_count for each matching document in the **ascending** order of user's follower's count. 
 * ***(Q16) What is your command for this query?***
 * ***(Q17) How many records are returned from this query?***
 
