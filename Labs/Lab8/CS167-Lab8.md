@@ -45,6 +45,7 @@ curl https://downloads.mongodb.com/compass/mongosh-2.1.5-linux-x64.tgz | tar -xv
     + mongofiles
     + mongorestore
     + mongotop
+
 You can use the following command for this step:
 ```shell
 cp -r $HOME/cs167/mongodb-database-tools-ubuntu2004-x86_64-100.9.4/bin/* $HOME/cs167/mongodb-linux-x86_64-ubuntu2004-7.0.5/bin/
@@ -69,7 +70,8 @@ cp -r $HOME/cs167/mongosh-2.1.5-linux-x64/bin/* $HOME/cs167/mongodb-linux-x86_64
 8. Reload the configuration by running `source ~/.bashrc`.
 
 9. Test that MongoDB works correctly by running the command `mongod -version`. The output should look something like the following:
- ![MongoDB Version](images/mongod-version.png)
+
+     ![MongoDB Version](images/mongod-version.png)
 
 10. Create a $MONGODB_HOME/data directory where your data will be stored. You can use the following command for this task.
 	```shell
@@ -97,7 +99,7 @@ cp -r $HOME/cs167/mongosh-2.1.5-linux-x64/bin/* $HOME/cs167/mongodb-linux-x86_64
 
     Hint: Use [`db.collection.find()`](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#mongodb-method-db.collection.find) and [`db.collection.count()`](https://www.mongodb.com/docs/manual/reference/method/db.collection.count/).
 
-5. Find all tweets from Japan (country_code: "JP") posted by users with at least 50,000 tweets (statuses_count). From these tweets, retrieve and list information about the users, specifically their username (user_name), number of followers (followers_count), and total number of tweets (statuses_count). The results should be sorted in ascending order based on the number of followers (followers_count).
+5. Find all tweets those have country_code "JP" and user's statuses_count is greater than 50,000. From these tweets, list information about the users, specifically their username (user_name), number of followers (followers_count), and total number of tweets (statuses_count). The results should be sorted in ascending order based on the number of followers (followers_count).
     * ***(Q4) What is your command for this query?***
     * ***(Q5) How many records does your query return?*** (Use the [db.collection.count()](https://www.mongodb.com/docs/manual/reference/method/db.collection.count/) function to answer this question.)
     
