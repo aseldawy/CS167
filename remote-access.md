@@ -88,7 +88,7 @@ If you have Visual Studio Code, you can use it to connect to your CS167 machine 
 ![Visual Studio Code Open Folder](vscode-open-folder.png)
 6. You can now upload files to that remote directory by simply dragging it into Visual Studio Code Explorer window.
 
-## Part VII: Run commands in a screen
+## <span id="screen">Part VII: Run commands in a screen</span>
 When you run a command on the CS167 machine, this command will terminate if you lose your connection. This can be annoying if you want to keep the command running for a long time. A better way to do that is to run your commands in a screen. The screen will keep your commands running even if you close the SSH connection and reconnect. The following steps will guide you through screen setup.
 
 1. Connect to your CS167 machine.
