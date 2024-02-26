@@ -207,7 +207,7 @@ Write a MongoDB aggregation pipeline to determine the top 5 most frequently used
 
 ### VII. Submission (2 minutes)
 
-1. Write your answers using the [template `README.md`](CS167-Lab7-README.md) file.
+1. Write your answers using the [template `README.md`](CS167-Lab8-README.md) file.
 2. Name your file `[UCRNetID]_lab7_README.md`, replace `[UCRNetID]` with your UCR Net ID.
 3. Do not forget to include your information as you do in other labs.
 4. No separate code is required for this lab.
