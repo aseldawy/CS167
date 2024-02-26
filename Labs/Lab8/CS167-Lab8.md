@@ -133,7 +133,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
     
     Hint: You will need to use [db.collection.find()](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#mongodb-method-db.collection.find), [projection](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#projection) and [Ascending/Descending Sort](https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#ascending-descending-sort). Check how to [access nested attributes](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#embedded-field-specification).
 
-5. Repeat step 5 but [do not show the `_id` field](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#_id-field-projection).
+5. Repeat what you did for Q5 but [do not show the `_id` field](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#_id-field-projection).
     * ***(Q7) What is the command that retrieves the results without the _id field?*** 
 
 6. Insert the following document to the collection.
