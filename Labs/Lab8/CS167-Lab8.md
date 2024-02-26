@@ -95,7 +95,7 @@ Build Info: {
     ```shell
     mongod --dbpath $MONGODB_HOME/data
     ```
-*Note*: It is recommended to run the **mongod** service in a [screen](../../remote-access.md#screen) so it stays running in case you lose your connection. If this is too complicated for you, just keep the window open. If you get disconnected, you will need to rerun the **mongod** service again using the command above.
+*Note*: It is recommended to run the **mongod** service in a [screen](../../remote-access.md#part-vii-run-commands-in-a-screen) so it stays running in case you lose your connection. If this is too complicated for you, just keep the window open. If you get disconnected, you will need to rerun the **mongod** service again using the command above.
 
 ### II. Data Understanding (15 minutes - In Home)
 
