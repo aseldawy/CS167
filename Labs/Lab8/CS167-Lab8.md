@@ -107,7 +107,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 
     *Note*: We explicitly use the local file system (`file:///`) to override your existing configuration from previous labs.
 
-***(Q1) What is the schema of the file? Copy it to the README file and keep it for your reference.***
+***(Q1) What is the schema of the file? Copy it to the README file and keep it for your reference.***  
 
 ---
 
@@ -115,8 +115,8 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 
 
 1. On your *CS167 machine*, import the sample file into a new collection named `tweets`. You will need to use [`mongoimport`](https://www.mongodb.com/docs/database-tools/mongoimport/) command from the database tool. You may use [`--collection`](https://www.mongodb.com/docs/database-tools/mongoimport/#std-option-mongoimport.--collection) option.
-    * ***(Q2) What is your command to import the `tweets.json` file?***
-    * ***(Q3) What is the output of the import command?***
+    * ***(Q2) What is your command to import the `tweets.json` file?*** 
+    * ***(Q3) What is the output of the import command?*** 
 
 2. On your CS167 machine, run the command `mongosh` in the terminal, and  this will open the MongoDB Shell (mongosh), which is an interactive JavaScript interface to MongoDB. Here, you can run queries, manage data, and perform administrative tasks directly against your MongoDB database. You should see the following after running this command.
 
@@ -128,7 +128,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
     Hint: Use [`db.collection.find()`](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#mongodb-method-db.collection.find) and [`db.collection.count()`](https://www.mongodb.com/docs/manual/reference/method/db.collection.count/).
 
 4. Find all tweets those have `country_code` "JP" and user's `statuses_count` is greater than 50,000. From these tweets, list information about the users, specifically their username (`user_name`), number of followers (`followers_count`), and total number of tweets (`statuses_count`). The results should be sorted in *ascending order* based on the number of followers (`followers_count`).
-    * ***(Q5) What is your command for this query?***
+    * ***(Q5) What is your command for this query?*** 
     * ***(Q6) How many records does your query return?*** (Use the [db.collection.count()](https://www.mongodb.com/docs/manual/reference/method/db.collection.count/) function to answer this question.)
     
     Hint: You will need to use [db.collection.find()](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#mongodb-method-db.collection.find), [projection](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#projection) and [Ascending/Descending Sort](https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#ascending-descending-sort). Check how to [access nested attributes](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#embedded-field-specification).
@@ -211,3 +211,21 @@ Write a MongoDB aggregation pipeline to determine the top 5 most frequently used
 2. Name your file `[UCRNetID]_lab7_README.md`, replace `[UCRNetID]` with your UCR Net ID.
 3. Do not forget to include your information as you do in other labs.
 4. No separate code is required for this lab.
+
+### Rubrics
+- Q/A: 14.5 points
+    - Q1, Q2, Q3, Q4: 0.5 points each 
+    - Q5: 1 point
+    - Q6, Q7, Q8, Q9: 0.5 points each
+    - Q10: 1 point
+    - Q11: 0.5 points
+    - Q12, Q13: 1 point each
+    - Q14, Q15, Q16: 0.5 points each
+    - Q17: 1 point
+    - Q18: 0.5 point
+    - Q19: 1 point
+    - Q20: 0.5 points
+    - Q21: 1 point
+    - Q22: 0.5 point
+
+- Proper Submission: 0.5 points
