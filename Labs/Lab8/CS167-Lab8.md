@@ -136,7 +136,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 5. Repeat what you did for Q5 but [do not show the `_id` field](https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#_id-field-projection).
     * ***(Q7) What is the command that retrieves the results without the _id field?*** 
 
-6. Insert the following document to the collection.
+6. Insert the following document into the collection.
     ```json
     {id: Long('921633456941125634'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz2', followers_count: [2100, 5000], statuses_count: 55000}, hashtags: ['nature' ],lang: 'ja'}
     ```
@@ -145,7 +145,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 
     Hint: Use [`db.collection.insertOne()`](https://www.mongodb.com/docs/manual/reference/method/db.collection.insertOne/#db.collection.insertone--).
 
-7. Insert the following documen to the collection.
+7. Insert the following document into the collection.
 
     ```json
     {id: Long('921633456941121354'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz3', followers_count: {last_month: 550, this_month: 2200}, statuses_count: 112000}, hashtags: [ 'art', 'tour' ], lang: 'ja'
@@ -158,9 +158,9 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 
     * ***(Q12) Why did they appear at these specific locations?***
 
-    Check the [documentation of MongoDB](https://www.mongodb.com/docs/v6.2/reference/bson-type-comparison-order/) to help you answering this question.
+    Check the [documentation of MongoDB](https://www.mongodb.com/docs/v6.2/reference/bson-type-comparison-order/) to help you answer this question.
 
-9. Rerun step 5, but this time lists the records sorted by followers_count in **ascending** order.
+9. Rerun step 4, but this time lists the records sorted by followers_count in **ascending** order.
     * ***(Q13) Where did the two records appear in the ascending sort order? Explain your observation.***
 
     Hint: [Ascending/Descending Sort](https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#ascending-descending-sort).
