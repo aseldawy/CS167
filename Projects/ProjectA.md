@@ -146,3 +146,27 @@ Here is an overview of what you are expected to do.
 
 In the report, include your own visualization of the 10k dataset.
 
+## Task 4: Arrest Prediction
+Develop a predictive model to forecast whether a reported crime incident will result in an arrest. This is a binary classification problem where the target variable is Arrest (with values "true" or "false"). The model should learn the relationship between all features and the arrest value. Then, it applies this model to all data to predict arrest status for each crime. For simplicity, we will only consider the `PrimaryType` of the crime and `description` of the crime as input features of the predictive model. 
+- Load the dataset in the Parquet format.
+You can test on [this sample file](https://drive.google.com/open?id=1D5R0DGueW-JS18z6tz6ZkIP6clpveock) until the first task is complete.
+- Write a Spark SQL query to retrieve only those records from the dataset where the 'Arrest' column values are either 'true' nor 'false'.
+- The machine learning pipeline should include the following.
+
+  - A Tokenzier that finds all the tokens (words) from the primary type and description.
+  - A HashingTF transformer that converts the tokens into a set of numeric features.
+  - A StringIndexer that converts each arrest value to an index.
+  - A LogisticRgression or another classifier that predicts the arrest value from the set of features.
+
+- Then, You will do the regular training-test split to train on one set and test on the other.
+
+Here is a sample of how part of your result might look like. The actual results will probably differ depending on how the model worked.
+
+|        PrimaryType|         Description|Arrest|label|prediction|
+|-------------------|--------------------|------|-----|----------|
+|              THEFT|       FROM BUILDING| false|  0.0|       0.0|
+|      OTHER OFFENSE|HARASSMENT BY TEL...| false|  0.0|       0.0|
+|    CRIMINAL DAMAGE| CRIMINAL DEFACEMENT| true |  1.0|       0.0|
+|            ROBBERY|STRONGARM - NO WE...| false|  0.0|       0.0|
+
+- Compute the precision and recall of the result you found and include them in the report for the 100,000 points dataset.
