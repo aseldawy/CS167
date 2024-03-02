@@ -161,3 +161,28 @@ Here is an overview of what you are expected to do.
 In the report, include your own visualization of the 10k dataset and a date range of your choice.
 Include the date range that you used.
 
+## Task 4: Bird's Category Prediction
+Develop a predictive model to predict the `CATEGORY` of a bird sighting using features derived from the bird's common and scientific names. We will only consider the `COMMON_NAME` and `SCIENTIFIC_NAME` of the bird as input features of the predictive model. 
+- Load the dataset in the Parquet format.
+You can test on [this sample file](https://drive.google.com/open?id=1D7mCYyXjIV3kdQyg_G9zyIrSmQugvBwQ) until the first task is complete.
+- Write a Spark SQL query to retrieve only those records from the dataset where the `CATEGORY` column values are species, form, issf, or slash.
+- The machine learning pipeline should include the following.
+
+  - A Tokenzier that finds all the tokens (words) from the bird's COMMON_NAME and SCIENTIFIC_NAME.
+  - A HashingTF transformer that converts the tokens into a set of numeric features.
+  - A StringIndexer that converts each category value to an index.
+  - A LogisticRgression or another classifier that predicts the arrest value from the set of features.
+
+- Then, You will do the regular training-test split to train on one set and test on the other. 
+
+Here is a sample of how part of your result might look like. The actual results will probably differ depending on how the model worked.
+
+|         COMMON_NAME|     SCIENTIFIC_NAME|CATEGORY|label|prediction|
+|--------------------|--------------------|--------|-----|----------|
+|Ruby-crowned Kinglet|   Regulus calendula| species|  0.0|       0.0|
+|   Mountain Bluebird|  Sialia currucoides| species|  0.0|       0.0|
+|    Lesser Nighthawk|Chordeiles acutip...| slash  |  3.0|       3.0|
+|    Crissal Thrasher|  Toxostoma crissale| species|  0.0|       0.0|
+|  Greater Roadrunner|Geococcyx califor...| issf   |  1.0|       2.0|
+
+- Compute the total time, precision and recall of the result you found and include them in the report for the 100,000 points dataset.
