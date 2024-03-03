@@ -21,14 +21,12 @@ There are samples of
 and [100,000 points](https://drive.google.com/open?id=1D1q3uA_SFCJrVv8k5BYcOm099LklKcbq).
 You do not have to decompress these files before processing.
 
-![Chicago Crimes visualization from UCR-Star](images/ChicagoCrimes_UCR-Star.png)
-
 2. Download the [ZIP Code Boundaries](https://drive.google.com/open?id=1CSTOR0FYrlA-hKM9CbhaDZV7zaU9saIL) 
 dataset made available by the US Census Bureau. You can also explore this dataset on
-[UCR-Star](https://star.cs.ucr.edu/?TIGER2018/ZCTA5#center=41.8226,-87.6925&zoom=11)
+[UCR-Star](https://star.cs.ucr.edu/?eBird#center=38.060,-119.295&zoom=8)
 to understand how it is represented.
 
-![Visualization of the eBird dataset in California from UCR-Star](eBird_UCRStar.png)
+![Visualization of the eBird dataset in California from UCR-Star](images/eBird.png)
 
 ## Task 1: Data preparation
 The first step is to prepare the data for processing. This includes two major steps.

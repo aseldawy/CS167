@@ -26,7 +26,7 @@ First, keep only the relevant attributes to reduce the complexity and size of th
 Second, extract the top 20 keywords. We will use them as our topics.
 
 - Load the given input file using the `json` format.
-- Keep only the following attributes {id, text, created_at, entities.hashtags.txt, user.description, retweet_count, reply_count, and quoted_status_id}
+- Keep only the following attributes {id, text, created_at, place.country_code, entities.hashtags.txt, user.description, retweet_count, reply_count, and quoted_status_id}
 - Store the output in a new JSON file named `tweets_clean`.
 - The output is supposed to be in the following schema.
 ```
@@ -57,7 +57,7 @@ root
   - `LIMIT` the number of results to 20.
 - Collect the result in an array of keywords. Here is a comma-separated list of the top-20 keywords for the 1k dataset.
 ```text
-ALDUBxEBLoveis,no309,FurkanPalalı,LalOn,sbhawks,DoktorlarDenklikistiyor,Benimisteğim,احتاج_بالوقت_هذا,happy,السعودية,nowplaying,CNIextravaganza2017,love,beautiful,art,türkiye,vegalta,KittyLive,tossademar,鯛
+ALDUBxEBLoveis, FurkanPalalı, no309, LalOn, sbhawks, DoktorlarDenklikistiyor, Benimisteğim, احتاج_بالوقت_هذا, art, CNIextravaganza2017, love, happy, السعودية, nowplaying, beautiful, türkiye, vegalta, KittyLive, 鯛, tossademar
 ```
 
 In the report, include the top 20 keywords you found for the 10k dataset.
@@ -79,6 +79,8 @@ If a tweet contains more than one top hashtags, any of them can be used.
 root
  |-- id: long (nullable = true)
  |-- text: string (nullable = true)
+ |-- created_at: string (nullable = true)
+ |-- country_code: string (nullable = true)
  |-- topic: string (nullable = true)
  |-- user_description: string (nullable = true)
  |-- retweet_count: long (nullable = true)
@@ -88,15 +90,14 @@ root
 And here are a few sample records.
 
 ```json
-{"id":921633446644080641,"text":"#negramaroofficial #love #smile #pic #follow4follow #followme #finoallimbrunire #amorecheritorni… https://t.co/o3LPaMxBrj","hashtag":"love","user_description":"Negramanteinside_romanainside\nSe non sei Giuliano Sangiorgi lasciami stare.","retweet_count":0,"reply_count":0}
-{"id":921633445045866497,"text":"#CNIextravaganza2017 Testimoni dari Bpk. Agung Handaya sebagai Double Diamond mengenai CNI I-Plan 2017 #bisnisCNI https://t.co/6fEs7eQPWh","hashtag":"CNIextravaganza2017","user_description":"Hebat Produknya Hebat Bisnisnya","retweet_count":0,"reply_count":0}
-{"id":921633449882128384,"text":"#DoktorlarDenklikistiyor #Benimisteğim https://t.co/decAepZqMN","hashtag":"DoktorlarDenklikistiyor","user_description":"emin ben","retweet_count":0,"reply_count":0}
-{"id":921633451773648896,"text":"Na miss ko mag tweet na may ALDUB hashtag  #ALDUBxEBLoveis","hashtag":"ALDUBxEBLoveis","user_description":"Resilient. Objective. Rational.\nLove is a grave mental disease. - Plato","retweet_count":0,"reply_count":0}
-{"id":921633452289642497,"text":"#FurkanPalalı Değil güzel bir mutluluk kaynağı olun #LalOn #no309 084","hashtag":"no309","retweet_count":0,"reply_count":0}
+{"id":921633446644080641,"text":"#negramaroofficial #love #smile #pic #follow4follow #followme #finoallimbrunire #amorecheritorni… https://t.co/o3LPaMxBrj","created_at":"Sat Oct 21 07:05:11 +0000 2017","country_code":"IT","topic":"love","user_description":"Negramanteinside_romanainside\nSe non sei Giuliano Sangiorgi lasciami stare.","retweet_count":0,"reply_count":0}
+{"id":921633445045866497,"text":"#CNIextravaganza2017 Testimoni dari Bpk. Agung Handaya sebagai Double Diamond mengenai CNI I-Plan 2017 #bisnisCNI https://t.co/6fEs7eQPWh","created_at":"Sat Oct 21 07:05:11 +0000 2017","country_code":"ID","topic":"CNIextravaganza2017","user_description":"Hebat Produknya Hebat Bisnisnya","retweet_count":0,"reply_count":0}
+{"id":921633449882128384,"text":"#DoktorlarDenklikistiyor #Benimisteğim https://t.co/decAepZqMN","created_at":"Sat Oct 21 07:05:12 +0000 2017","country_code":"TR","topic":"DoktorlarDenklikistiyor","user_description":"emin ben","retweet_count":0,"reply_count":0}
+{"id":921633451773648896,"text":"Na miss ko mag tweet na may ALDUB hashtag  #ALDUBxEBLoveis","created_at":"Sat Oct 21 07:05:12 +0000 2017","country_code":"PH","topic":"ALDUBxEBLoveis","user_description":"Resilient. Objective. Rational.\nLove is a grave mental disease. - Plato","retweet_count":0,"reply_count":0}
 ```
 
 Finally, you can download
-[this sample file](https://drive.google.com/open?id=1EEwaBE5Es6yOpQ54y-iANtHLyFmvZABe)
+[this sample file](https://drive.google.com/file/d/1VcsXznJkmyBJjKnVN__Q0mjyV3v7WVJ2/view?usp=sharing)
 to double-check your result.
 
 In the report, include the total number of records in the `tweets_topic` dataset for the 10k dataset.
@@ -104,7 +105,8 @@ In the report, include the total number of records in the `tweets_topic` dataset
 ### Task 3: Topic prediction
 Build a machine learning model that assigns a topic for each tweet based on the classified tweets.
 The model should learn the relationship between all features and the topic.
-Then, it applies this model to all data to predict one topic for each tweet.
+Then, it applies this model to all data to predict one topic for each tweet. Load the dataset in the JSON format.
+You can test on [this sample file](https://drive.google.com/file/d/1VcsXznJkmyBJjKnVN__Q0mjyV3v7WVJ2/view?usp=sharing) until the second task is complete.
 The machine learning pipeline should include the following.
 
 - A `Tokenzier` that finds all the tokens (words) from the tweets text and user description.
