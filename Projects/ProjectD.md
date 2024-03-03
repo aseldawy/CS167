@@ -136,13 +136,13 @@ Here is an overview of what you are expected to do.
 - Load the dataset named `tweets_clean` from the Task 1 in the Json format.
   You can test on [this sample file](https://drive.google.com/file/d/1HuwfP05nX_qFucACuUlHqi4_ro3EiolZ/view?usp=sharing) until the first task is complete.
 - The start and end dates will be provided as command-line arguments in the format `MM/DD/YYYY`, e.g., `03/15/2018`.
-- Run an SQL query to keep only those tweets in the dataframe whose country and created_at field values are NOT null. 
+- Run an SQL query to keep only those tweets in the dataframe whose country_code and created_at field values are NOT null. 
 - Run an SQL query that does the following:                                                
   - Parse the `created_at` attribute into a proper timestamp attribute. 
-    For that use the SQL function `to_timestamp` with the format `MM/dd/yyyy hh:mm:ss a`.
+    For that use the SQL function `to_timestamp` with the format `EEE MMM dd HH:mm:ss Z yyyy`. (*Note:* this pattern format is not supported in the latest version (3.5.0) of Spark. You would need to add `.config("spark.sql.legacy.timeParserPolicy", "LEGACY"))` to the SparkSession to make this pattern support in your spark version)
   - Parse the user-provided start and end dates using the function `to_date` with the format `MM/dd/yyyy`
   - Include a `WHERE` clause that tests if the tweets are is `BETWEEN` start `AND` end dates.
-  - Include a grouped aggregate statement to count the number of tweets for each `country`.
+  - Include a grouped aggregate statement to count the number of tweets for each `country_code`.
   - Show only those country_codes and correspoding count values in the result whose count value is greater than 50. 
 - Write the output as a CSV file named `CountryTweetsCount`. You might want to first `coalesce(1)` the Dataframe to produce a single file.
   A sample output is provided below for your reference. These results are for the date range `[02/21/2017, 12/22/2017]` and the 1k dataset.   Your numbers might differ depending on your own parameters.
