@@ -34,13 +34,14 @@ First, introduce a new attribute `County` that indicates the county at which eac
 Second, convert the file into a column-oriented Parquet format to speed up the analysis.
 
 - Parse and load the CSV file using the Dataframe API.
+- - Keep only the following columns to reduce the size of the dataset: "x", "y", "acq_date", "frp", "acq_time", "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
 - Introduce a geometry attribute that represents the location of each crime. Use the `ST_CreatePoint` function.
-- Keep only the following columns to reduce the size of the dataset: "x", "y", "acq_date", "frp", "acq_time".
 - The `frp` column, short for fire radiative power, requires some attention from you.
   This column sometimes stores a floating point value, and sometimes store two values separated by comma.
   In this step, you should convert all of them to float to prepare for the next step.
   To do that, use the `split` function to split the string around the comma and take only the first value.
   Then, cast this value to double using the syntax `double(...)` in SQL.
+- Cast all the numerical columns to double: "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
 - Convert the resulting Dataframe to a SpatialRDD to prepare for the next step.
 - Load the County dataset using Beast.
 - Run a spatial join query to find the county of each wildfire.
@@ -59,20 +60,29 @@ root
  |-- acq_date: string (nullable = true)
  |-- frp: double (nullable = true)
  |-- acq_time: string (nullable = true)
+ |-- ELEV_mean: double (nullable = true)
+ |-- SLP_mean: double (nullable = true)
+ |-- EVT_mean: double (nullable = true)
+ |-- EVH_mean: double (nullable = true)
+ |-- CH_mean: double (nullable = true)
+ |-- TEMP_ave: double (nullable = true)
+ |-- TEMP_min: double (nullable = true)
+ |-- TEMP_max: double (nullable = true)
  |-- County: string (nullable = true)
 ```
 
-You can download this [sample output file](https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x) to double-check your result.
+You can download this [sample output file](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing) to double-check your result.
 
 A few sample records are shown below for your reference.
 
-|                  x|                 y|  acq_date| frp| acq_time|County|
-|-------------------|------------------|----------|----|---------|------|
-|-123.79012382714633| 39.49769932079566|2014-04-16| 5.7|     2051| 06045|
-|-123.59370530564676| 40.62211574302579|2015-08-07| 1.4|     1005| 06023|
-|-123.58558385152243| 40.61345034913054|2015-08-05| 1.8|1043,1043| 06023|
-|-123.57749200118698| 40.33575710612239|2015-08-15| 2.1|1055,1055| 06023|
-|-123.56022433828086| 40.44443512212919|2015-08-04| 1.5|     1102| 06023|
++-------------------+------------------+----------+----+--------+----------+----------+----------+----------+---------+--------+--------+--------+------+
+|                  x|                 y|  acq_date| frp|acq_time| ELEV_mean|  SLP_mean|  EVT_mean|  EVH_mean|  CH_mean|TEMP_ave|TEMP_min|TEMP_max|County|
++-------------------+------------------+----------+----+--------+----------+----------+----------+----------+---------+--------+--------+--------+------+
+|-117.41316845575105|42.366651969370714|2012-07-12| 4.0|     837|       0.0|       0.0|       0.0|     103.0|      0.0|    28.7|    13.9|    40.0| 41045|
+|-121.49050227282443| 38.85103301438476|2013-02-18| 3.5|    2057|       0.0|       0.0|       0.0| 61.674557|2.0710058|     8.7|     2.0|    15.0| 06101|
+|-118.52945376865702| 34.32721431731797|2013-07-12| 0.4|     937| 695.39105| 23.948717|       0.0| 101.80769|15.705129|    25.0|    18.9|    31.7| 06037|
+|-118.52848927542246|34.323954009037365|2012-05-21| 0.7|     955|  627.9467| 28.674557|       0.0| 103.60355|50.739643|    23.5|    15.0|    33.3| 06037|
+|-118.52848927542246|34.323954009037365|2017-12-10| 0.8|     913|  627.9467| 28.674557| 229.47337|  205.5858|31.005917|    21.4|    16.1|    25.6| 06037|
 
 
 In the report, include one paragraph, in your own words, on why the Parquet format will be helpful for this project.
@@ -145,7 +155,7 @@ and plot the result as a line chart.
 
 Here is an overview of what you are expected to do.
 - Load the dataset in the Parquet format.
-  You can test on [this sample file](https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x)
+  You can test on [this sample file]([https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing))
   until the first task is complete.
 - Since the name is not unique and is not present in the WildfireDB dataset, we cannot directly search by it.
 - To solve this issue, we first search for the unique GEOID of the county with that name in California.
@@ -170,3 +180,36 @@ Here is an overview of what you are expected to do.
 
 - Open the file in a spreadsheet program and plot the result as a line chart.
   The output should look similar to the figure above.
+
+## Task 4: Fire Intensity Prediction
+
+
+Develop a model that predicts the `fire_intensity` using as input these values: "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
+
+- Load the dataset in the Parquet format.
+You can test on [this sample file](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing) until the first task is complete.
+- Group the records by county, year and month, and aggregate "frp" using SUM and name it as "fire_intensity", for all other numerical values in the aggregation use the average (AVG). This is a similar aggregation to the one you did in Task 3, but in this task, you will save all the numberical columns and aggregate them using AVG. You will use this dataframe in your model.
+- As input features, your model will take the aggregate values from these columns: "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
+- Your model will predict the "fire_intensity" value which is the sum of the "frp" column after the aggregation.
+- The machine learning pipeline should include the following.
+  - A normalization step, that transforms all columns to have normal distribution with 0 mean, and standard deviation of one.
+  - A LogisticRgression or another classifier that predicts the fire_intensity value from the set of features.
+- Then, You will do the regular training-test split to train on one set and test on the other. 
+- Note, your predictions must be shown in the original scale not normalized values.
+
+Here is a sample of how part of your result might look like. The actual results will probably differ depending on how the model worked.
+
++----------+----------+----------+----------+---------+--------+--------+--------+---------------+-----------+
+| ELEV_mean|  SLP_mean|  EVT_mean|  EVH_mean|  CH_mean|TEMP_ave|TEMP_min|TEMP_max| fire_intensity| prediction|
++----------+----------+----------+----------+---------+--------+--------+--------+---------------+-----------+
+|       0.0|       0.0|       0.0|     103.0|      0.0|    28.7|    13.9|    40.0|            4.0|        3.7|
+|       0.0|       0.0|       0.0| 61.674557|2.0710058|     8.7|     2.0|    15.0|            3.5|        3.0|
+| 695.39105| 23.948717|       0.0| 101.80769|15.705129|    25.0|    18.9|    31.7|            0.4|        0.0|
+|  627.9467| 28.674557|       0.0| 103.60355|50.739643|    23.5|    15.0|    33.3|            0.7|        2.0|
+|  627.9467| 28.674557| 229.47337|  205.5858|31.005917|    21.4|    16.1|    25.6|            0.8|       -0.5|
+|  615.1603| 20.948717|       0.0| 104.54487|62.820515|    28.0|    18.9|    38.3|            0.3|        1.0|
+| 608.19446|  24.88889| 210.36806| 192.38194| 51.59722|    19.2|    10.0|    30.6|            0.5|        0.1|
+|  533.5128|  21.99359|101.621796|  96.01923|      0.0|    21.6|    16.1|    28.9|            0.8|       -0.9|
+
+[Optional] You may attempt using different regression models, and scaling with MinMax instead of normalizaiton, and observe any differences. You can also attempt to use the County as a categorical input feature, and observe if it has any effect.
+
