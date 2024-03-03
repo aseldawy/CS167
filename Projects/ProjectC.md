@@ -13,9 +13,13 @@ Click on a few points to see sample data records and their attribute values.
 The dataset contains a total of 18 million points. However, we will only work with a subset of the data in California.
 Furthermore, we will have several subsets of the data of sizes, 1K, 10K, and 100K, to expedite the development.
 
+![WildfireDB](images/wildfiredb.png)
+
 You can also explore the [county dataset on UCR-Star](https://star.cs.ucr.edu/?TIGER2018/COUNTY#center=40.03,-116.90&zoom=5).
 Click on a few records to see all the attributes that we have available for this data.
 Do you think that the county name is unique? Can you find two different counties with the same name?
+
+![SoCal Counties](images/SoCal-Counties.png)
 
 ## Prerequisites
 1. Download samples of the data with different sizes to test your program while developing.
@@ -34,7 +38,7 @@ First, introduce a new attribute `County` that indicates the county at which eac
 Second, convert the file into a column-oriented Parquet format to speed up the analysis.
 
 - Parse and load the CSV file using the Dataframe API.
-- - Keep only the following columns to reduce the size of the dataset: "x", "y", "acq_date", "frp", "acq_time", "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
+- Keep only the following columns to reduce the size of the dataset: "x", "y", "acq_date", "frp", "acq_time", "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
 - Introduce a geometry attribute that represents the location of each crime. Use the `ST_CreatePoint` function.
 - The `frp` column, short for fire radiative power, requires some attention from you.
   This column sometimes stores a floating point value, and sometimes store two values separated by comma.
