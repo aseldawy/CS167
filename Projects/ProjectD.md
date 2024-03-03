@@ -26,13 +26,15 @@ First, keep only the relevant attributes to reduce the complexity and size of th
 Second, extract the top 20 keywords. We will use them as our topics.
 
 - Load the given input file using the `json` format.
-- Keep only the following attributes {id, text, entities.hashtags.txt, user.description, retweet_count, reply_count, and quoted_status_id}
+- Keep only the following attributes {id, text, created_at, entities.hashtags.txt, user.description, retweet_count, reply_count, and quoted_status_id}
 - Store the output in a new JSON file named `tweets_clean`.
 - The output is supposed to be in the following schema.
 ```
 root
  |-- id: long (nullable = true)
  |-- text: string (nullable = true)
+ |-- created_at: string (nullable = true)
+ |-- country_code: string (nullable = true)
  |-- hashtags: array (nullable = true)
  |    |-- element: string (containsNull = true)
  |-- user_description: string (nullable = true)
@@ -42,13 +44,11 @@ root
 ```
 - A few sample records are shown below for your reference.
 ```json
-{"id":921633443708096512,"text":"He referred to his place as home so my heart is SO warm rn https://t.co/xZS41dUF55","hashtags":[],"user_description":"constantly grumpy","retweet_count":0,"reply_count":0}
-{"id":921633445788258304,"text":"@ShirazHassan my son want to purchase his camera for his assignments as BJMC students so which the good in nowadays??. Regards","hashtags":[],"user_description":"Cheif operating officer with 300 crore Indian conglomerate in edibles Oils. HQ Raipur Chattisgarh","retweet_count":0,"reply_count":0}
-{"id":921633446623137792,"text":"حمزة العيلي وهو\" محروس\" الزوج الثاني لهيفاء وهبي بالمسلسل جداً نظيف وواضح وغلبان تتعاطف معه كثير بالمسلسل\nالمسلسل جميل وماننسى دور عمرو واكد","hashtags":[],"retweet_count":0,"reply_count":0}
-{"id":921633444391555073,"text":"矢沢な皆さん❣️\n琵琶湖ホールで会いましょうね😘\n#トラバス2017 https://t.co/G4IMOC4VIF","hashtags":["トラバス2017"],"user_description":"JR草津駅東口徒歩約4分❣️昭和歌謡からロックまて♫老若男女が楽しめるカラオケバーです🎤","retweet_count":0,"reply_count":0}
-{"id":921633447558266880,"text":"It's beautiful https://t.co/1RHtFBEFnk","hashtags":[],"user_description":"Football, healthcare, stem cell research, technology, cycling, politics. I believe in an Australian Republic #SydneyIsSkyBlue","retweet_count":0,"reply_count":0}
+{"id":921633443934433280,"text":"saya tahu dia tertidur sebab dia loser","created_at":"Sat Oct 21 07:05:10 +0000 2017","country_code":"MY","hashtags":[],"user_description":"I'm not here anymore","retweet_count":0,"reply_count":0}
+{"id":921633444219596800,"text":"ふみとぉおおお🙈🙈🙈💓💓💓\n\nヤバイ、最高すぎへん？？ふみと大好きやわ〜😭❤️\n\n甲子園の試合前に流れる学校紹介？キャプテンが喋るやつやん、ハイクオリティ🤤w https://t.co/heX5eQbWIP","created_at":"Sat Oct 21 07:05:10 +0000 2017","country_code":"JP","hashtags":[],"user_description":"野球ガールの頭やってます🙋甲子園 ⚾️LARUS🐧は本拠地🇯🇵花咲徳栄のアイドルって言われてます(言わせてます)優勝おめで徳栄ぅぅう💙💓💙💓浪しゃま可愛いし史也男前やし、やっぱり阪神優勝するわ🏆","retweet_count":0,"reply_count":0,"quoted_status_id":921338657436459008}
+{"id":921633444131680256,"text":"اللهم إني أعوذ بك من جهد البلاء،\nودرك الشقاء، وسوء القضاء، وشماتة الأعداء.\n\"\n(متفق عليه)","created_at":"Sat Oct 21 07:05:10 +0000 2017","country_code":"KW","hashtags":[],"user_description":"اللهم إجعلني خير خلف لـ خير سلف","retweet_count":0,"reply_count":0}
 ```
-- Download [this sample output](https://drive.google.com/open?id=1EDI4xS0qQJkMsk4Pt9WkhGX9QVsa_hX1)
+- Download [this sample output](https://drive.google.com/file/d/1HuwfP05nX_qFucACuUlHqi4_ro3EiolZ/view?usp=sharing)
   to double-check your result.
 - On the clean data, run a top-k SQL query to select the top 20 most frequent hashtags as follows.
   - Use the function `explode` to produce one list of all hashtags from the column `hashtags`.
@@ -68,7 +68,7 @@ The topic is any of the hashtags that appear in the most frequent list.
 If a tweet contains more than one top hashtags, any of them can be used.
 
 - If the result of Task 1 is not available to you yet,
-  download [this sample file](https://drive.google.com/open?id=1EDI4xS0qQJkMsk4Pt9WkhGX9QVsa_hX1) to start working.
+  download [this sample file](https://drive.google.com/file/d/1HuwfP05nX_qFucACuUlHqi4_ro3EiolZ/view?usp=sharing) to start working.
 - Load the file as a JSON file.
 - Use the function `array_intersect` to compute the intersection between the list of hashtags and the list of topics.
 - Since the result of `array_intersect` is an array, keep only the first entry of it.
@@ -124,3 +124,37 @@ Here is a sample of how part of your result might look like. The actual results 
 |921633514587656192| Indigo Son #art #human #nature #figure #artofvisuals #color @ Los Angeles, California https://t.co/95DYGZOd1S         |art                    |I am an artist. So, there!                                                                                           |8.0  |6.0       |
 
 - Compute the precision and recall of the result you found and include them in the report for the 10k dataset. 
+
+## Task 4: Temporal Analysis
+Given start and end dates, count the number of tweets for each country_code and plot as a bar chart (see below).
+
+![Tweets Per country](images/tweets_per_country.png)
+
+Here is an overview of what you are expected to do.
+- Load the dataset named `tweets_clean` from the Task 1 in the Json format.
+  You can test on [this sample file](https://drive.google.com/file/d/1HuwfP05nX_qFucACuUlHqi4_ro3EiolZ/view?usp=sharing) until the first task is complete.
+- The start and end dates will be provided as command-line arguments in the format `MM/DD/YYYY`, e.g., `03/15/2018`.
+- Run an SQL query to keep only those tweets in the dataframe whose country and created_at field values are NOT null. 
+- Run an SQL query that does the following:                                                
+  - Parse the `created_at` attribute into a proper timestamp attribute. 
+    For that use the SQL function `to_timestamp` with the format `MM/dd/yyyy hh:mm:ss a`.
+  - Parse the user-provided start and end dates using the function `to_date` with the format `MM/dd/yyyy`
+  - Include a `WHERE` clause that tests if the tweets are is `BETWEEN` start `AND` end dates.
+  - Include a grouped aggregate statement to count the number of tweets for each `country`.
+  - Show only those country_codes and correspoding count values in the result whose count value is greater than 50. 
+- Write the output as a CSV file named `CountryTweetsCount`. You might want to first `coalesce(1)` the Dataframe to produce a single file.
+  A sample output is provided below for your reference. These results are for the date range `[02/21/2017, 12/22/2017]` and the 1k dataset.   Your numbers might differ depending on your own parameters.
+
+|country_code|count|
+|------------|-----|
+|          GB|   57|
+|          BR|   55|
+|          US|  229|
+|          PH|   52|
+|          JP|  122|
+
+- Load the file into a spreadsheet program, e.g., Excel, and draw the desired bar chart.
+- The output should look like the image above.
+
+In the report, include your own visualization of the 10k dataset and a date range of your choice.
+Include the date range that you used.

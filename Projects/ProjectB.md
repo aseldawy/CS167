@@ -186,3 +186,6 @@ Here is a sample of how part of your result might look like. The actual results 
 |  Greater Roadrunner|Geococcyx califor...| issf   |  1.0|       2.0|
 
 - Compute the total time, precision and recall of the result you found and include them in the report for the 100,000 points dataset.
+
+
+
