@@ -45,13 +45,16 @@ In this task, you need to count the total number of crimes for each ZIP code and
 ## Task 3: Temporal analysis
 Given start and end dates, count the number of crimes for each crime type and plot as a bar chart.
 
-## [Project B: Bird Analysis](ProjectB.md)
+## Task 4: Arrest Prediction
+Develop a predictive model to forecast whether a reported crime incident will result in an arrest.
+
+# [Project B: Bird Analysis](ProjectB.md)
 In this project, you will perform some analytical tasks on a dataset that represents bird observations.
 We will combine this dataset with a ZIP code dataset to determine the ZIP code for each point.
 Then, we will perform two analytical tasks, one based on ZIP codes, and one based on time.
 The results will be visualized using existing tools.
 
-### Task 1: Data preparation
+## Task 1: Data preparation
 To prepare the data for analysis, we will do the following.
 
 - Parse the dataset in its CSV format.
@@ -59,19 +62,22 @@ To prepare the data for analysis, we will do the following.
 - Introduce the ZIP Code for each bird observation by joining in the ZIPCode dataset.
 - Save the converted file in Parquet file format to speed up the next tasks
 
-### Task 2: Spatial analysis
+## Task 2: Spatial analysis
 Given a specific bird species, count the percentage of observations for this species among
 all observations per ZIP Code and visualize the result as a choropleth map.
 
 ## Task 3: Temporal analysis
 Given a date range `[start, end]`, find the number of observations of each species and plot the result as a pie chart.
 
-## [Project C: Wildfire analysis](ProjectC.md)
+## Task 4: Bird's Category Prediction
+Use machine learning to predict the category of a bird sighting using features derived from the bird's common and scientific names.
+
+# [Project C: Wildfire analysis](ProjectC.md)
 In this project, we will perform some analytic tasks on the wildfire dataset in California.
 Each point in this dataset represents an occurrence of a wildfire along with relevant information
 such as the location at which it happened, the date of the first, and the fire intensity.
 
-### Task 1: Preparation
+## Task 1: Preparation
 To prepare the dataset for analysis, we will do the following.
 
 - Parse the data in its CSV format.
@@ -79,30 +85,36 @@ To prepare the dataset for analysis, we will do the following.
 - Join with the county dataset and add a new column that gives the county name for each fire observation.
 - Write the output in Parquet format.
 
-### Task 2: Spatio-temporal analysis
+## Task 2: Spatio-temporal analysis
 Given a date range, start and end, compute the total fire intensity for each county over that time. Draw the result as a choropleth map.
 
-### Task 3: Temporal analysis
+## Task 3: Temporal analysis
 Given a specific county by name, compute the total fire intensity each month over all time and plot the result as a line chart.
 
-## [Project D: Twitter data analysis](ProjectD.md)
+## Task 4: Fire Intensity Prediction
+Develop a machine learning model to predict fire intensity using other fire features.
+
+# [Project D: Twitter data analysis](ProjectD.md)
 In this project, we will analyze twitter data. Our goal is to build a machine-learning classifier that assigns
 a topic to each tweet. The topics are automatically extracted from all tweets based on most frequent hashtags.
 
-### Task 1: Data preparation 1
+## Task 1: Data preparation 1
 Clean the dataset by selecting only relevant attributes that will be used in next steps.
 Store the converted data in a new CSV file.
 Extract the top 20 hashtags in all tweets and store them in an array.
 
-### Task 2: Data preparation 2
+## Task 2: Data preparation 2
 Add a new column for each tweet that indicates its topic.
 The topic is any of the hashtags that appear in the most frequent list.
 If a tweet contains more than one top hashtags, any of them can be used.
 
-### Task 3: Topic prediction
+## Task 3: Topic prediction
 Build a machine learning model that assigns a topic for each tweet based on the classified tweets.
 The model should learn the relationship between all features and the topic.
 Then, it applies this model to all data to predict one topic for each tweet.
+
+## Task 4: Temporal Analysis
+Given start and end dates, count the number of tweets for each country_code and plot as a bar chart.
 
 # Rubric
 - 2% for the code part.
