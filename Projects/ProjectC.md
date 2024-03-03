@@ -102,7 +102,7 @@ Draw the result as a choropleth map.
 
 Here is an overview of what you are expected to do.
 - Load the dataset in the Parquet format.
-You can test on [this sample file](https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x) until the first task is complete.
+You can test on [this sample file](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing) until the first task is complete.
 - Run an SQL query that does the following:
   - Parse the `acq_date` attribute into a proper timestamp attribute.
     For that use the SQL function `to_date` with the format `yyyy-MM-dd`.
