@@ -35,7 +35,7 @@ In this lab, we will use Scala as a programming language.
     Your pom.xml file must include <spark.version>3.5.0</spark.version> in the properties. It must also include `spark-core` and `spark-sql` similar to Lab 6.
 ---
 
-### II. Load Input (20 minutes) (In-home)
+### II. Load Input (30 minutes) (In-home)
 
 First, we will load the input file that we will use throughout the lab.
 The input file name is passed as the first command line argument `args(0)`.
@@ -120,15 +120,7 @@ The input file name is passed as the first command line argument `args(0)`.
     }
     ```
 
-2. Complete all `// ...` and `/* ... */` based on the following sections.
-
----
-
-### III. Support Vector Machines model on sentiment data (90 minutes) (In-Lab)
-
-In this part, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To activate this part of the code, set the command line arguments to: `sentiment.csv`
-
-1. Decompress the file you downloaded, and open the file `sentiment.csv` in a text editor and go through it to see some examples of the data. For your reference, the first few lines are included below.
+2. Decompress the file you downloaded, and open the file `sentiment.csv` in a text editor and go through it to see some examples of the data. For your reference, the first few lines are included below.
 
     |                text|sentiment|
     |--------------------|---------|
@@ -138,7 +130,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     |This is a terrible movie, and I'm not even sure why it's so terrible. It's ugly, ...|   neg|
     |First of all this movie is a piece of reality very well realized artistically. ...|     pos|
 
-2. (`TODO A`) Load the file input file `sentiment.csv` as a CSV file using the following options.
+3. (`TODO A`) Load the file input file `sentiment.csv` as a CSV file using the following options.
 
     | option     | value    |
     | ---------- | -------- |
@@ -158,7 +150,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
 
     Hint: See [Lab 6](../Lab6/CS167-Lab6.md#iv-query-the-dataframe-using-dataframe-operators-45-minutes)
 
-    Print the schema and the first few lines to double check that the file was loaded correctly. It should look like the following.
+    Print the schema and the first few lines to double-check that the file was loaded correctly. It should look like the following.
 
     ```text
     root
@@ -176,22 +168,28 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     +--------------------+---------+
     ```
 
-3. We will build a pipeline that consists of three transformations and one estimator described below.
-4. (`TODO B`) First, we use a [`Tokenizer`](http://spark.apache.org/docs/latest/ml-features.html#tokenizer), which splits the text into words, and configure it as below.
+---
+
+### III. Support Vector Machines model on sentiment data (90 minutes) (In-Lab)
+
+In this part, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To activate this part of the code, set the command line arguments to: `sentiment.csv`
+
+1. We will build a pipeline that consists of three transformations and one estimator described below.
+2. (`TODO B`) First, we use a [`Tokenizer`](http://spark.apache.org/docs/latest/ml-features.html#tokenizer), which splits the text into words, and configure it as below.
 
     | method | parameter |
     | - | - |
     | [`setInputCol`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/Tokenizer.html#setInputCol(value:String):T) | `"text"` |
     | [`setOutputCol`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/Tokenizer.html#setOutputCol(value:String):T) | `"words"` |
 
-5. (`TODO C`) Second, we use a [`HashingTF`](http://spark.apache.org/docs/latest/ml-features.html#tf-idf), which maps the words in each review to a vector of TF-IDF, and configure it as below.
+3. (`TODO C`) Second, we use a [`HashingTF`](http://spark.apache.org/docs/latest/ml-features.html#tf-idf), which maps the words in each review to a vector of TF-IDF, and configure it as below.
 
     | method | parameter |
     | - | - |
     | [`setInputCol`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/HashingTF#setInputCol(value:String):HashingTF.this.type) | `"words"` |
     | [`setOutputCol`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/HashingTF#setOutputCol(value:String):HashingTF.this.type) | `"features"` |
 
-6. (`TODO D`) Third, we use a [`StringIndexer`](http://spark.apache.org/docs/latest/ml-features.html#stringindexer), which maps the two sentiments `pos` and `neg` to integer values, and configure it as below.
+4. (`TODO D`) Third, we use a [`StringIndexer`](http://spark.apache.org/docs/latest/ml-features.html#stringindexer), which maps the two sentiments `pos` and `neg` to integer values, and configure it as below.
 
     | method | parameter |
     | - | - |
@@ -199,9 +197,9 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     | [`setOutputCol`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/StringIndexer.html#setOutputCol(value:String):StringIndexer.this.type) | `"label"` |
     | [`setHandleInvalid`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/feature/StringIndexer.html#setHandleInvalid(value:String):StringIndexer.this.type) | `"skip"` |
 
-7. (`TODO E`) Fourth, we run the data through a [`LinearSVC`](https://spark.apache.org/docs/latest/ml-classification-regression.html#linear-support-vector-machine) model. The default configuration is fine, we will set the parameters of interest using a parameter grid.
+5. (`TODO E`) Fourth, we run the data through a [`LinearSVC`](https://spark.apache.org/docs/latest/ml-classification-regression.html#linear-support-vector-machine) model. The default configuration is fine, we will set the parameters of interest using a parameter grid.
 
-8. (`TODO F`) Create a pipeline that combines the four stages in the above order.
+6. (`TODO F`) Create a pipeline that combines the four stages in the above order.
   
     See [`Pipeline.setStages`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/ml/Pipeline.html#setStages(value:Array[_%3C:org.apache.spark.ml.PipelineStage]):Pipeline.this.type)
 
@@ -217,7 +215,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     | `svc.threshold`               | `Array(0.0001, 0.01)`        |
 
 
-11. (`TODO H`) Working with this dataset will take more time because it is bigger and more complex. To speed up the training process, we will use a [`TrainValidationSplit`](http://spark.apache.org/docs/latest/ml-tuning.html#train-validation-split) validator. We will create and configure it as below:
+7. (`TODO H`) Working with this dataset will take more time because it is bigger and more complex. To speed up the training process, we will use a [`TrainValidationSplit`](http://spark.apache.org/docs/latest/ml-tuning.html#train-validation-split) validator. We will create and configure it as below:
 
     ```scala
     val cv = new TrainValidationSplit()
@@ -228,13 +226,13 @@ In this part, we will build a model that estimates the sentiment (positive/negat
       .setParallelism(2)
     ```
 
-12. (`TODO I`) Split the input data into training and test sets as below.
+8. (`TODO I`) Split the input data into training and test sets as below.
 
     ```scala
     val Array(trainingData: Dataset[Row], testData: Dataset[Row]) = sentimentData.randomSplit(Array(0.8, 0.2))
     ```
 
-13. (`TODO J`) Run through the data and get the best model as follows.
+9. (`TODO J`) Run through the data and get the best model as follows.
 
     ```scala
     val model: TrainValidationSplitModel = cv.fit(trainingData)
@@ -253,7 +251,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     val tol: Double = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getTol
     ```
 
-15. (`TODO L`) Now, apply the the model on the test set and print out a few cases for demonstration.
+10. (`TODO L`) Now, apply the the model on the test set and print out a few cases for demonstration.
 
     ```scala
     val predictions: DataFrame = model.transform(testData)
@@ -261,28 +259,28 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     ```
 
     The output should look similar to the following:
+    
+    ```text
+    +--------------------+---------+-----+----------+
+    |                text|sentiment|label|prediction|
+    +--------------------+---------+-----+----------+
+    |"200l: A Space Od...|      pos|  0.0|       0.0|
+    |"Atoll K" aka "Ut...|      neg|  1.0|       1.0|
+    |"Dead Man Walking...|      pos|  0.0|       0.0|
+    |"Death Machines" ...|      neg|  1.0|       1.0|
+    |"Four Daughters" ...|      pos|  0.0|       1.0|
+    |"Goodbye, Mr. Chi...|      pos|  0.0|       0.0|
+    |"House of Dracula...|      pos|  0.0|       1.0|
+    |"I haven't laughe...|      neg|  1.0|       1.0|
+    |"Jaded" offers a ...|      neg|  1.0|       1.0|
+    |"Just before dawn...|      pos|  0.0|       0.0|
+    |"Problem Child" w...|      neg|  1.0|       1.0|
+    |"Quit while your ...|      neg|  1.0|       1.0|
+    |"The Next Karate ...|      neg|  1.0|       0.0|
+    +--------------------+---------+-----+----------+
+    ```
 
-```text
-+--------------------+---------+-----+----------+
-|                text|sentiment|label|prediction|
-+--------------------+---------+-----+----------+
-|"200l: A Space Od...|      pos|  0.0|       0.0|
-|"Atoll K" aka "Ut...|      neg|  1.0|       1.0|
-|"Dead Man Walking...|      pos|  0.0|       0.0|
-|"Death Machines" ...|      neg|  1.0|       1.0|
-|"Four Daughters" ...|      pos|  0.0|       1.0|
-|"Goodbye, Mr. Chi...|      pos|  0.0|       0.0|
-|"House of Dracula...|      pos|  0.0|       1.0|
-|"I haven't laughe...|      neg|  1.0|       1.0|
-|"Jaded" offers a ...|      neg|  1.0|       1.0|
-|"Just before dawn...|      pos|  0.0|       0.0|
-|"Problem Child" w...|      neg|  1.0|       1.0|
-|"Quit while your ...|      neg|  1.0|       1.0|
-|"The Next Karate ...|      neg|  1.0|       0.0|
-+--------------------+---------+-----+----------+
-```
-
-15. (`TODO M`) Let us also calculate the accuracy of the result.
+11. (`TODO M`) Let us also calculate the accuracy of the result.
 
     ```scala
     val binaryClassificationEvaluator = new BinaryClassificationEvaluator()
@@ -292,26 +290,26 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     val accuracy: Double = binaryClassificationEvaluator.evaluate(predictions)
     println(s"Accuracy of the test set is $accuracy")
     ```
-
-***(Q1) Fill the following table.***
-
-The parameter values and the accuracy are based on the best model you obtained. The run time is the total run time printed by the program.
-
-| Parameter       | Value |
-|-----------------|------------|
-| numFeatures     |            |
-| fitIntercept    |            |
-| regParam        |            |
-| maxIter         |            |
-| threshold       |            |
-| tol             |            |
-| Test accuracy   |            |
-| Run time        |            |
-
+    
+    ***(Q1) Fill the following table.***
+    
+    The parameter values and the accuracy are based on the best model you obtained. The run time is the total run time printed by the program.
+    
+    | Parameter       | Value |
+    |-----------------|------------|
+    | numFeatures     |            |
+    | fitIntercept    |            |
+    | regParam        |            |
+    | maxIter         |            |
+    | threshold       |            |
+    | tol             |            |
+    | Test accuracy   |            |
+    | Run time        |            |
+    
 
 ---
 
-### IV. Distributed Mode (15 minutes)
+### IV. Distributed Mode (20 minutes)
 
 In this part, you will run the same pipeline on a cluster with your group.
 
@@ -354,16 +352,16 @@ The parameter values and the accuracy are based on the best model you obtained. 
 
 
 
-### IV. Submission (15 minutes)
+### IV. Submission (10 minutes)
 
 1. Add a `README` file with all your information. Use this [template](CS167-Lab9-README.md).
-2. No need to add a run script this time. However, make sure that your code compiles with `mvn clean package` prior to submission.
+2. No need to add a run script this time. However, make sure that your code compiles with `mvn clean package` before submission. To double-check, download your submission and compile it again to make sure no files are missing.
 3. Similar to all labs, do not include any additional files such as the compiled code, input, or output files.
 
 Submission file format:
 
 ```console
-<UCRNetID>_lab8.{tar.gz | zip}
+<UCRNetID>_lab9.{tar.gz | zip}
   - src/
   - pom.xml
   - README.md
@@ -383,7 +381,7 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 
 ## Hints
 
-Spark tends to be very chatty on the console. If you would like to reduce the amount of logs written by Spark, create a file named `log4j.properties` under `src/main/resources` and include the following configuraiton in it.
+Spark tends to be very chatty on the console. If you would like to reduce the amount of logs written by Spark, create a file named `log4j.properties` under `src/main/resources` and include the following configuration in it.
 
 ```properties
 # Set root logger level to INFO and its only appender to A1.
