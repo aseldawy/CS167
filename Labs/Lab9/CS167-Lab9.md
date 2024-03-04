@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-* Download the following file made available by [Kaggle](https://www.kaggle.com), [Sentiment data](sentiment.csv).
+* Download the following file made available by [Kaggle](https://www.kaggle.com), [Sentiment data](sentiment.csv.zip).
 
 ---
 
@@ -128,7 +128,7 @@ The input file name is passed as the first command line argument `args(0)`.
 
 In this part, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To activate this part of the code, set the command line arguments to: `sentiment.csv`
 
-1. Open the file `sentiment.csv` in a text editor and go through it to see some examples of the data. For your reference, the first few lines are included below.
+1. Decompress the file you downloaded, and open the file `sentiment.csv` in a text editor and go through it to see some examples of the data. For your reference, the first few lines are included below.
 
     |                text|sentiment|
     |--------------------|---------|
