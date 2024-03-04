@@ -264,7 +264,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
 
     The output should look similar to the following:
 
-    ```text
+```text
 +--------------------+---------+-----+----------+
 |                text|sentiment|label|prediction|
 +--------------------+---------+-----+----------+
