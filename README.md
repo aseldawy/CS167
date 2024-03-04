@@ -23,6 +23,7 @@ Unless otherwise mentioned:
 * [Lab 6](Labs/Lab6/CS167-Lab6.md): Spark RDD and Spark SQL using Scala
 * [Lab 7](Labs/Lab7/CS167-Lab7.md): Spark SQL and Parquet
 * [Lab 8](Labs/Lab8/CS167-Lab8.md): MongoDB
+* [Lab 9](Labs/Lab9/CS167-Lab9.md): Machine Learning with MLlib
 * [Projects](Projects/Projects.md)
 
 ## Links
