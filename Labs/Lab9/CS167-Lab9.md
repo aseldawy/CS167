@@ -124,7 +124,7 @@ The input file name is passed as the first command line argument `args(0)`.
 
 ---
 
-### III. Support Vector Machines model on sentiment data (90 minutes)
+### III. Support Vector Machines model on sentiment data (90 minutes) (In-Lab)
 
 In this part, we will build a model that estimates the sentiment (positive/negative) of textual data based on labeled data. To activate this part of the code, set the command line arguments to: `sentiment.csv`
 
