@@ -211,7 +211,6 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     | ----------------------------- | ---------------------------- |
     | `hashingTF.numFeatures`       | `Array(1024, 2048)`          |
     | `svc.fitIntercept`            | `Array(true,false)`          |
-    | `svc.standardization`         | `Array(true,false)`          |
     | `svc.regParam`                | `Array(0.01, 0.0001)`        |
     | `svc.maxIter`                 | `Array(10, 15)`              |
     | `svc.threshold`               | `Array(0, 0.25)`             |
@@ -248,7 +247,6 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     ```scala
     val numFeatures: Int = model.bestModel.asInstanceOf[PipelineModel].stages(1).asInstanceOf[HashingTF].getNumFeatures
     val fitIntercept: Boolean = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getFitIntercept
-    val standardization: Boolean = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getStandardization
     val regParam: Double = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getRegParam
     val maxIter: Double = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getMaxIter
     val threshold: Double = model.bestModel.asInstanceOf[PipelineModel].stages(3).asInstanceOf[LinearSVCModel].getThreshold
@@ -303,7 +301,6 @@ The parameter values and the accuracy are based on the best model you obtained. 
 |-----------------|------------|
 | numFeatures     |            |
 | fitIntercept    |            |
-| standardization |            |
 | regParam        |            |
 | maxIter         |            |
 | threshold       |            |
@@ -325,7 +322,7 @@ In this part, you will run the same pipeline on a cluster with your group.
 3. You can run your program using this command:
 
 ```bash
-spark-submit --conf --conf spark.default.parallelism=[CORES] --class edu.ucr.cs.cs167.[UCRNetID].App --master [MASTER_NODE_HOSTNAME]:[PORT] [UCRNetID]_lab9-1.0-SNAPSHOT.jar hdfs:///sentiment.csv
+spark-submit --conf spark.default.parallelism=[CORES] --class edu.ucr.cs.cs167.[UCRNetID].App --master spark://[MASTER_NODE_HOSTNAME]:[PORT] [UCRNetID]_lab9-1.0-SNAPSHOT.jar hdfs:///sentiment.csv
 ```
 Make sure to edit the command as defined in the table:
 
@@ -346,7 +343,6 @@ The parameter values and the accuracy are based on the best model you obtained. 
 | Total number of cores in your cluster     |            |
 | numFeatures                               |            |
 | fitIntercept                              |            |
-| standardization                           |            |
 | regParam                                  |            |
 | maxIter                                   |            |
 | threshold                                 |            |
