@@ -39,7 +39,7 @@ Second, convert the file into a column-oriented Parquet format to speed up the a
 
 - Parse and load the CSV file using the Dataframe API.
 - Keep only the following columns to reduce the size of the dataset: "x", "y", "acq_date", "frp", "acq_time", "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
-- Introduce a geometry attribute that represents the location of each crime. Use the `ST_CreatePoint` function.
+- Introduce a geometry attribute that represents the location of each wildfire. Use the `ST_CreatePoint` function.
 - The `frp` column, short for fire radiative power, requires some attention from you.
   This column sometimes stores a floating point value, and sometimes store two values separated by comma.
   In this step, you should convert all of them to float to prepare for the next step.
@@ -185,8 +185,6 @@ Here is an overview of what you are expected to do.
   The output should look similar to the figure above.
 
 ## Task 4: Fire Intensity Prediction
-
-
 Develop a model that predicts the `fire_intensity` using as input these values: "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
 
 - Load the dataset in the Parquet format.
@@ -215,3 +213,39 @@ Here is a sample of how part of your result might look like. The actual results 
 
 [Optional] You may attempt using different regression models, and scaling with MinMax instead of normalizaiton, and observe any differences. You can also attempt to use the County as a categorical input feature, and observe if it has any effect.
 
+## Task 5: Temporal Analysis- 2
+Given start and end dates, compute the total fire intensity for each county of California and plot the result in a bar chart (as shown below).
+![Bar chart of species](images/wildfire_bar_chart.png)
+
+Here is an overview of what you are expected to do.
+- Load the dataset in the Parquet format.
+  You can test on [this sample file]([https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing))
+  until the first task is complete.
+- The start and end dates will be provided as command-line arguments in the format `MM-DD-YYYY`, e.g., `03-15-2018`.
+- First, load the county dataset using Beast and run a filter query by `STATEFP="06"` which represents California. Retrieve the GEOID and NAME as county_name of all the counties of California.
+- Now, back to the wildfire data, run an equi-join SQL query to join with the results of the previous query on GEOID=County. The query also includes the following:
+  - Parse the `acq_date` attribute into a proper timestamp attribute. 
+    For that use the SQL function `to_date` with the format `yyyy-MM-dd`.
+  - Parse the user-provided start and end dates using the function `to_date` with the format `MM-dd-yyyy`
+  - Include a `WHERE` clause that tests if the wildfire date is `BETWEEN` start `AND` end dates.
+  - Include a grouped aggregate statement to group by county_name attribute and compute the total fire intensity, `SUM(frp)` for each group. 
+- Store the result in a CSV file named `wildfires_California`.You might want to first coalesce(1) the Dataframe to produce a single file.
+- Here is part a output file for the sample input data. These results are for the date range [01-01-2012, 12-01-2017].
+
+|   county_name|total_fire_intensity|
+|--------------|--------------------|
+|   Los Angeles|                 1.6|
+|        Sonoma|                10.7|
+|San Bernardino|                 0.9|
+|  Contra Costa|                 4.6|
+|        Alpine|                 2.6|
+|      Humboldt|                 5.1|
+|        Tulare|                 0.8|
+|        Orange|                 1.8|
+
+
+- Load the file into a spreadsheet program, e.g., Excel, and draw the desired bar chart.
+- The output should look like the image above.
+
+In the report, include your own visualization of the 10k dataset and a date range of your choice.
+Include the date range that you used.

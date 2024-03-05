@@ -94,6 +94,10 @@ Given a specific county by name, compute the total fire intensity each month ove
 ## Task 4: Fire Intensity Prediction
 Develop a machine learning model to predict fire intensity using other fire features.
 
+## Task 5: Temporal analysis - 2
+Given start and end dates, compute the total fire intesitites for each country of California and show the result in a bar-chart.
+
+
 # [Project D: Twitter data analysis](ProjectD.md)
 In this project, we will analyze twitter data. Our goal is to build a machine-learning classifier that assigns
 a topic to each tweet. The topics are automatically extracted from all tweets based on most frequent hashtags.
