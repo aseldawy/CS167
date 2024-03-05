@@ -211,6 +211,9 @@ Here is a sample of how part of your result might look like. The actual results 
 | 608.19446|  24.88889| 210.36806| 192.38194| 51.59722|    19.2|    10.0|    30.6|            0.5|        0.1|
 |  533.5128|  21.99359|101.621796|  96.01923|      0.0|    21.6|    16.1|    28.9|            0.8|       -0.9|
 
+
+- Compute the total time and the Root Mean Square Error (RMSE) of the result you found and include them in the report for the 100,000 records dataset.
+
 [Optional] You may attempt using different regression models, and scaling with MinMax instead of normalizaiton, and observe any differences. You can also attempt to use the County as a categorical input feature, and observe if it has any effect.
 
 ## Task 5: Temporal Analysis- 2
