@@ -212,7 +212,7 @@ In this part, we will build a model that estimates the sentiment (positive/negat
     | `svc.regParam`                | `Array(0.01, 0.0001)`        |
     | `svc.maxIter`                 | `Array(10, 15)`              |
     | `svc.threshold`               | `Array(0, 0.25)`             |
-    | `svc.threshold`               | `Array(0.0001, 0.01)`        |
+    | `svc.tol`               | `Array(0.0001, 0.01)`        |
 
 
 7. (`TODO H`) Working with this dataset will take more time because it is bigger and more complex. To speed up the training process, we will use a [`TrainValidationSplit`](http://spark.apache.org/docs/latest/ml-tuning.html#train-validation-split) validator. We will create and configure it as below:
