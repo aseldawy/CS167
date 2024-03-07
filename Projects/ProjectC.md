@@ -189,7 +189,7 @@ Develop a model that predicts the `fire_intensity` using as input these values: 
 
 - Load the dataset in the Parquet format.
 You can test on [this sample file](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing) until the first task is complete.
-- Group the records by county, year and month, and aggregate "frp" using SUM and name it as "fire_intensity", for all other numerical values in the aggregation use the average (AVG). This is a similar aggregation to the one you did in Task 3, but in this task, you will save all the numerical columns and aggregate them using AVG. You will use this dataframe in your model.
+- Group the records by county, year and month, and aggregate "frp" using SUM and name it as "fire_intensity", for all other numerical values in the aggregation use the average (AVG). You will use this dataframe in your model.
 - As input features, your model will take the aggregate values from these columns: "ELEV_mean", "SLP_mean", "EVT_mean", "EVH_mean", "CH_mean", "TEMP_ave", "TEMP_min", "TEMP_max".
 - Your model will predict the "fire_intensity" value which is the sum of the "frp" column after the aggregation.
 - The machine learning pipeline should include the following.
