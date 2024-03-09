@@ -155,3 +155,21 @@ Given start and end dates, count the number of tweets for each country_code and 
   - Your final grade in this part will be calculated using the equation `max(4%, correct answers/number of questions / 0.8 * 4%)`.
     This means that if you get 80% correct, you get full score.
 
+# Frequenty Asked Questions
+
+***(Q1) How do I fix this error 'java.lang.OutOfMemoryError'?***
+
+Spark by default only uses one Gigabyte of memory. You need to configure it to use all availalbe memory in your machine. The CS167 mahcine we provided to you has 32GB of ram, and you should use it if you don't have sufficient memory in your laptop.
+
+To make Spark use all available memory, you can add the related options after `spark-submit` or `beast` commands, which set the `spark.executer.memory` and `spark.driver.memory` configurations. Your commands will look something similar to this:
+
+
+```bash
+spark-submit --conf spark.executor.memory=32g --conf spark.driver.memory=32g [OTHER_PARTS_OF_YOUR_COMMAND]
+```
+
+Or:
+
+```bash
+beast --conf spark.executor.memory=32g --conf spark.driver.memory=32g [OTHER_PARTS_OF_YOUR_COMMAND]
+```
