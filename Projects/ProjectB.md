@@ -30,19 +30,19 @@ to understand how it is represented.
 
 ## Task 1: Data preparation
 The first step is to prepare the data for processing. This includes two major steps.
-First, introduce a new attribute `ZIPCode` that indicates the ZIP code at which each crime happened.
+First, introduce a new attribute `ZIPCode` that indicates the ZIP code at which each observation happened.
 Second, convert the file into a column-oriented Parquet format to speed up the analysis.
 
 - Parse and load the CSV file using the Dataframe API.
-- Introduce a geometry attribute that represents the location of each crime. Use the `ST_CreatePoint` function.
+- Introduce a geometry attribute that represents the location of each observation. Use the `ST_CreatePoint` function.
 - Keep only the following columns to reduce the size of the dataset: {"x", "y", "GLOBAL UNIQUE IDENTIFIER", "CATEGORY", "COMMON NAME", "SCIENTIFIC NAME",
   "SUBSPECIES COMMON NAME", "OBSERVATION COUNT", "OBSERVATION DATE"}
 - Rename all attributes that include a space to make them easier to process and compatible with the Parquet format.
     To do that, use the function `withColumnRenamed` on the Dataframe.
 - Convert the resulting Dataframe to a SpatialRDD to prepare for the next step.
 - Load the ZIP Code dataset using Beast.
-- Run a spatial join query to find the ZIP code of each crime.
-- Use the attribute `ZCTA5CE10` from the ZIP code to introduce a new attribute `ZIPCode` in the crime.
+- Run a spatial join query to find the ZIP code of each observation.
+- Use the attribute `ZCTA5CE10` from the ZIP code to introduce a new attribute `ZIPCode` in the observations.
 - Convert the result back to a Dataframe.
 - Drop the geometry column using the function `dropColumn` on the Dataframe.
 - Write the output as a Parquet file named `eBird_ZIP`.
