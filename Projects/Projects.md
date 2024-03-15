@@ -121,18 +121,18 @@ Then, it applies this model to all data to predict one topic for each tweet.
 Given start and end dates, count the number of tweets for each country_code and plot as a bar chart.
 
 # Rubric
-- 2% for the code part.
+- 3% for the code part.
   - Make sure that your code is indented and use proper variable names. Include comments as-needed to understand your code.
   - Include a README file with your information.
   - Include all source files and no binary or data files.
   - Include a script that compiles and runs the three tasks in order.
     If you use AsterixDB or MongoDB, include the query in a comment and do not run it.
-- 2% for the report that includes:
+- 1% for the report that includes:
   - A title for your project.
   - Student information and who did which part.
   - A short introduction in your own words for the project and which big-data system you used and why you chose it.
   - A section for each task that includes what you were asked for, e.g., visualizations or other comparisons.
-- 2% for the video and the question.
+- 3% for the video.
   - The video can be up-to two minutes. If it goes any longer, it will be trimmed and you will lose points.
   - In the first 10-15 seconds, indicate which project you worked on, your group number, and the group members.
     Make sure that all this information is written during that time.
@@ -140,7 +140,7 @@ Given start and end dates, count the number of tweets for each country_code and 
   - Include 30 seconds for each task where you very briefly describe what you did and how you did it. For example,
     mention which functions you used and how they helped you. Show the result that you included in the report as you talk.
   - Each student must present their own part. If only one student makes the whole presentation, other members will get zero in this part.
-- 2% for the question.
+- 1% for the question.
   - The question must be a multiple choice question.
   - There should be exactly three choices.
   - Only one choice can be correct.
