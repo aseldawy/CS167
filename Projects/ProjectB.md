@@ -35,8 +35,7 @@ Second, convert the file into a column-oriented Parquet format to speed up the a
 
 - Parse and load the CSV file using the Dataframe API.
 - Introduce a geometry attribute that represents the location of each observation. Use the `ST_CreatePoint` function.
-- Keep only the following columns to reduce the size of the dataset: {"x", "y", "GLOBAL UNIQUE IDENTIFIER", "CATEGORY", "COMMON NAME", "SCIENTIFIC NAME",
-  "SUBSPECIES COMMON NAME", "OBSERVATION COUNT", "OBSERVATION DATE"}
+- Keep only the following columns to reduce the size of the dataset: {"x", "y", "GLOBAL UNIQUE IDENTIFIER", "CATEGORY", "COMMON NAME", "SCIENTIFIC NAME", "OBSERVATION COUNT", "OBSERVATION DATE"}
 - Rename all attributes that include a space to make them easier to process and compatible with the Parquet format.
     To do that, use the function `withColumnRenamed` on the Dataframe.
 - Convert the resulting Dataframe to a SpatialRDD to prepare for the next step.
