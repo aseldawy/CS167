@@ -133,7 +133,7 @@ Given start and end dates, count the number of tweets for each country_code and 
   - A short introduction in your own words for the project and which big-data system you used and why you chose it.
   - A section for each task that includes what you were asked for, e.g., visualizations or other comparisons.
 - 3% for the video.
-  - The video can be up-to two minutes. If it goes any longer, it will be trimmed and you will lose points.
+  - The video can be up-to two minutes and a half (180 seconds). If it goes any longer, it will be trimmed and you will lose points.
   - In the first 10-15 seconds, indicate which project you worked on, your group number, and the group members.
     Make sure that all this information is written during that time.
   - In 10-15 seconds, give a very brief introduction to the project in your own words.
