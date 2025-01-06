@@ -1,4 +1,4 @@
-# Lab 2
+# Lab 1
 
 ## Student information
 
