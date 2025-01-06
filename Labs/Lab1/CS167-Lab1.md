@@ -34,7 +34,7 @@ Follow the instructions below to complete this lab. If you have any questions, p
 #### Oracle JDK 17
 We will use JDK as our SDK to compile Java and Scala code in this course.
 
- 1. Download the compressed archive that is right for your operating system from the [JDK download page](https://www.oracle.com/java/technologies/downloads/#java17).
+ 1. Download the compressed archive that is right for your operating system from the [JDK download page](https://www.oracle.com/java/technologies/downloads/#java17). You can also try this [Link](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 
     *Note*: For Mac users, make sure to choose ARM64 if your device runs on an M* chip and x64 if it runs on Intel.
  2. Decompress the archive in the course directory.
