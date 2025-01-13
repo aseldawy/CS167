@@ -6,8 +6,19 @@ As part of this course, you will have access to a remote machine where you will 
 - Have your CS Lab username and password handy. If you do not know your password, check [this page](https://www1.cs.ucr.edu/department-intranet) for instructions on how to reset your password.
 - Install Visual Studio Code if you would like to use it to connect to your remote machine.
 
+In the following part, we will refer to three machines:
+- *Local machine*: this is your personal laptop.
+- *bolt*: This is a gateway machine to access your remote machine.
+- *cs167*: This is your personalized remote machine that you will use throughout this course.
 
-## Part II: Connect to your machine
+When you run a command in the terminal, the prompt tells you which machine you are running on.
+- On your local machine, the prompt might be something like `jason@jasons-imac ~ %`
+- On bolt, the prompt will be `[csusername]@bolt $`.
+- On cs167, the prompt will be `cs167@class-xxx:~$`.
+
+When you're asked to run a command, pay attention to which machine you are connected to.
+
+## Part II: Connect to your CS167 machine
 The easiest way to connect to your machine is to first connect to `bolt.cs.ucr.edu` and then your machine.
 
 1. Connect to bolt.cs.ucr.edu:
@@ -25,7 +36,8 @@ The easiest way to connect to your machine is to first connect to `bolt.cs.ucr.e
     ```shell
     cs167_login
     ```
-4. You should be connected to your CS 167 machine. You will find the machine name written at the prompt. You can also find your machine name by running the comman `hostname`. Take a note of that machine name since we will use it later. It will have the format of `class-###`.
+4. You should be connected to your CS 167 machine. You will find the machine name written at the prompt. You can also find your machine name by running the command `hostname`. Take a note of that machine name since we will use it later. It will have the format of `class-###`.
+5. To exit from cs167 machine to bolt, type `exit`. To exit back to your local machine, type `exit` again.
 
 ## Part III: Setup key access to bolt
 To make it easier to access your machine, we will set up password-less access.
