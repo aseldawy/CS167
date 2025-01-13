@@ -17,6 +17,14 @@
 
 * (Q4) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?
 
-* (Q5) Use your program to test the following cases and record the running time for each case.
+* (Q5) Verify the copied file (`copy.csv`) size and report the running time.
 
-* (Q6) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?
+* (Q6) Report the running time of the cp command.
+
+* (Q7) How do the two numbers in (Q5) and (Q6) compare? (The running times of copying the file through your program and the operating system.) Explain IN YOUR OWN WORDS why you see these results.
+
+* (Q8) Use your program to test the following cases and report the running time for each case.
+1) Copy a file from local file system to HDFS.
+2) Copy a file from HDFS to local file system.
+3) Copy a file from HDFS to HDFS.
+
