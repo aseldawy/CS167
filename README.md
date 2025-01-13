@@ -15,16 +15,8 @@ Unless otherwise mentioned:
 ## Table of Contents
 
 * [Remote Access](remote-access.md): Setup remote access to your CS167 machine.
-* [Lab 1](Labs/Lab1/CS167-Lab1.md): Development Setup for Java.
-* [Lab 2](Labs/Lab2/CS167-Lab2.md): Functional Programming in Java.
-* [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Distributed File System (HDFS).
-* [Lab 4](Labs/Lab4/CS167-Lab4.md): Hadoop MapReduce.
-* [Lab 5](Labs/Lab5/CS167-Lab5.md): Spark RDD.
-* [Lab 6](Labs/Lab6/CS167-Lab6.md): Spark RDD and Spark SQL using Scala
-* [Lab 7](Labs/Lab7/CS167-Lab7.md): Spark SQL and Parquet
-* [Lab 8](Labs/Lab8/CS167-Lab8.md): MongoDB
-* [Lab 9](Labs/Lab9/CS167-Lab9.md): Machine Learning with MLlib
-* [Projects](Projects/Projects.md)
+* [Lab 1](Labs/Lab1/CS167-Lab1.md): Functional Programming in Java.
+* [Lab 2](Labs/Lab2/CS167-Lab2.md): Hadoop Distributed File System
 
 ## Links
-* [Course website](https://elearn.ucr.edu/courses/122516) (Only enrolled students will have access)
+* [Course website](https://elearn.ucr.edu/courses/166244) (Only enrolled students will have access)
