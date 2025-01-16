@@ -2,10 +2,10 @@
 
 ## Student information
 
-* Full name:
-* E-mail:
-* UCR NetID:
-* Student ID:
+* Full name: Zaniah Lewis
+* E-mail: zlewi004@ucr.edu
+* UCR NetID:zlewi004
+* Student ID: 862244139
 
 ## Answers
 
