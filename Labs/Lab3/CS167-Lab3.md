@@ -141,7 +141,7 @@ For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc
 * ***(Q2) Copy the output of this command.***
 * ***(Q3) How many lived datanodes are in this cluster?***
 
-### III. Understand HDFS Write Behavior
+### III. Understand HDFS Write Behavior (20 minutes) - In-lab part
 This part will be done on the `cs167` server (continue to part II).
 In this part, you need to write to HDFS from namenode and datanode.  
 
