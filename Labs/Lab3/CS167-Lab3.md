@@ -13,8 +13,8 @@
 
 ## Overview
 
-In this lab, you will set a HDFS cluster with your group members. You will learn how to use web interface to write a file to hdfs from NameNode and DataNode, respectively. You need to be awared of the differences between these two cases.
-You will write a java program, which can use HDFS interface to perform random read on a certain split of file. 
+In this lab, you will set a HDFS cluster with your group members. You will learn how to use web interface to write a file to hdfs from NameNode and DataNode, respectively. You need to be aware of the differences between these two cases.
+You will write a java program, which can use the HDFS interface to perform random read on a certain split of file. 
 
 ## Lab Work
 
@@ -133,6 +133,15 @@ For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc
     </property>
     ```
     * *Note*: Replace `[namenode]` with the `hostname` of the machine that you selected as the namenode. After this step, the `core-site.xml` file should look identical across all machines. Make sure there are no additional spaces in the name and value.
+  
+5. Also, all group members need to modify `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` so that you change the default replication factor.
+Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml`, and add the following property inside the configuration tag:
+```xml
+  <property>
+      <name>dfs.replication</name>
+      <value>3</value>
+  </property>
+```
 5. On the `namenode`, initialize the files for HDFS by running the command `hdfs namenode -format`.
     * *Note*: Make sure that you run this command `only on the namenode`. 
 6. On the `namenode`: start the namenode by running `hdfs namenode`. Wait a few seconds to make sure that the namenode has started.
@@ -153,14 +162,14 @@ In this part, you need to write to HDFS from namenode and datanode.
 
 2. On the `namenode` machine, run the following command to copy `AREAWATER_[UCRNetID].csv` from your local file system to HDFS:
 ```shell
-# Replace [UCRNetID] with the netid of student owning this the namenode
+# Replace [UCRNetID] with the netid of the student owning this namenode
 hdfs dfs -put AREAWATER_[UCRNetID].csv
 ```
 
 3. On the `namenode` machine, run the following command to find the block locations of the file you just uploaded:
 ```shell
 # Replace [UCRNetID] with the netid of student owning this the namenode
-hdfs fsck AREAWATER_[UCRNetID].csv -locations
+hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
 ```
 * ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
 
