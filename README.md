@@ -16,7 +16,8 @@ Unless otherwise mentioned:
 
 * [Remote Access](remote-access.md): Setup remote access to your CS167 machine.
 * [Lab 1](Labs/Lab1/CS167-Lab1.md): Functional Programming in Java.
-* [Lab 2](Labs/Lab2/CS167-Lab2.md): Hadoop Distributed File System
+* [Lab 2](Labs/Lab2/CS167-Lab2.md): Hadoop Distributed File System.
+* [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Cluster and Read Procedure.
 
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/166244) (Only enrolled students will have access)
