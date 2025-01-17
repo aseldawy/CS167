@@ -9,14 +9,37 @@
 
 ## Answers
 
-* (Q1) Verify the file size and report the running time.
+1. ***(Q1) Compare `bytesRead` and `length`, are they equal? Use one sentance to explain why.***
 
-* (Q2) Report the running time of the copy command.
 
-* (Q3) How do the two numbers compare? (The running times of copying the file through your program and the operating system.) Explain IN YOUR OWN WORDS why you see these results.
 
-* (Q4) Does the program run after you change the default file system to HDFS? What is the error message, if any, that you get?
+2. ***(Q2) Copy the output of this command.***
 
-* (Q5) Use your program to test the following cases and record the running time for each case.
 
-* (Q6) Test your program on two files, one file stored on the local file system, and another file stored on HDFS. Compare the running times of both tasks. What do you observe?
+
+
+3. ***(Q3) How many live datanodes are in this cluster?***
+
+
+
+4. ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
+
+
+
+5. ***(Q5) How many replicas are stored on the datanode uploading the file? How many replicas are stored across other datanodes?***
+
+
+
+
+6. ***(Q6) Compare your results of Q4 and Q5, give one sentence to explain the results you obtained.***
+
+
+
+7. ***(Q7) Include the output of the three cases above in your README file.***
+
+
+  | offset | length | bytesRead  | numMatchingLines |
+  | ------ | ------ | ---------- | ---------------- |
+  | 500    | 1000   |            |                  |
+  | 12000  | 1000   |            |                  |
+  | 100095 | 1000   |            |                  |
