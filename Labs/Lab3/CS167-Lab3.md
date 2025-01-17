@@ -9,7 +9,7 @@
 ## Prerequisites
 
 * Follow the instructions in [Lab #1](../Lab1/CS167-Lab1.md) to setup the development environment.
-* Download the file [`nasa_19950801.tsv`](nasa_19950801.tsv) and place it in your local machine to be used later.
+* Download the file [`nasa_19950801.tsv`](nasa_19950801.tsv), [`nasa_19950630.22-19950728.12.tsv`](./nasa_19950630.22-19950728.12.tsv.gz) and place it in your local machine to be used later.
 
 ## Overview
 
@@ -142,10 +142,20 @@ Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml`, and add the following property ins
       <value>3</value>
   </property>
 ```
-5. On the `namenode`, initialize the files for HDFS by running the command `hdfs namenode -format`.
-    * *Note*: Make sure that you run this command `only on the namenode`. 
-6. On the `namenode`: start the namenode by running `hdfs namenode`. Wait a few seconds to make sure that the namenode has started.
-7. On each of the datanodes: start the data node by running `hdfs datanode`
+5. On the `namenode`, initialize the files for HDFS by running the command (*Note*: Make sure that you run this command `only on the namenode`):
+```shell
+ hdfs namenode -format.
+```
+6. On the `namenode`: start the namenode by running:
+```shell
+hdfs namenode
+``` 
+Wait a few seconds to make sure that the namenode has started.
+
+7. On each of the datanodes: start the data node by running:
+```shell
+hdfs datanode
+```
 8. Run this command to check the status of the cluster
  ```shell
    hdfs dfsadmin -report
@@ -172,6 +182,10 @@ hdfs dfs -put AREAWATER_[UCRNetID].csv
 hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
 ```
 * ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
+  * *Note* You can find the datanode ip/information by using the command:
+  ```shell
+  hdfs dfs -report
+  ```
 
 4. Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
     * *Note*: you need to change [UCRNetID] to the netid of student owning this datanode.
@@ -195,7 +209,9 @@ You will use your packed `jar` file to read from HDFS.
   hadoop jar [UCRNetID]_lab3-1.0-SNAPSHOT.jar nasa_19950801.tsv [offset] [length]
   ```
   Your code should output the number of lines contain string `200`.
+
 5. Test with the following input parameters with the input file `nasa_19950801.tsv`:
+
   | offset | length |
   | ------ | ------ |
   | 500    | 1000   |
@@ -203,10 +219,29 @@ You will use your packed `jar` file to read from HDFS.
   | 100095 | 1000   |
   ***(Q7) Include the output of the three cases above in your README file.***
 
+6. Test on larger dataset. Now you need to test your code on larger dataset. Download [`nasa_19950630.22-19950728.12.tsv.gz`](./nasa_19950630.22-19950728.12.tsv.gz) to your local computer.  
+Upload the downloaded file `nasa_19950630.22-19950728.12.tsv.gz` to your `cs167` server home directory.  
+Use the following command to decompress it:  
+```shell
+gunzip nasa_19950630.22-19950728.12.tsv.gz
+```
+
+7. Put the file `gunzip nasa_19950630.22-19950728.12.tsv` to HDFS, similar to step 3.
+
+8. Test your program with the following input parameters on `nasa_19950630.22-19950728.12.tsv`:
+
+| offset | length |
+| ------ | ------ |
+| 1500   | 2000   |
+| 13245  | 3500   |
+| 112233 | 4000   |
+
+Write a shell script named `run.sh`, which contains the commands you run the above three cases on `nasa_19950630.22-19950728.12.tsv`.
+
 ### V. Submission (15 minutes)
 
 1. Add a `README.md` file ([template](CS167-Lab3-README.md)) and include all the answers to the questions above in the `README` file.
-2. Add a script `run.sh` that will compile your code and run the three cases mentioned above on the file `nasa_19950801.tsv`
+2. Add a script `run.sh` that will compile your code and run the three cases mentioned above on the file `nasa_19950630.22-19950728.12.tsv`
 3. ***(S) Submit your compressed file as the lab deliverable.***
 
 * Note 1: Don't forget to include your information in the README file.
