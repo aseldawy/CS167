@@ -144,7 +144,7 @@ Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml`, and add the following property ins
 ```
 5. On the `namenode`, initialize the files for HDFS by running the command (*Note*: Make sure that you run this command `only on the namenode`):
 ```shell
- hdfs namenode -format.
+ hdfs namenode -format
 ```
 6. On the `namenode`: start the namenode by running:
 ```shell
