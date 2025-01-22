@@ -117,19 +117,25 @@ The `jar` file will be used and tested on your remote `cs167` server.
 This part will be done on the `cs167` server.
 In this part, you need to set up a HDFS cluster with your group members. 
 
-0. Clean your hadoop and HDFS environment by using this command in your home directory:
-```shell
-rm -rf cs167/ hadoop/
-```
+1. Clean your hadoop and HDFS environment by using this command in your home directory:
+  ```shell
+  rm -rf cs167/ hadoop/
+  ```
 Since every student started their HDFS for multiple times, the cluster IDs are different.
 We need to make sure the namenode and datanodes have the same cluster ID so that they can connect to each other.
 
-
-
-2. Identify all members of your group. You will find the group information in Canvas. 
+2. Setup your HDFS from scratch. You can run the following command to download and setup environment (similar to [Lab2](../Lab2/CS167-Lab2.md):
+   ```shell
+   bash setup.sh
+   ```
+   Then, source your environment setting by running:
+   ```shell
+   source ~/.bashrc
+   ```
+3. Identify all members of your group. You will find the group information in Canvas. 
 Each member should find their machine name by running the command `hostname` with format `class-xxx` after they are logged in to their `cs167` machine.
 3. By convention, we will use the machine with the *lowest* hostname number as the namenode, and others will be the datanodes.
-4. All group members need to modify `$HADOOP_HOME/etc/hadoop/core-site.xml`, so that all machines are in the same cluster. 
+5. All group members need to modify `$HADOOP_HOME/etc/hadoop/core-site.xml`, so that all machines are in the same cluster. 
 For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc/hadoop/core-site.xml`, and modify the following property inside the configuration tag.
     ```xml
     <property>
@@ -143,7 +149,7 @@ For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc
     ```
     * *Note*: Replace `[namenode]` with the `hostname` of the machine that you selected as the namenode. After this step, the `core-site.xml` file should look identical across all machines. Make sure there are no additional spaces in the name and value.
   
-5. Also, all group members need to modify `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` so that you change the default replication factor.
+6. Also, all group members need to modify `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` so that you change the default replication factor.
 Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml`, and add the following property inside the configuration tag:
 ```xml
   <property>
@@ -184,6 +190,11 @@ In this part, you need to write to HDFS from namenode and datanode.
 # Replace [UCRNetID] with the netid of the student owning this namenode
 hdfs dfs -put AREAWATER_[UCRNetID].csv
 ```
+  * *Note*: If you get error message saying 'no such file or directory', create a directory in HDFS by using:
+    ```shell
+    hdfs dfs -mkdir -p .
+    ```
+
 
 3. On the `namenode` machine, run the following command to find the block locations of the file you just uploaded:
 ```shell
