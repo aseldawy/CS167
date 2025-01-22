@@ -117,7 +117,16 @@ The `jar` file will be used and tested on your remote `cs167` server.
 This part will be done on the `cs167` server.
 In this part, you need to set up a HDFS cluster with your group members. 
 
-1. Identify all members of your group. You will find the group information in Canvas. 
+0. Clean your hadoop and HDFS environment by using this command in your home directory:
+```shell
+rm -rf cs167/ hadoop/
+```
+Since every student started their HDFS for multiple times, the cluster IDs are different.
+We need to make sure the namenode and datanodes have the same cluster ID so that they can connect to each other.
+
+
+
+2. Identify all members of your group. You will find the group information in Canvas. 
 Each member should find their machine name by running the command `hostname` with format `class-xxx` after they are logged in to their `cs167` machine.
 3. By convention, we will use the machine with the *lowest* hostname number as the namenode, and others will be the datanodes.
 4. All group members need to modify `$HADOOP_HOME/etc/hadoop/core-site.xml`, so that all machines are in the same cluster. 
