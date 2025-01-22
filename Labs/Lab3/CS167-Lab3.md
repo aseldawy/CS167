@@ -119,7 +119,7 @@ In this part, you need to set up a HDFS cluster with your group members.
 
 1. Clean your hadoop and HDFS environment by using this command in your home directory:
   ```shell
-  rm -rf cs167/ hadoop/
+  cd ~ && rm -rf cs167/ hadoop/
   ```
 Since every student started their HDFS for multiple times, the cluster IDs are different.
 We need to make sure the namenode and datanodes have the same cluster ID so that they can connect to each other.
