@@ -193,7 +193,7 @@ hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
 * ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
   * *Note* You can find the datanode ip/information by using the command:
   ```shell
-  hdfs dfs -report
+  hdfs dfsadmin -report
   ```
 
 4. Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
