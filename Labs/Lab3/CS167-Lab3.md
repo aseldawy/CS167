@@ -117,25 +117,10 @@ The `jar` file will be used and tested on your remote `cs167` server.
 This part will be done on the `cs167` server.
 In this part, you need to set up a HDFS cluster with your group members. 
 
-1. Clean your hadoop and HDFS environment by using this command in your home directory:
-  ```shell
-  cd ~ && rm -rf cs167/ hadoop/
-  ```
-Since every student started their HDFS for multiple times, the cluster IDs are different.
-We need to make sure the namenode and datanodes have the same cluster ID so that they can connect to each other.
-
-2. Setup your HDFS from scratch. You can run the following command to download and setup environment (similar to [Lab2](../Lab2/CS167-Lab2.md):
-   ```shell
-   bash setup.sh
-   ```
-   Then, source your environment setting by running:
-   ```shell
-   source ~/.bashrc
-   ```
-3. Identify all members of your group. You will find the group information in Canvas. 
+1. Identify all members of your group. You will find the group information in Canvas. 
 Each member should find their machine name by running the command `hostname` with format `class-xxx` after they are logged in to their `cs167` machine.
-3. By convention, we will use the machine with the *lowest* hostname number as the namenode, and others will be the datanodes.
-5. All group members need to modify `$HADOOP_HOME/etc/hadoop/core-site.xml`, so that all machines are in the same cluster. 
+2. By convention, we will use the machine with the *lowest* hostname number as the namenode, and others will be the datanodes.
+3. All group members need to modify `$HADOOP_HOME/etc/hadoop/core-site.xml`, so that all machines are in the same cluster. 
 For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc/hadoop/core-site.xml`, and modify the following property inside the configuration tag.
     ```xml
     <property>
@@ -149,7 +134,7 @@ For all machines (including both namenode and datanodes), edit `$HADOOP_HOME/etc
     ```
     * *Note*: Replace `[namenode]` with the `hostname` of the machine that you selected as the namenode. After this step, the `core-site.xml` file should look identical across all machines. Make sure there are no additional spaces in the name and value.
   
-6. Also, all group members need to modify `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` so that you change the default replication factor.
+4. Also, all group members need to modify `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` so that you change the default replication factor.
 Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml`, and add the following property inside the configuration tag:
 ```xml
   <property>
@@ -171,6 +156,11 @@ Wait a few seconds to make sure that the namenode has started.
 ```shell
 hdfs datanode
 ```
+  * *Note*: if you can the following error, you can **check the solution at the bottom** of this instruction:
+    ```shell
+    java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
+    ```
+
 8. Run this command to check the status of the cluster
  ```shell
    hdfs dfsadmin -report
@@ -308,3 +298,29 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 * Make sure to follow the naming conventions that are mentioned in Lab #1.
 * Do *not* include the target directory or the test input files in your submission.
 * Failure to follow these instructions and conventions might result in losing some points. This includes, for example, adding unnecessary files in your compressed file, using different package names, using a different name for the compressed file, not including a runnable script, and not including a `README.md` file.
+
+## Common Errors:
+
+* Error: When I run any HDFS command, I get an error related to safemode
+```
+Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
+```
+
+* Fix: Run the following command
+```shell
+hdfs dfsadmin -safemode leave
+```
+
+* Error: When I run the datanode, I get the following error:
+
+```
+java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
+```
+
+* Fix: Do the following steps to ensure a fresh start of HDFS:
+
+1. Stop the namenode and all data nodes.
+2. Delete the directory `~/hadoop/dfs` on *the namenode and all datanodes*. `rm -rf ~/hadoop/dfs`.
+3. Reformat HDFS using the command `hdfs namenode -format`.
+4. Start the namenode using the command `hdfs namenode`.
+5. Start the datanode using the command `hdfs datanode`.
