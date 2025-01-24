@@ -320,7 +320,7 @@ java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: nam
 * Fix: Do the following steps to ensure a fresh start of HDFS:
 
 1. Stop the namenode and all data nodes.
-2. Delete the directory `~/hadoop/dfs` on *the namenode and all datanodes*. `rm -rf ~/hadoop/dfs`.
+2. Delete the directory `~/hadoop` on *the namenode and all datanodes*. `rm -rf ~/hadoop`.
 3. Reformat HDFS using the command `hdfs namenode -format`.
 4. Start the namenode using the command `hdfs namenode`.
 5. Start the datanode using the command `hdfs datanode`.
