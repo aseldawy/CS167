@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CS167-Lab4.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///Users/huangbo/Documents/PhD-Related/Winter2025/CS167/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///Users/huangbo/Documents/PhD-Related/Winter2025/CS167/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="lab-4">Lab 4</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Learn how to develop Maven proejct on remote server.</li>
+<li>Write and play with a simple MapReduce program.</li>
+<li>Customize the MapReduce program by accepting user input.</li>
+<li>Run Hadoop MapReduce programs in standalone and distributed modes.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Setup the development environment as explained in <a href="../Lab1/CS167-Lab1.md">Lab #1</a>.</li>
+<li>Download two <code>tsv</code> files in <a href="../Lab3/CS167-Lab3.md">Lab3</a>( <a href="../Lab3/nasa_19950801.tsv">nasa_19950801.tsv</a>, <a href="../Lab3/nasa_19950630.22-19950728.12.tsv.gz">nasa_19950630.22-19950728.12.tsv</a>), and put them to your <code>cs167</code> virtual machine home directory (decompress if needed).</li>
+<li>Remote-access in <a href="../../remote-access.md">remote-access</a>.</li>
+</ul>
+<h2 id="lab-work">Lab Work</h2>
+<h3 id="i-setup---in-home-30-minutes">I. Setup - In-home (30 minutes)</h3>
+<p>This part will be done in <code>cs167</code> server.<br>
+Every steps are assuming you have already login into <code>cs167</code> server and in your home directory <code>/home/cs167</code>.</p>
+<ol start="0">
+<li>
+<p>Makesure the namenode and all datanodes in your group are alive (you can use <code>screen</code> or <code>tmux</code> to keep them running in the backend).</p>
+</li>
+<li>
+<p>Create a new empty project using Maven for Lab4. See previous Labs (<a href="../Lab1/CS167-Lab1.md">Lab #1</a>, <a href="../Lab2/CS167-Lab2.md">Lab #2</a>, <a href="../Lab3/CS167-Lab3.md">Lab #3</a>) for more details.</p>
+</li>
+<li>
+<p>Import your project into IntelliJ IDEA.</p>
+</li>
+<li>
+<p>Copy the file <code>$HADOOP_HOME/etc/hadoop/log4j.properties</code> to your project directory under <code>src/main/resources</code>. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.</p>
+<ul>
+<li>Manually create <code>src/main/resources</code> if it does not exist.</li>
+</ul>
+</li>
+<li>
+<p>Place the two sample files in your project home directory, i.e., next to the <code>pom.xml</code> file.</p>
+</li>
+<li>
+<p>In <code>pom.xml</code> add the following dependencies.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- Change the version number below to match your installed Hadoop. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">hadoop.version</span>&gt;</span>3.3.6<span class="hljs-tag">&lt;/<span class="hljs-name">hadoop.version</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${hadoop.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-hdfs<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${hadoop.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-mapreduce-client-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${hadoop.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-mapreduce-client-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${hadoop.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+</div></code></pre>
+</li>
+</ol>
+<h3 id="ii-simple-filter-program---in-home-30-minutes">II. Simple Filter Program - In-home (30 minutes)</h3>
+<p>[TODO] Specify the locations. I assume student will do this experiment on the server.</p>
+<p>This part will be done on <code>cs167</code> server.<br>
+In this part, you will need to write a MapReduce program that produces the lines that have a specific response code in them (similar to <a href="../Lab3/CS167-Lab3.md">Lab #3</a>). We will provide you with a sample code to help you understand MapReduce procedure in Hadoop.</p>
+<ol start="0">
+<li>
+<p>If <a href="./nasa_19950801.tsv"><code>nasa_19950801.tsv</code></a> does not exist in your home directory, download <a href="./nasa_19950801.tsv"><code>nasa_19950801.tsv</code></a> and put it to your virtual environment home directory. You can use the following command to check whether you have the file:</p>
+<pre class="hljs"><code><div>ls ~/ | grep nasa
+</div></code></pre>
+<p><em>Note</em>: You should see <code>nasa_19950801.tsv</code> in the output.</p>
+</li>
+<li>
+<p>Take a few minutes to look into the sample file and understand its format. You can use the following command:</p>
+<pre class="hljs"><code><div>less nasa_19950801.tsv
+</div></code></pre>
+<p><em>Note</em>: You can press <code>J</code> or <code>K</code> on your keyborad to scroll down or up. Press <code>Q</code> when you want to exist viewing the file.</p>
+</li>
+<li>
+<p>Create a new class named <code>Filter</code> in package <code>edu.ucr.cs.cs167.[UCRNetID]</code> with the following content:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Replace [UCRNetID] with your netid</span>
+<span class="hljs-keyword">package</span> edu.ucr.cs.cs167.[UCRNetID];
+
+<span class="hljs-keyword">import</span> org.apache.hadoop.conf.Configuration;
+<span class="hljs-keyword">import</span> org.apache.hadoop.fs.Path;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.LongWritable;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.NullWritable;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.Text;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Job;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Mapper;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+<span class="hljs-keyword">import</span> java.io.IOException;
+
+<span class="hljs-comment">/**
+* Filter log file by response code
+*/</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Filter</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        String inputPath = args[<span class="hljs-number">0</span>];
+        String outputPath = args[<span class="hljs-number">1</span>];
+        <span class="hljs-comment">// String desiredResponse = args[2];</span>
+        Configuration conf = <span class="hljs-keyword">new</span> Configuration();
+        <span class="hljs-comment">// TODO pass the desiredResponse code to the MapReduce program</span>
+        Job job = Job.getInstance(conf, <span class="hljs-string">"filter"</span>);
+        job.setJarByClass(Filter<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setMapperClass(TokenizerMapper<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setNumReduceTasks(<span class="hljs-number">0</span>);
+        job.setInputFormatClass(TextInputFormat<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        Path input = <span class="hljs-keyword">new</span> Path(inputPath);
+        FileInputFormat.addInputPath(job, input);
+        Path output = <span class="hljs-keyword">new</span> Path(outputPath);
+        FileOutputFormat.setOutputPath(job, output);
+        System.exit(job.waitForCompletion(<span class="hljs-keyword">true</span>) ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TokenizerMapper</span> <span class="hljs-keyword">extends</span> 
+            <span class="hljs-title">Mapper</span>&lt;<span class="hljs-title">LongWritable</span>, <span class="hljs-title">Text</span>, <span class="hljs-title">NullWritable</span>, <span class="hljs-title">Text</span>&gt; </span>{
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">(Context context)</span> 
+                <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+            <span class="hljs-keyword">super</span>.setup(context);
+            <span class="hljs-comment">// TODO add additional setup to your map task, if needed.</span>
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">map</span><span class="hljs-params">(LongWritable key, Text value, Context context)</span> 
+                <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+            <span class="hljs-keyword">if</span> (key.get() == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Skip header line</span>
+            String[] parts = value.toString().split(<span class="hljs-string">"\t"</span>);
+            String responseCode = parts[<span class="hljs-number">5</span>];
+            <span class="hljs-comment">// TODO Filter by response code</span>
+        }
+    }
+}
+</div></code></pre>
+</li>
+<li>
+<p>Take some time to understand the code and answer the following questions.</p>
+<ul>
+<li><em><strong>(Q1) What do you think the line <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Job.html#setJarByClass-java.lang.Class-"><code>job.setJarByClass(Filter.class);</code></a> does?</strong></em></li>
+<li><em><strong>(Q2) What is the effect of the line <a href="https://data-flair.training/forums/topic/what-happen-if-number-of-reducer-is-0-in-hadoop/"><code>job.setNumReduceTasks(0);</code></a>?</strong></em></li>
+<li><em><strong>(Q3) Where does the <code>main</code> function run? (Driver node, Master node, or an executor node).</strong></em></li>
+</ul>
+</li>
+<li>
+<p>We will slightly modify the <code>Filter</code> class to filter all lines with response code <code>200</code>.<br>
+Add the following code below comment <code>// TODO Filter by response code</code> in <code>map</code> function:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// TODO Filter by response code</span>
+<span class="hljs-keyword">if</span> (responseCode.equals(<span class="hljs-string">"200"</span>)){
+    context.write(NullWritable.get(), value);
+}
+</div></code></pre>
+<p><em>Note</em>: we use <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#equals(java.lang.Object)"><code>String#equals</code></a> rather than the operator <code>==</code> since <code>String</code> is not a primitive value in Java.</p>
+</li>
+<li>
+<p>Go to your project directory <code>workspace/[UCR_NetID]_lab4</code>, use the following command to build your <code>jar</code> file:</p>
+<pre class="hljs"><code><div>mvn clean package
+</div></code></pre>
+</li>
+<li>
+<p>Run your program by <code>hadoop jar</code> command, and specify the class <code>Filter</code>:</p>
+<pre class="hljs"><code><div>hadoop jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output_dir
+</div></code></pre>
+<p><em>Note</em>: Since we didn't specify the <code>mainClass</code> in <code>pom.xml</code>, we need to manually specify which class to be run.</p>
+</li>
+<li>
+<p>After running this command, an ourput directory will be generated in HDFS.<br>
+Check the output directory by using <code>hdfs dfs -ls</code> command:</p>
+<pre class="hljs"><code><div>hdfs dfs -ls filter_output_dir 
+</div></code></pre>
+<p><em>Note</em>: You should be able to see two files. One is called <code>_SUCCESS</code>, which indicates that your MapReduce job successfully finished.</p>
+</li>
+<li>
+<p>Check the content in the other file you found.<br>
+You can use the following command to see how many lines are in the MapReduce output file:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash"> Replace [filter_output] to be the other file name you find</span>
+hdfs dfs -cat filter_output_dir/[filter_output]
+</div></code></pre>
+<p><em>Note</em>: <code>hdfs dfs -cat</code> will show all contents of input file in HDFS.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>(Q4) How many lines do you see in the output?</strong></p>
+<p><em>Note</em>: You can use the following command:</p>
+<pre class="hljs"><code><div>hdfs dfs -cat filter_output_dir/[filter_output] | wc -l
+</div></code></pre>
+</li>
+</ul>
+<h3 id="iii-take-user-input-for-the-filter---in-lab-part-20-minutes">III. Take User Input For the Filter - In-lab Part (20 minutes)</h3>
+<p>This part will be run on <code>cs167</code> server.</p>
+<p>In this part, we will customize our program by taking the desired response code from the user as a command line argument.</p>
+<ol>
+<li>
+<p>Uncomment the line <code>// String desiredResponse = args[2];</code> in the <code>main</code> function.<br>
+Now, the variable <code>desiredResponse</code> will store a string which indicates the response code we want to filter.<br>
+<em>Note</em>: Now your program needs <strong>three</strong> parameters to run.</p>
+</li>
+<li>
+<p>Add the desired response code to the job configuration using the method <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html#set-java.lang.String-java.lang.String-"><code>Configuration#set</code></a>. Use a user-defined configuration entry with the key <code>target_code</code>:</p>
+<pre class="hljs"><code><div>conf.set(<span class="hljs-string">"target_code"</span>, desiredResponse);
+</div></code></pre>
+<p><em>Note</em>: Now, <code>conf</code> will store a &lt;key-value&gt; pair: &lt;<code>target_code</code>, desiredResponse&gt;.</p>
+</li>
+<li>
+<p>In <code>TokenizerMapper</code> class, declear a class-wide variable called <code>target_code</code>. Then, in the <code>setup</code> function, read the value of <code>target_code</code> key from the job configuration. Store it in <code>target_code</code>. Below is an example structure you can refer to:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// ... indicates some other codes, *this code is not directly runnable*.</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TokenizerMapper</span> <span class="hljs-keyword">extends</span>
+        <span class="hljs-title">Mapper</span>&lt;<span class="hljs-title">LongWritable</span>, <span class="hljs-title">Text</span>, <span class="hljs-title">NullWritable</span>, <span class="hljs-title">Text</span>&gt; </span>{
+    
+    String target_code; <span class="hljs-comment">// The class-wide variable</span>
+
+    <span class="hljs-meta">@override</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span> <span class="hljs-params">(Context context)</span></span>{
+        ...
+        target_code = context.getConfiguration().get(<span class="hljs-string">"target_code"</span>); <span class="hljs-comment">// Read value from key `target_code`</span>
+    }
+    ...
+}
+</div></code></pre>
+<p><em>Note</em>: Use <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Mapper.html#setup-org.apache.hadoop.mapreduce.Mapper.Context-"><code>org.apache.hadoop.mapreduce.Mapper.Context</code></a> and <a href="https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/conf/Configuration.html#get-java.lang.String-"><code>Configuration#get</code></a>.</p>
+</li>
+<li>
+<p>Modify the <code>map</code> function to use <code>target_code</code> rather than the hard-coded response code that we used in Part II:<br>
+<em>Note</em>: You just need to replace <code>200</code> with variable <code>target_code</code>.</p>
+</li>
+<li>
+<p>Run your program again to filter the lines with response code <code>200</code>. This time, you will need to pass it as a third command-line argument. You can refer to the following example to run your code:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#</span><span class="bash"> Replace [output-dir-name] with the directory name you want to store the filter result.</span>
+hadoop jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv [output-dir-name] 200
+</div></code></pre>
+<p><em>Note</em>: You may need to give the output directory a new name for multiple runs.</p>
+</li>
+<li>
+<p>Try on both files <code>nasa_19950801.tsv</code> and <code>nasa_19950630.22-19950728.12.tsv</code>.</p>
+<ul>
+<li><em><strong>(Q5) How many files are produced in the output for each of the two files?</strong></em></li>
+<li><em><strong>(Q6) Explain this number based on the input file size and default block size in HDFS.</strong></em></li>
+<li><em>Hint:</em> Think about how may blocks are needed to store to two files, respectively.</li>
+</ul>
+ <!-- *Note*: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode, similar to how it runs in IntelliJ. -->
+</li>
+</ol>
+<h3 id="iv-run-in-distributed-mode-45-minutes">IV. Run in Distributed Mode (45 minutes)</h3>
+<p>This part will be done on <code>cs167</code> server.</p>
+<p>To run your MapReduce program in distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.</p>
+<p><em>Note:</em> YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.</p>
+<ol>
+<li>
+<p>Login to your CS167 machine.</p>
+</li>
+<li>
+<p>Among your group members that are present in lab, choose the node with the smallest number as the master node.</p>
+</li>
+<li>
+<p>Configure Hadoop to run MapReduce programs with YARN. Edit the file <code>$HADOOP_HOME/etc/hadoop/mapred-site.xml</code> and add the following part.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- Put all properties inside configuration!!! --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>mapreduce.framework.name<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>yarn<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>yarn.app.mapreduce.am.env<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>HADOOP_MAPRED_HOME=/home/cs167/cs167/hadoop-3.3.6<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>mapreduce.map.env<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>HADOOP_MAPRED_HOME=/home/cs167/cs167/hadoop-3.3.6<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>mapreduce.reduce.env<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>HADOOP_MAPRED_HOME=/home/cs167/cs167/hadoop-3.3.6<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+</div></code></pre>
+<p>Note: If you do not have a <code>mapred-site.xml</code> file, make a copy of <code>mapred-site.xml.template</code> and name it <code>mapred-site.xml</code>.</p>
+</li>
+<li>
+<p>Edit the file <code>$HADOOP_HOME/etc/hadoop/yarn-site.xml</code> and add the following part.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- Put all properties inside configuration!!! --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>mapreduce_shuffle<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>yarn.resourcemanager.hostname<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>class-###<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+</div></code></pre>
+<p><em>Note:</em> Replace <code>class-###</code> with the name of the master node. If you want to run YARN on your local machine, replace <code>class-###</code> with <code>localhost</code>.</p>
+</li>
+<li>
+<p>We need to re-start the cluster to apply the changes. Do the following steps:<br>
+(a) Stop all datanodes.<br>
+(b) Stop the namenode.<br>
+(c) Start the HDFS namenode (on the namenode machine).<br>
+(d) Start all datanodes.<br>
+<em>Note</em>: Check the bottom of this page for some common problems that you might face.</p>
+</li>
+<li>
+<p>On the master node, and preferably in <code>screen</code> or <code>tmux</code>, start the resource manager by running the command:</p>
+<pre class="hljs"><code><div>yarn resourcemanager
+</div></code></pre>
+<p><em>Note</em>: If you met error when running this command, check the common issues at the bottom of instruction.</p>
+</li>
+<li>
+<p>On each data node, and preferably in <code>screen</code> or <code>tmux</code>, start the node manager (worker) by running the command:</p>
+<pre class="hljs"><code><div>yarn nodemanager
+</div></code></pre>
+</li>
+<li>
+<p>Put both test files to your HDFS home directory using the command:</p>
+<pre class="hljs"><code><div>hdfs dfs -put nasa_19950801.tsv nasa_19950801_[UCRNetID].tsv
+</div></code></pre>
+<p>Make sure to replace <code>[UCRNetID]</code> with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file since you all share the same HDFS home directory. Repeat the same for the other test file to put that in HDFS.</p>
+<p><em>Note</em>: Makesure your home directory <code>.</code> exists in HDFS. If you do not have one, use:</p>
+<pre class="hljs"><code><div>hdfs dfs -mkdir -p .
+</div></code></pre>
+</li>
+<li>
+<p>Run your JAR file using the command <code>yarn jar &lt;*.jar&gt; &lt;main class&gt; &lt;input&gt; &lt;output&gt; &lt;code&gt;</code>, for example:</p>
+<pre class="hljs"><code><div>yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801_[UCRNetID].tsv filter_output_[UCRNetID].tsv 200
+</div></code></pre>
+</li>
+</ol>
+<h3 id="v-write-an-aggregate-program-30-minutes">V. Write an Aggregate Program (30 minutes)</h3>
+<p>[TODO] Keep Yarn or not?</p>
+<p>In this part, we will create another MapReduce program that computes the total bytes for each response code. That is the sum of the column <code>bytes</code> grouped by the column <code>response</code>.</p>
+<ol>
+<li>
+<p>Create a new class <code>Aggregation</code> based on the following stub code.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">package</span> edu.ucr.cs.cs167.[UCRNetID];
+
+<span class="hljs-keyword">import</span> org.apache.hadoop.conf.Configuration;
+<span class="hljs-keyword">import</span> org.apache.hadoop.fs.Path;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.IntWritable;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.LongWritable;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.Text;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Job;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Mapper;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Reducer;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+<span class="hljs-keyword">import</span> java.io.IOException;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Aggregation</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Configuration conf = <span class="hljs-keyword">new</span> Configuration();
+        Job job = Job.getInstance(conf, <span class="hljs-string">"aggregation"</span>);
+        job.setJarByClass(Aggregation<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setMapperClass(TokenizerMapper<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setCombinerClass(IntSumReducer<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setReducerClass(IntSumReducer<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setMapOutputKeyClass(IntWritable<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setMapOutputValueClass(IntWritable<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setOutputKeyClass(IntWritable<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setOutputValueClass(IntWritable<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setInputFormatClass(TextInputFormat<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+        job.setNumReduceTasks(<span class="hljs-number">2</span>);
+        FileInputFormat.addInputPath(job, <span class="hljs-keyword">new</span> Path(args[<span class="hljs-number">0</span>]));
+        FileOutputFormat.setOutputPath(job, <span class="hljs-keyword">new</span> Path(args[<span class="hljs-number">1</span>]));
+        System.exit(job.waitForCompletion(<span class="hljs-keyword">true</span>) ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TokenizerMapper</span> <span class="hljs-keyword">extends</span>
+            <span class="hljs-title">Mapper</span>&lt;<span class="hljs-title">LongWritable</span>, <span class="hljs-title">Text</span>, <span class="hljs-title">IntWritable</span>, <span class="hljs-title">IntWritable</span>&gt; </span>{
+
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> IntWritable outKey = <span class="hljs-keyword">new</span> IntWritable();
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> IntWritable outVal = <span class="hljs-keyword">new</span> IntWritable();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">map</span><span class="hljs-params">(LongWritable key, Text value, Context context)</span>
+                <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+            <span class="hljs-keyword">if</span> (key.get() == <span class="hljs-number">0</span>)
+                <span class="hljs-keyword">return</span>;
+            String[] parts = value.toString().split(<span class="hljs-string">"\t"</span>);
+            <span class="hljs-keyword">int</span> responseCode = Integer.parseInt(parts[<span class="hljs-number">5</span>]);
+            <span class="hljs-keyword">int</span> bytes = Integer.parseInt(parts[<span class="hljs-number">6</span>]);
+            <span class="hljs-comment">// TODO write &lt;responseCode, bytes&gt; to the output</span>
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntSumReducer</span> <span class="hljs-keyword">extends</span>
+            <span class="hljs-title">Reducer</span>&lt;<span class="hljs-title">IntWritable</span>, <span class="hljs-title">IntWritable</span>, <span class="hljs-title">IntWritable</span>, <span class="hljs-title">IntWritable</span>&gt; </span>{
+
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> IntWritable result = <span class="hljs-keyword">new</span> IntWritable();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reduce</span><span class="hljs-params">(IntWritable key, Iterable&lt;IntWritable&gt; values,
+                        Context context)</span>
+                <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+            <span class="hljs-comment">// TODO write &lt;key, sum(values)&gt; to the output</span>
+        }
+    }
+}
+</div></code></pre>
+</li>
+<li>
+<p>Implement the <strong>TODO</strong> items to make the desired logic. Hint: look at the <a href="https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0">WordCount example</a>.</p>
+</li>
+<li>
+<p>Run your program on the file <code>nasa_19950801.tsv</code> and check the output directory. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:<br>
+[TODO]: I got the following error:</p>
+<pre class="hljs"><code><div>2025-01-25 07:54:46,553 INFO mapreduce.Job: Job job_1737791655291_0001 failed with state FAILED due to: Application application_1737791655291_0001 failed 2 times due to AM Container for appattempt_1737791655291_0001_000002 exited with  exitCode: 1
+Failing this attempt.Diagnostics: [2025-01-25 07:54:45.894]Exception from container-launch.
+Container id: container_1737791655291_0001_02_000001
+Exit code: 1
+</div></code></pre>
+<p>And I cannot open the web UI of yarn.<br>
+I check the local log, and the root error is:</p>
+<pre class="hljs"><code><div>Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
+</div></code></pre>
+<p>I added the following code to <code>hadoop-env.sh</code> and <code>yarn-env.sh</code>, and restart HDFS and Yarn resource/node managers:</p>
+<pre class="hljs"><code><div>export HADOOP_OPTS=&quot;$HADOOP_OPTS --add-opens java.base/java.lang=ALL-UNNAMED&quot;
+</div></code></pre>
+<pre class="hljs"><code><div>yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801_[UCRNetID].tsv aggregation_nasa_19950801_output_dir_[UCRNetID] 200
+</div></code></pre>
+<ul>
+<li>
+<p><em><strong>(Q7) How many files are produced in the output directory and how many lines are there in each file?</strong></em></p>
+</li>
+<li>
+<p><em><strong>(Q8) Explain these numbers based on the number of reducers and number of response codes in the input file.</strong></em></p>
+</li>
+<li>
+<p><em>Note:</em> The <a href="https://github.com/apache/hadoop/blob/trunk/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/io/IntWritable.java#L71">hash function</a> of the class <code>IntWritable</code> is its integer value. The <a href="https://github.com/apache/hadoop/blob/trunk/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/lib/HashPartitioner.java#L36">default hash partitioner</a> assigns a record to a partition using the function <code>hashCode mod #reducers</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Run your program on the file <code>nasa_19950630.22-19950728.12.tsv</code>.</p>
+<pre class="hljs"><code><div>yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12_[UCRNetID].tsv aggregation_large_output_dir_[UCRNetID].tsv
+</div></code></pre>
+<ul>
+<li><em><strong>(Q9) How many files are produced in the output directory and how many lines are there in each file?</strong></em></li>
+<li><em><strong>(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.</strong></em></li>
+</ul>
+</li>
+<li>
+<p>Run your program on the output of the <code>Filter</code> operation with response code <code>200</code> on the file <code>nasa_19950630.22-19950728.12.tsv</code>.</p>
+<ol>
+<li>
+<p>Re-run <code>Filter</code> program on the file <code>nasa_19950630.22-19950728.12.tsv</code>.</p>
+<pre class="hljs"><code><div>yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950630.22-19950728.12_[UCRNetID].tsv filter_large_output_[UCRNetID].tsv 200
+</div></code></pre>
+</li>
+<li>
+<p>Run <code>Aggregation</code> program on the output <strong>directory</strong> of <code>Filter</code>: filter_nasa_19950630_output_[UCRNetID].tsv</p>
+<pre class="hljs"><code><div>yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output_[UCRNetID].tsv aggregation_filter_large_output_[UCRNetID].tsv
+</div></code></pre>
+</li>
+</ol>
+<ul>
+<li><em><strong>(Q11) How many files are produced in the output directory and how many lines are there in each file?</strong></em></li>
+<li><em><strong>(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.</strong></em></li>
+</ul>
+</li>
+</ol>
+<h3 id="vi-submission-15-minutes">VI. Submission (15 minutes)</h3>
+<ol>
+<li>Add a <code>README.md</code> file with all your answers (<a href="CS167-Lab4-README.md">template</a>).</li>
+<li>Add a <code>run.sh</code> script that runs compiles and runs your filter operation on the sample input file with response code <code>200</code>. Then, it should run the aggregation method on the same input file. The output files should be named <code>filter_output</code> and <code>aggregation_output</code> accordingly. Try the <code>run.sh</code> file before submission to make sure your code is correct.</li>
+</ol>
+<p>Submission file format:</p>
+<pre class="hljs"><code><div>[UCRNetID]_lab4.{tar.gz | zip}
+  - src/
+  - pom.xml
+  - README.md
+  - run.sh
+</div></code></pre>
+<p>Requirements:</p>
+<ul>
+<li>The archive file must be either <code>.tar.gz</code> or <code>.zip</code> format.</li>
+<li>The archive file name must be all lower case letters. It must be underscore '_', not hyphen '-'.</li>
+<li>The folder <code>src</code> and three files <code>pom.xml</code>, <code>README.md</code> and <code>run.sh</code> must be the exact names.</li>
+<li>The folder <code>src</code> and three files <code>pom.xml</code>, <code>README.md</code> and <code>run.sh</code> must be directly in the root of the archive, do not put them inside any folder.</li>
+<li>Do not include any other files/folders, otherwise points will be deducted.</li>
+</ul>
+<p>See how to create the archive file for submission at <a href="../MakeArchive.md">here</a>.</p>
+<h2 id="rubrics">Rubrics</h2>
+<ul>
+<li>Q/A: +12 points (+1 point for each question)</li>
+<li>Code: +2 points
+<ul>
+<li>+1 for completing filter class</li>
+<li>+1 for completing aggregate class</li>
+</ul>
+</li>
+<li>Following submission instructions: +1 point</li>
+</ul>
+<h2 id="useful-hadoop-filesystem-commands">Useful Hadoop Filesystem Commands</h2>
+<p>Check all Hadoop filesystem commands from <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html</a></p>
+<p>Specifically, you would be interested in the following commands:</p>
+<ul>
+<li>Upload file: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#put">put</a></li>
+<li>Create a directory: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#mkdir">mkdir</a>
+<ul>
+<li>To create directory with parent directoriesl use argument <code>-p</code>.</li>
+</ul>
+</li>
+<li>Delete file: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#rm">rm</a>
+<ul>
+<li>To delete a directory recursively, use argument <code>-r</code>.</li>
+</ul>
+</li>
+<li>List files: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#ls">ls</a></li>
+<li>Print text file content: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#cat">cat</a>
+<ul>
+<li>Do not use this command on large files, otherwise your terminal may freeze.</li>
+</ul>
+</li>
+<li>Print the first few lines of a text file: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#head">head</a></li>
+<li>Print the last few lines of a text file: <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html#tail">tail</a></li>
+</ul>
+<h4 id="example-commands">Example commands</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Upload file to hdfs root</span>
+hadoop fs -put nasa_19950801.tsv /
+
+<span class="hljs-comment"># Create a directory</span>
+hadoop fs -mkdir -p /dir1/dir2
+
+<span class="hljs-comment"># Upload file to hdfs under some directory</span>
+hadoop fs -put nasa_19950630.22-19950728.12.tsv /dir1/dir2/
+
+<span class="hljs-comment"># List directory contents</span>
+hadoop fs -ls /dir1/dir2
+
+<span class="hljs-comment"># Delete a directory</span>
+hadoop fs -rm -f -r /dir1
+</div></code></pre>
+<h2 id="common-errors">Common Errors</h2>
+<ul>
+<li>
+<p>Error: When I run my program on YARN, I see an error message similar to the following.</p>
+<pre class="hljs"><code><div>Failing this attempt.Diagnostics: [...]Container [pid=xxx,containerID=xxx] is running beyond virtual memory limits. Current usage: xxx MB of yyy GB physical memory used; xxx TB of yyy GB virtual memory used. Killing container.
+</div></code></pre>
+</li>
+<li>
+<p>Fix: Add the following configuration to your <code>$HADOOP_HOME/etc/yarn-site.xml</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+</div></code></pre>
+<p>See also <a href="https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits">https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits</a></p>
+</li>
+<li>
+<p>Error: When I run any HDFS command, I get an error related to safemode</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
+</div></code></pre>
+<ul>
+<li>Fix: Run the following command</li>
+</ul>
+<pre class="hljs"><code><div>hdfs dfsadmin -safemode leave
+</div></code></pre>
+<ul>
+<li>Error: When I run the datanode, I get the following error:</li>
+</ul>
+<pre class="hljs"><code><div>java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
+</div></code></pre>
+<ul>
+<li>Fix: Do the following steps to ensure a fresh start of HDFS:</li>
+</ul>
+<ol>
+<li>Stop the namenode and all data nodes.</li>
+<li>Delete the directory <code>~/hadoop/dfs</code> on <em>the namenode and all datanodes</em>. <code>rm -rf ~/hadoop/dfs</code>.</li>
+<li>Reformat HDFS using the command <code>hdfs namenode -format</code>.</li>
+<li>Start the namenode using the command <code>hdfs namenode</code>.</li>
+<li>Start the datanode using the command <code>hdfs datanode</code>.</li>
+</ol>
+<ul>
+<li>Error: When I run <code>yarn resourcemanager</code>, I got the following error:</li>
+</ul>
+<pre class="hljs"><code><div>error: Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
+</div></code></pre>
+<ul>
+<li>Fix: add the following command to the very bottom of <code>$HADOOP_HOME/etc/hadoop/hadoop-env.sh</code>:</li>
+</ul>
+<pre class="hljs"><code><div>export HADOOP_OPTS="$HADOOP_OPTS --add-opens java.base/java.lang=ALL-UNNAMED"
+</div></code></pre>
+
+</body>
+
+</html>
