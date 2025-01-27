@@ -16,21 +16,22 @@
 ## Lab Work
 
 ### I. Setup - In-home (30 minutes)
-This part will be done in `cs167` server.
-Every steps are assuming you have already login into `cs167` server and in your home directory `/home/cs167`.
+This part will be done in your `local` machine.
+<!-- This part will be done in `cs167` server. -->
+<!-- Every steps are assuming you have already login into `cs167` server and in your home directory `/home/cs167`. -->
 
-0. Makesure the namenode and all datanodes in your group are alive (you can use `screen` or `tmux` to keep them running in the backend).
+<!-- 0. Makesure the namenode and all datanodes in your group are alive (you can use `screen` or `tmux` to keep them running in the backend). -->
 
 1. Create a new empty project using Maven for Lab4. See previous Labs ([Lab #1](../Lab1/CS167-Lab1.md), [Lab #2](../Lab2/CS167-Lab2.md), [Lab #3](../Lab3/CS167-Lab3.md)) for more details.
 
 2. Import your project into IntelliJ IDEA. 
 
-3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properties` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
-    * Manually create `src/main/resources` if it does not exist.
+<!-- 3. Copy the file `$HADOOP_HOME/etc/hadoop/log4j.properties` to your project directory under `src/main/resources`. This allows you to see internal Hadoop log messages when you run in IntelliJ IDEA.
+    * Manually create `src/main/resources` if it does not exist. -->
 
-4. Place the two sample files in your project home directory, i.e., next to the `pom.xml` file.
+3. Place the two sample files in your project home directory, i.e., next to the `pom.xml` file.
 
-5. In `pom.xml` add the following dependencies.
+4. In `pom.xml` add the following dependencies.
 
     ```xml
     <properties>
@@ -66,22 +67,27 @@ Every steps are assuming you have already login into `cs167` server and in your 
 
 ### II. Simple Filter Program - In-home (30 minutes)
 
-[TODO] Specify the locations. I assume student will do this experiment on the server.
+<!-- [TODO] Specify the locations. I assume student will do this experiment on the server. -->
 
-This part will be done on `cs167` server.  
+<!-- This part will be done on `cs167` server.   -->
+This part will be done in your `local` machine.
+
 In this part, you will need to write a MapReduce program that produces the lines that have a specific response code in them (similar to [Lab #3](../Lab3/CS167-Lab3.md)). We will provide you with a sample code to help you understand MapReduce procedure in Hadoop.
 
-0. If [`nasa_19950801.tsv`](./nasa_19950801.tsv) does not exist in your home directory, download [`nasa_19950801.tsv`](./nasa_19950801.tsv) and put it to your virtual environment home directory. You can use the following command to check whether you have the file:
+<!-- 0. If [`nasa_19950801.tsv`](./nasa_19950801.tsv) does not exist in your home directory, download [`nasa_19950801.tsv`](./nasa_19950801.tsv) and put it to your virtual environment home directory. You can use the following command to check whether you have the file:
     ```shell
     ls ~/ | grep nasa
     ```
-    *Note*: You should see `nasa_19950801.tsv` in the output.
+    *Note*: You should see `nasa_19950801.tsv` in the output. -->
+0. Download [`nasa_19950801.tsv`](./nasa_19950801.tsv) to your proejct foler.
 
-1. Take a few minutes to look into the sample file and understand its format. You can use the following command:
-    ```shell
+1. Take a few minutes to look into the sample file and understand its format. You can use excel or numbers to show the content in [`nasa_19950801.tsv`](./nasa_19950801.tsv).
+
+<!-- 1. Take a few minutes to look into the sample file and understand its format. You can use the following command:
+    ```shel
     less nasa_19950801.tsv
     ```
-    *Note*: You can press `J` or `K` on your keyborad to scroll down or up. Press `Q` when you want to exist viewing the file.
+    *Note*: You can press `J` or `K` on your keyborad to scroll down or up. Press `Q` when you want to exist viewing the file. -->
 
 2. Create a new class named `Filter` in package `edu.ucr.cs.cs167.[UCRNetID]` with the following content:
     ```java
