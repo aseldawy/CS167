@@ -13,8 +13,6 @@
 
 * (Q2) What is the effect of the line `job.setNumReduceTasks(0);`?
 
-* (Q3) Where does the `main` function run? (Driver node, Master node, or an executor node).
-
 * (Q4) How many lines do you see in the output?
 
 * (Q5) How many files are produced in the output?

@@ -147,8 +147,7 @@ In this part, you will need to write a MapReduce program that produces the lines
 3. Take some time to understand the code and answer the following questions.
     * ***(Q1) What do you think the line [`job.setJarByClass(Filter.class);`](https://hadoop.apache.org/docs/stable/api/org/apache/hadoop/mapreduce/Job.html#setJarByClass-java.lang.Class-) does?***
     * ***(Q2) What is the effect of the line [`job.setNumReduceTasks(0);`](https://data-flair.training/forums/topic/what-happen-if-number-of-reducer-is-0-in-hadoop/)?***
-    * ***(Q3) Where does the `main` function run? (Driver node, Master node, or an executor node).***
-
+    
 4. We will slightly modify the `Filter` class to filter all lines with response code `200`.
 Add the following code below comment `// TODO Filter by response code` in `map` function:
     ```java
@@ -159,39 +158,13 @@ Add the following code below comment `// TODO Filter by response code` in `map` 
     ```
     *Note*: we use [`String#equals`](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#equals(java.lang.Object)) rather than the operator `==` since `String` is not a primitive value in Java.
 
-5. Go to your project directory `workspace/[UCR_NetID]_lab4`, use the following command to build your `jar` file:
+5. To test the logic of your program, you can run it in standalone mode by simply running the main function in IntelliJ IDEA by choosing "Run -> Run" from the top menu. Make sure to specify the command line argument as `nasa_19950801.tsv filter_output_dir` by choosing "Run -> Edit Configuration". If the output directory already exists, you will need to delete it first.
+    * **(Q3) How many lines do you see in the output?**
+
+    *Note*: You can use the following command on Linux and MacOS:
     ```shell
-    mvn clean package
+    cat filter_output_dir/* | wc -l
     ```
-
-6. Run your program by `hadoop jar` command, and specify the class `Filter`:
-    ```shell
-    hadoop jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output_dir
-    ```
-    *Note*: Since we didn't specify the `mainClass` in `pom.xml`, we need to manually specify which class to be run.
-
-7. After running this command, an ourput directory will be generated in HDFS.
-Check the output directory by using `hdfs dfs -ls` command:
-    ```shell
-    hdfs dfs -ls filter_output_dir 
-    ```
-    *Note*: You should be able to see two files. One is called `_SUCCESS`, which indicates that your MapReduce job successfully finished. 
-
-8. Check the content in the other file you found. 
-You can use the following command to see how many lines are in the MapReduce output file:
-    ```shell
-    # Replace [filter_output] to be the other file name you find
-    hdfs dfs -cat filter_output_dir/[filter_output]
-    ```
-    *Note*: `hdfs dfs -cat` will show all contents of input file in HDFS. 
-
-* **(Q4) How many lines do you see in the output?**
-
-    *Note*: You can use the following command:
-    ```shell
-    hdfs dfs -cat filter_output_dir/[filter_output] | wc -l
-    ```
-
 
 ### III. Take User Input For the Filter - In-lab Part (20 minutes)
 This part will be run on `cs167` server.
@@ -229,17 +202,13 @@ Now, the variable `desiredResponse` will store a string which indicates the resp
 4. Modify the `map` function to use `target_code` rather than the hard-coded response code that we used in Part II:  
     *Note*: You just need to replace `200` with variable `target_code`.
 
-5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a third command-line argument. You can refer to the following example to run your code:
-    ```shell
-    # Replace [output-dir-name] with the directory name you want to store the filter result.
-    hadoop jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv [output-dir-name] 200
-    ```
-    *Note*: You may need to give the output directory a new name for multiple runs.
+5. Run your program again to filter the lines with response code `200`. This time, you will need to pass it as a third command-line argument.
+
 6. Try on both files `nasa_19950801.tsv` and `nasa_19950630.22-19950728.12.tsv`.
-    * ***(Q5) How many files are produced in the output for each of the two files?***
-    * ***(Q6) Explain this number based on the input file size and default block size in HDFS.***
-    * *Hint:* Think about how may blocks are needed to store to two files, respectively.
-    <!-- *Note*: If you run your program from the command-line without setting up YARN (see next section), then it runs in standalone mode, similar to how it runs in IntelliJ. -->
+    * ***(Q4) How many files are produced in the output for each of the two files?***
+    * ***(Q5) Explain this number based on the input file size and default block size in HDFS.***
+    * *Hint:* Think about how many blocks are needed to store to two files, respectively.
+    * *Note:* When your file is on the local file system, Hadoop assumes a default block size of 32MB.
 
 ### IV. Run in Distributed Mode (45 minutes)
 
@@ -290,7 +259,7 @@ To run your MapReduce program in distributed mode, we will need to configure Had
     ```
     *Note:* Replace `class-###` with the name of the master node. If you want to run YARN on your local machine, replace `class-###` with `localhost`.
 
-5. We need to re-start the cluster to apply the changes. Do the following steps:  
+5. We might need to re-start the cluster to apply the changes. Do the following steps:  
 (a) Stop all datanodes.   
 (b) Stop the namenode.  
 (c) Start the HDFS namenode (on the namenode machine).  
@@ -313,21 +282,38 @@ To run your MapReduce program in distributed mode, we will need to configure Had
     ```
     Make sure to replace `[UCRNetID]` with your UCR Net ID. This ensures that your group members will not accidentally overwrite your file since you all share the same HDFS home directory. Repeat the same for the other test file to put that in HDFS.
 
-    *Note*: Makesure your home directory `.` exists in HDFS. If you do not have one, use:
+    *Note*: Make sure your home directory `.` exists in HDFS. If you do not have one, use:
     ```shell
     hdfs dfs -mkdir -p .
     ```
-    
 
-13. Run your JAR file using the command `yarn jar <*.jar> <main class> <input> <output> <code>`, for example:
-
-    ```bash
-    yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801_[UCRNetID].tsv filter_output_[UCRNetID].tsv 200
+12. On your development machine, i.e., your laptop, go to your project directory `workspace/[UCR_NetID]_lab4`, use the following command to build your `jar` file:
+    ```shell
+    mvn clean package
     ```
+13. Copy the file to your CS167 machine.
+14. Run your program by `yarn jar` command, and specify the class `Filter`:
+    ```shell
+    yarn jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output_dir 200
+    ```
+    *Note*: Since we didn't specify the `mainClass` in `pom.xml`, we need to manually specify which class to be run.
+
+15. After running this command, an ourput directory will be generated in HDFS.
+Check the output directory by using `hdfs dfs -ls` command:
+    ```shell
+    hdfs dfs -ls filter_output_dir 
+    ```
+    *Note*: You should be able to see two files. One is called `_SUCCESS`, which indicates that your MapReduce job successfully finished. 
+
+16. Check the content in the other file you found. 
+You can use the following command to see how many lines are in the MapReduce output file:
+    ```shell
+    # Replace [filter_output] to be the other file name you find
+    hdfs dfs -cat filter_output_dir/[filter_output]
+    ```
+    *Note*: `hdfs dfs -cat` will show all contents of input file in HDFS. 
 
 ### V. Write an Aggregate Program (30 minutes)
-
-[TODO] Keep Yarn or not?
 
 In this part, we will create another MapReduce program that computes the total bytes for each response code. That is the sum of the column `bytes` grouped by the column `response`.
 
@@ -403,30 +389,14 @@ In this part, we will create another MapReduce program that computes the total b
 
 2. Implement the **TODO** items to make the desired logic. Hint: look at the [WordCount example](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0).
 
-3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine:  
-[TODO]: I got the following error:
-    ```shell
-    2025-01-25 07:54:46,553 INFO mapreduce.Job: Job job_1737791655291_0001 failed with state FAILED due to: Application application_1737791655291_0001 failed 2 times due to AM Container for appattempt_1737791655291_0001_000002 exited with  exitCode: 1
-    Failing this attempt.Diagnostics: [2025-01-25 07:54:45.894]Exception from container-launch.
-    Container id: container_1737791655291_0001_02_000001
-    Exit code: 1
-    ```
-    And I cannot open the web UI of yarn.
-    I check the local log, and the root error is:
-    ```shell
-    Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
-    ```
-    I added the following code to `hadoop-env.sh` and `yarn-env.sh`, and restart HDFS and Yarn resource/node managers:
-    ```
-    export HADOOP_OPTS="$HADOOP_OPTS --add-opens java.base/java.lang=ALL-UNNAMED"
-    ```
+3. Run your program on the file `nasa_19950801.tsv` and check the output directory. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run as follows on the CS167 machine.
 
     ```bash
     yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950801_[UCRNetID].tsv aggregation_nasa_19950801_output_dir_[UCRNetID] 200
     ```
 
-    * ***(Q7) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q8) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q6) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q7) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
     * *Note:* The [hash function](https://github.com/apache/hadoop/blob/trunk/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/io/IntWritable.java#L71) of the class `IntWritable` is its integer value. The [default hash partitioner](https://github.com/apache/hadoop/blob/trunk/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/main/java/org/apache/hadoop/mapred/lib/HashPartitioner.java#L36) assigns a record to a partition using the function `hashCode mod #reducers`.
 
@@ -436,8 +406,8 @@ In this part, we will create another MapReduce program that computes the total b
     yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation nasa_19950630.22-19950728.12_[UCRNetID].tsv aggregation_large_output_dir_[UCRNetID].tsv
     ```
 
-    * ***(Q9) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q10) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q8) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q9) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
 5. Run your program on the output of the `Filter` operation with response code `200` on the file `nasa_19950630.22-19950728.12.tsv`.
     1. Re-run `Filter` program on the file `nasa_19950630.22-19950728.12.tsv`.
@@ -452,8 +422,8 @@ In this part, we will create another MapReduce program that computes the total b
         yarn jar [UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Aggregation filter_large_output_[UCRNetID].tsv aggregation_filter_large_output_[UCRNetID].tsv
         ```
 
-    * ***(Q11) How many files are produced in the output directory and how many lines are there in each file?***
-    * ***(Q12) Explain these numbers based on the number of reducers and number of response codes in the input file.***
+    * ***(Q10) How many files are produced in the output directory and how many lines are there in each file?***
+    * ***(Q11) Explain these numbers based on the number of reducers and number of response codes in the input file.***
 
 ### VI. Submission (15 minutes)
 
@@ -480,10 +450,10 @@ Requirements:
 
 See how to create the archive file for submission at [here](../MakeArchive.md).
 ## Rubrics
-- Q/A: +12 points (+1 point for each question)
-- Code: +2 points
-  - +1 for completing filter class
-  - +1 for completing aggregate class
+- Q/A: +11 points (+1 point for each question)
+- Code: +3 points
+  - +1 for completing filter class correctly
+  - +2 for completing aggregate class correctly
 - Following submission instructions: +1 point
 
 ## Useful Hadoop Filesystem Commands
@@ -542,34 +512,39 @@ hadoop fs -rm -f -r /dir1
     See also [https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits](https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits)
 
 * Error: When I run any HDFS command, I get an error related to safemode
-```
-Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
-```
+    ```
+    Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
+    ```
 
 * Fix: Run the following command
-```shell
-hdfs dfsadmin -safemode leave
-```
+    ```shell
+    hdfs dfsadmin -safemode leave
+    ```
 
 * Error: When I run the datanode, I get the following error:
 
-```
-java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
-```
+    ```
+    java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
+    ```
 
 * Fix: Do the following steps to ensure a fresh start of HDFS:
 
-1. Stop the namenode and all data nodes.
-2. Delete the directory `~/hadoop/dfs` on *the namenode and all datanodes*. `rm -rf ~/hadoop/dfs`.
-3. Reformat HDFS using the command `hdfs namenode -format`.
-4. Start the namenode using the command `hdfs namenode`.
-5. Start the datanode using the command `hdfs datanode`.
+    1. Stop the namenode and all data nodes.
+    2. Delete the directory `~/hadoop/dfs` on *the namenode and all datanodes*. `rm -rf ~/hadoop/dfs`.
+    3. Reformat HDFS using the command `hdfs namenode -format`.
+    4. Start the namenode using the command `hdfs namenode`.
+    5. Start the datanode using the command `hdfs datanode`.
 
-* Error: When I run `yarn resourcemanager`, I got the following error:
-```shell
-error: Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
-``` 
+* Error: When I run a hadoop command, I got the following error:
+    ```text
+    error: Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
+    ``` 
 * Fix: add the following command to the very bottom of `$HADOOP_HOME/etc/hadoop/hadoop-env.sh`:
-```shell
-export HADOOP_OPTS="$HADOOP_OPTS --add-opens java.base/java.lang=ALL-UNNAMED"
-```
+    ```shell
+    export HADOOP_OPTS="$HADOOP_OPTS -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
+    ```
+    If you got that error while running in IntelliJ, edit the run configuration and add the following to the VM Options.
+
+    ```shell
+    -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
+    ```
