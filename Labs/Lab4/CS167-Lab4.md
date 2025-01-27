@@ -173,7 +173,7 @@ Add the following code below comment `// TODO Filter by response code` in `map` 
     ```
 
 ### III. Take User Input For the Filter - In-lab Part (20 minutes)
-This part will be run on `cs167` server.
+This part will be run on your `local` machine.
 
 In this part, we will customize our program by taking the desired response code from the user as a command line argument.
 
