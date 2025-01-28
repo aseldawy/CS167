@@ -554,3 +554,22 @@ hadoop fs -rm -f -r /dir1
     ```shell
     -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
     ```
+
+* Error: When I run `yarn jar ...`, I got the following error:
+    ```shell
+   Exception from container-launch.
+   Container id: 
+   Exit code: 1
+   Stack trace: ExitCodeException exitCode=1: 
+    ```
+* Fix: check your application log at: `~/cs167/hadoop-3.3.6/logs/userlogs/[application_id]` (replace application_id with your application id). Then search for `ERROR`. If the error is:
+     ```shell
+         error: Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
+     ```
+  Then `Yarn` didn't inherent the HADOOP_OPTS set before. Open `~/cs167/hadoop-3.3.6/etc/hadoop/yarn-site.xml`, add the following property with in configuration:
+  ```shell
+    <property>
+       <name>yarn.app.mapreduce.am.command-opts</name>
+       <value>--add-opens=java.base/java.lang=ALL-UNNAMED</value>
+     </property>
+  ```
