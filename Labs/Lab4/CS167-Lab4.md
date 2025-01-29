@@ -573,3 +573,5 @@ hadoop fs -rm -f -r /dir1
        <value>--add-opens=java.base/java.lang=ALL-UNNAMED</value>
      </property>
   ```
+  * If you have some problems in Windows running hadoop: check this page: `https://github.com/cdarlint/winutils/tree/master/hadoop-3.3.6/bin`
+    Download `hadoop.dll` and `winutils.exe`
