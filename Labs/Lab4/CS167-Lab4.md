@@ -573,5 +573,8 @@ hadoop fs -rm -f -r /dir1
        <value>--add-opens=java.base/java.lang=ALL-UNNAMED</value>
      </property>
   ```
-  * If you have some problems in Windows running hadoop: check this page: `https://github.com/cdarlint/winutils/tree/master/hadoop-3.3.6/bin`
-    Download `hadoop.dll` and `winutils.exe`
+ *For Windows users only*, patch the binaries of Hadoop, otherwise some Hadoop related functions will fail:
+  1. Download the patched binaries from [https://github.com/cdarlint/winutils](https://github.com/cdarlint/winutils), `winutils.exe` and `hadoop.dll`.
+  2. Place the downloaded files in the `bin/` subdirectory under the extracted Hadoop directory.
+  3. Set up environment variables like `java` and `maven`.
+  4. Start `IntelliJ IDEA` in administration mode.
