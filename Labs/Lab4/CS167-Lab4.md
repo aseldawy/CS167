@@ -216,13 +216,15 @@ Now, the variable `desiredResponse` will store a string which indicates the resp
     * *Hint:* Think about how many blocks are needed to store to two files, respectively.
     * *Note:* When your file is on the local file system, Hadoop assumes a default block size of 32MB.
 
-### IV. Run in Distributed Mode (45 minutes)
+### IV. Run in Distributed Mode (45 minutes) [Group Activity]
 
 This part will be done on `cs167` server.
 
 To run your MapReduce program in distributed mode, we will need to configure Hadoop to use YARN and start YARN instances.
 
 *Note:* YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.
+
+0. #### *Note*: If you have any problems for running `yarn`, please check the solutions for `ERROR 4` and `ERROR 5` at the bottom of the instruction.
 1. Login to your CS167 machine.
 2. Among your group members that are present in lab, choose the node with the smallest number as the master node.
 3. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
@@ -500,7 +502,7 @@ hadoop fs -rm -f -r /dir1
 
 ## Common Errors
 
-* Error: When I run my program on YARN, I see an error message similar to the following.
+* Error 1: When I run my program on YARN, I see an error message similar to the following.
 
     ```text
     Failing this attempt.Diagnostics: [...]Container [pid=xxx,containerID=xxx] is running beyond virtual memory limits. Current usage: xxx MB of yyy GB physical memory used; xxx TB of yyy GB virtual memory used. Killing container.
@@ -517,7 +519,7 @@ hadoop fs -rm -f -r /dir1
 
     See also [https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits](https://stackoverflow.com/questions/21005643/container-is-running-beyond-memory-limits)
 
-* Error: When I run any HDFS command, I get an error related to safemode
+* Error 2: When I run any HDFS command, I get an error related to safemode
     ```
     Cannot create file/user/cs167/nasa_19950630.22-19950728.12.tsv._COPYING_. Name node is in safe mode.
     ```
@@ -527,7 +529,7 @@ hadoop fs -rm -f -r /dir1
     hdfs dfsadmin -safemode leave
     ```
 
-* Error: When I run the datanode, I get the following error:
+* Error 3: When I run the datanode, I get the following error:
 
     ```
     java.io.IOException: Incompatible clusterIDs in /home/cs167/hadoop/dfs/data: namenode clusterID = CID-ca13b215-c651-468c-9188-bcdee4ad2d41; datanode clusterID = CID-d9c134b6-c875-4019-bce0-2e6f8fbe30d9
@@ -541,7 +543,7 @@ hadoop fs -rm -f -r /dir1
     4. Start the namenode using the command `hdfs namenode`.
     5. Start the datanode using the command `hdfs datanode`.
 
-* Error: When I run a hadoop command, I got the following error:
+* Error 4: When I run a hadoop command, I got the following error:
     ```text
     error: Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @1e14e2e7
     ``` 
@@ -555,7 +557,7 @@ hadoop fs -rm -f -r /dir1
     -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
     ```
 
-* Error: When I run `yarn jar ...`, I got the following error:
+* Error 5: When I run `yarn jar ...`, I got the following error:
     ```shell
    Exception from container-launch.
    Container id: 
@@ -573,8 +575,13 @@ hadoop fs -rm -f -r /dir1
        <value>--add-opens=java.base/java.lang=ALL-UNNAMED</value>
      </property>
   ```
- *For Windows users only*, patch the binaries of Hadoop, otherwise some Hadoop related functions will fail:
-  1. Download the patched binaries from [https://github.com/cdarlint/winutils](https://github.com/cdarlint/winutils), `winutils.exe` and `hadoop.dll`.
-  2. Place the downloaded files in the `bin/` subdirectory under the extracted Hadoop directory.
-  3. Set up environment variables like `java` and `maven`.
-  4. Start `IntelliJ IDEA` in administration mode.
+
+ * Error 6 (*For Windows users only*): patch the binaries of Hadoop, otherwise some Hadoop related functions will fail in your `local machine`:
+    1. Download the patched binaries from [https://github.com/cdarlint/winutils](https://github.com/cdarlint/winutils), `winutils.exe` and `hadoop.dll`.
+    2. Create a folder in your local machine at the same position as `java` and `maven`:
+    ```shell
+    hadoop-3.3.6/bin/
+    ```
+    3. Place the downloaded files in the `bin/` subdirectory under the extracted `hadoop-3.3.6` directory.
+    4. Set up environment variables like `java` and `maven`. You can figure out how to do this in [`Lab1`](../Lab1/CS167-Lab1.md).
+    5. Start `IntelliJ IDEA` in `administration mode`: open `IntelliJ IDEA` folder, right click start exe for `IDEA`, and choose `run as administrator`.
