@@ -23,8 +23,6 @@ This part will be done in your `local machine`.
 
 1. Create a new empty project using Maven for Lab 5. See [Lab 1](../Lab1/CS167-Lab1.md) for more details.
 2. Import your project into IntelliJ IDEA.
-<!-- 3. Copy the file `$SPARK_HOME/conf/log4j2.properties.template` to your project directory under `src/main/resources/log4j2.properties`. This allows you to see internal Spark log messages when you run in IntelliJ IDEA. -->
-  <!-- * Manually create `src/main/resources` if it does not exist. -->
 3. Place the two sample files in your project home directory.
 4. In `pom.xml` add the following configuration.
 
@@ -74,33 +72,25 @@ This part will be done on your `local machine`.
 
 3. Add VM options for your project configuration. You can refer to the `bottom of the instruction` for how to do this. 
 
-3. 
-    <!-- Replace the [UCRNetID] of ```
-    JavaSparkContext spark = new JavaSparkContext("local[*]", "CS167-Lab5-App-[UCRNetID]")``` 
-    with your own NetID,  -->
-
-    Run the `main` function in IntelliJ IDEA. The command line argument should be `nasa_19950801.tsv`. You should see the following line in the output.
+4. Run the `main` function in IntelliJ IDEA. The command line argument should be `nasa_19950801.tsv`. You should see the following line in the output.
     ```text
     Number of lines in the log file 30970
-    ```
-    
+    ```  
 ---
 
 ### III. Run in Distributed Mode (30 minutes) - In-lab Part
 
 In the followign part, we will configure Spark to run in distributed mode. Make sure that each group member has access to their CS167 machine before doing the following part.
 
-
 1. On your `local machine`, edit the file `$HOME/.ssh/config` (Linux and MacOS) or `%USERPROFILE%\.ssh\config` (Windows). Add the line `LocalForward 8080 class-###:8080` and `LocalForward 4040 class-$$$:4040` under `Host cs167` in your config file. Replace `class-###` with the name of the machine you elect to be the master node (not necessarily your own machine) and `class-$$$` is your own machine. So, the file should look something like the following
-    ```java
+    ```
     Host cs167
         LocalForward 8080 class-###:8080 // Replace ### with your cluster master hostname
         LocalForward 4040 class-$$$:4040 // Replace $$$ with your own machine host name
-        HostName class-888.cs.ucr.edu
-        User cs167
-        ProxyJump [UCRNetID]@bolt.cs.ucr.edu
+        HostName class-$$$.cs.ucr.edu // Already there. Do not modify!
+        User cs167  // Already there. Do not modify!
+        ProxyJump [UCRNetID]@bolt.cs.ucr.edu  // Already there. Do not modify!
     ```
-    <!-- In this case, `class-777` is the master node and `class-888` is your own machine. -->
     *Note:* If you were already connected to your CS167 while changing the 
     configuration, you will need to close that session and start a new SSH session for the new configuration to take effect.
     
@@ -149,7 +139,7 @@ In the followign part, we will configure Spark to run in distributed mode. Make 
         Type --help for more information.
     ```
 
-The following part will be configuring a Spark cluster.
+In the following part, we will configure a Spark cluster.
 
 1. Among your group, elect a machine as the master. By convention, we will use the machine with the lowest number that you have access to during the lab. In the following part we will call it `class-###`.
 2. Set `spark.master` in your configuration file.
@@ -190,9 +180,8 @@ The following part will be configuring a Spark cluster.
     ```shell
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App [UCRNetID]_lab5-1.0-SNAPSHOT.jar nasa_19950801.tsv
     ```
-    
 
-***(Q1) Do you think it will use your cluster? Why or why not?***
+***(Q1) Do you think it will use your cluster? Why or why not? Make sure to record your answer now before making the following steps.***
 
 Hint: To find out, check the [web interface](http://localhost:8080) and observe any new applications that get listed.
 
@@ -210,7 +199,7 @@ Hint: To find out, check the [web interface](http://localhost:8080) and observe 
 * Note: class-### is the hostname of the master node. 
 11. Now, save the file and compile it with `mvn clean package`. Run your program in cs167 machine as you did before. (*Note*: This updated code will not run on your local machine, so you just need to build the jar, send the jar to cs167 machine, and run the jar there using `spark-submit` command.)
 
-    ***(Q2) Does the application use the cluster that you started? How did you find out?***
+    ***(Q2) Does the application use the cluster that you started? How did you find out? Make sure to record your answer now before your do the following steps.***
 
 ---
 
@@ -248,7 +237,7 @@ We do not want to change the code every time we switch between local and cluster
 
     ***(Q3) What is the Spark master printed on the standard output on IntelliJ IDEA?***
 
-4. Compile the code from command line using `mvn clean package` and then run the jar in your cs167 machine using `spark-submit`.
+4. Compile the code from command line using `mvn clean package`, copy the file to your cs167 machine, and then run the jar in your cs167 machine using `spark-submit`.
 
     ```bash
     spark-submit --class edu.ucr.cs.cs167.[UCRNetID].App [UCRNetID]_lab5-1.0-SNAPSHOT.jar nasa_19950801.tsv
@@ -271,7 +260,7 @@ We do not want to change the code every time we switch between local and cluster
 
 In the next part, we will extend the program to use more Spark functions. We will use the [filter](https://spark.apache.org/docs/latest/api/java/org/apache/spark/rdd/RDD.html#filter-scala.Function1-) transformation to find log entries with a specific response code.
 
-1. Make a copy of the current sample class and named it `Filter`. Place it in the same package as the `App` class.
+1. Make a copy of the current sample class and name it `Filter`. Place it in the same package as the `App` class.
 2. Add the following line to set the desired code to the value `200`.
 
     ```java
@@ -284,14 +273,6 @@ In the next part, we will extend the program to use more Spark functions. We wil
     JavaRDD<String> matchingLines = logFile.filter(line -> line.split("\t")[5].equals(desiredCode));
     System.out.printf("The file '%s' contains %d lines with response code %s\n", inputPath, matchingLines.count(), desiredCode);
     ```
-
-    Note: the following expression in Java
-
-    ```java
-    line -> line.split("\t")[5].equals(desiredCode)
-    ```
-
-    is called lambda expression. It is a shorthand to write an anonymous inner class with one function, which we have experience with from Lab 1. After compilation, it will be similar to the map function that we used to write in Hadoop which was a class with one function called `map`.
 
 4. You can run it locally first in IntelliJ to test the logic. Once you're satisfied with the result, recompile into a new JAR file, copy it to your CS167 machine, and run your program in your CS167 machine using the file `nasa_19950801.tsv`. The output should look similar to the following.
 
