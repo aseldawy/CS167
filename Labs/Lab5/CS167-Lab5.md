@@ -85,11 +85,11 @@ In the followign part, we will configure Spark to run in distributed mode. Make 
 1. On your `local machine`, edit the file `$HOME/.ssh/config` (Linux and MacOS) or `%USERPROFILE%\.ssh\config` (Windows). Add the line `LocalForward 8080 class-###:8080` and `LocalForward 4040 class-$$$:4040` under `Host cs167` in your config file. Replace `class-###` with the name of the machine you elect to be the master node (not necessarily your own machine) and `class-$$$` is your own machine. So, the file should look something like the following
     ```
     Host cs167
-        LocalForward 8080 class-###:8080 // Replace ### with your cluster master hostname
-        LocalForward 4040 class-$$$:4040 // Replace $$$ with your own machine host name
-        HostName class-$$$.cs.ucr.edu // Already there. Do not modify!
-        User cs167  // Already there. Do not modify!
-        ProxyJump [UCRNetID]@bolt.cs.ucr.edu  // Already there. Do not modify!
+        LocalForward 8080 class-###:8080 # Replace ### with your cluster master hostname
+        LocalForward 4040 class-$$$:4040 # Replace $$$ with your own machine host name
+        HostName class-$$$.cs.ucr.edu # Already there. Do not modify!
+        User cs167  # Already there. Do not modify!
+        ProxyJump [UCRNetID]@bolt.cs.ucr.edu  # Already there. Do not modify!
     ```
     *Note:* If you were already connected to your CS167 while changing the 
     configuration, you will need to close that session and start a new SSH session for the new configuration to take effect.
