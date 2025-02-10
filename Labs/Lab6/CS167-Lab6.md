@@ -35,12 +35,10 @@ The lab has two parts. The first part implements some operations using the Scala
 
 This part will be done on your `local` machine.
 
-<!-- We will follow a slightly modified version of the instructions on the [official Scala website](https://docs.scala-lang.org/tutorials/scala-with-maven.html). More specifically, we will avoid the interactive steps and combine all our choices in one command line. -->
-
 1. Generate a new Maven project that works with `Scala`. Use the following command (Please note that this command is different from the previous Labs):
 
     ```bash
-    mvn archetype:generate -DarchetypeGroupId=net.alchim31.maven -DarchetypeArtifactId=scala-archetype-simple -DgroupId=edu.ucr.cs.cs167.[UCRNetID] -DartifactId=[UCRNetID]_lab6 -B
+    mvn archetype:generate "-DarchetypeGroupId=net.alchim31.maven" "-DarchetypeArtifactId=scala-archetype-simple" "-DgroupId=edu.ucr.cs.cs167.[UCRNetID]" "-DartifactId=[UCRNetID]_lab6" -B
     ```
     *Note* : Do not forget to replace `[UCRNetID]` with your UCR Net ID. If you cannot run the above command, check [this alternative approach](#create-lab-6-project-from-intellij).
 
@@ -75,7 +73,7 @@ This part will be done on your `local` machine.
       </dependency>
     </dependencies>
 
-    <!-- Repleace Build -->
+    <!-- Replace Build -->
     <build>
       <sourceDirectory>src/main/scala</sourceDirectory>
       <plugins>
@@ -114,7 +112,6 @@ This part will be done on your `local` machine.
 In addition, in your local machine command line, go to your `[UCRNetID_lab6]` directory and type `mvn package` to make sure your project can generate a `.jar` file.
 
 5. This Lab requires you to implement multiple functionalities: `count-all`, `time-filter`, and `avg-bytes-by-code`. Therefore, it is recommanded to `setup all configurations inadvance`. You can refer to [here](#intellij-configurations) for how to do this.
-    <!-- * Run all tests inside IntelliJ, you will need to create a configuration for each test, check [IntelliJ Configurations](#intellij-configurations) for pre-defined configurations. -->
 
 ---
 
@@ -219,7 +216,7 @@ A few commands in the next sections may require more than 2 arguments.
 1. The `count-all` command should use the method [`RDD#count`](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/rdd/RDD.html#count():Long) which is an action to count the total number of records in the input file.
     * Copy and complete the following code for `TODO 2: count all code`:
       ```scala
-              case "count-all" => // Count total number of records in the file
+            case "count-all" => // Count total number of records in the file
               val count: Long = // TODO 2: count total number of records in the file on `parsedLines`
               println(s"Total count for file '$inputfile' is $count")
       ```
@@ -252,7 +249,7 @@ A few commands in the next sections may require more than 2 arguments.
         val filteredLines: RDD[Array[String]] = // TODO 3: `filter` on  `parsedLines` by time (column 2) with `from` and `to`
       
         val count: Long = filteredLines.count()
-          println(s"Total count for file '$inputfile' in time range [$from, $to] is $count")
+        println(s"Total count for file '$inputfile' in time range [$from, $to] is $count")
     ```
 
 4. You will need a filter followed by count to complete this part. The filter will be:
@@ -509,7 +506,7 @@ Spark SQL is equipped with a CSV parser that can read semi-structured CSV files.
 
 This makes your table viewable by Spark SQL so you can run SQL queries on it.
 
-### IV. Query the Dataframe using Dataframe Operators (45 minutes)
+### IV. Query the Dataframe using Dataframe Operators (45 minutes) (In-lab)
 
 In this part, we will run some relational operators through the Dataframe/SparkSQL API. The logic of these queries is similar to what we did in part A. This will allow you to compare and contrast the two APIs.
 
@@ -604,7 +601,7 @@ Note: For each of the following, you are free to use SQL queries directly or bui
 
 ---
 
-## Part C. Running in Distributed Mode (Group Activity)
+## Part C. Running in Distributed Mode (In-lab Group Activity)
 
 This part will be done in your `cs167` server.
 
@@ -810,68 +807,68 @@ The following reading material could help you with your lab.
     A: Check your `pom.xml` file and make sure that the following sections are there in your file.
 
     ```xml
-<properties>
-  <maven.compiler.source>1.8</maven.compiler.source>
-  <maven.compiler.target>1.8</maven.compiler.target>
-  <encoding>UTF-8</encoding>
-  <scala.version>2.12.18</scala.version>
-  <spark.version>3.5.4</spark.version>
-  <scala.compat.version>2.12</scala.compat.version>
-  <spec2.version>4.20.5</spec2.version>
-</properties>
+    <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <encoding>UTF-8</encoding>
+      <scala.version>2.12.18</scala.version>
+      <spark.version>3.5.4</spark.version>
+      <scala.compat.version>2.12</scala.compat.version>
+      <spec2.version>4.20.5</spec2.version>
+    </properties>
 
-<dependencies>
-  <dependency>
-    <groupId>org.apache.spark</groupId>
-    <artifactId>spark-core_${scala.compat.version}</artifactId>
-    <version>${spark.version}</version>
-    <scope>compile</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.apache.spark</groupId>
-    <artifactId>spark-sql_${scala.compat.version}</artifactId>
-    <version>${spark.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>org.scala-lang</groupId>
-    <artifactId>scala-library</artifactId>
-    <version>${scala.version}</version>
-  </dependency>
-</dependencies>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-core_${scala.compat.version}</artifactId>
+        <version>${spark.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-sql_${scala.compat.version}</artifactId>
+        <version>${spark.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.version}</version>
+      </dependency>
+    </dependencies>
 
-<build>
-  <sourceDirectory>src/main/scala</sourceDirectory>
-  <plugins>
-    <plugin>
-      <!-- see http://davidb.github.com/scala-maven-plugin -->
-      <groupId>net.alchim31.maven</groupId>
-      <artifactId>scala-maven-plugin</artifactId>
-      <version>3.3.2</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>compile</goal>
-          </goals>
+    <build>
+      <sourceDirectory>src/main/scala</sourceDirectory>
+      <plugins>
+        <plugin>
+          <!-- see http://davidb.github.com/scala-maven-plugin -->
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>3.3.2</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+              </goals>
+              <configuration>
+                <args>
+                  <arg>-dependencyfile</arg>
+                  <arg>${project.build.directory}/.scala_dependencies</arg>
+                </args>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.21.0</version>
           <configuration>
-            <args>
-              <arg>-dependencyfile</arg>
-              <arg>${project.build.directory}/.scala_dependencies</arg>
-            </args>
+            <!-- Tests will be run with scalatest-maven-plugin instead -->
+            <skipTests>true</skipTests>
           </configuration>
-        </execution>
-      </executions>
-    </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <version>2.21.0</version>
-      <configuration>
-        <!-- Tests will be run with scalatest-maven-plugin instead -->
-        <skipTests>true</skipTests>
-      </configuration>
-    </plugin>
-  </plugins>
-</build>
+        </plugin>
+      </plugins>
+    </build>
     ```
 
 * Q: IntelliJ IDEA does not show the green run arrow next to the `App` class.
