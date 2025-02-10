@@ -19,6 +19,8 @@ Unless otherwise mentioned:
 * [Lab 2](Labs/Lab2/CS167-Lab2.md): Hadoop Distributed File System.
 * [Lab 3](Labs/Lab3/CS167-Lab3.md): Hadoop Cluster and Read Procedure.
 * [Lab 4](Labs/Lab4/CS167-Lab4.md): Hadoop MapReduce programming.
+* [Lab 5](Labs/Lab5/CS167-Lab5.md): Spark Filter and Aggregation programming.
+* [Lab 6](Labs/Lab6/CS167-Lab6.md): Scala and SparkSQL programming.
 
 ## Links
 * [Course website](https://elearn.ucr.edu/courses/166244) (Only enrolled students will have access)
