@@ -110,8 +110,9 @@ This part will be done on your `local` machine.
 
 4. Run the main function in `App` class in IntelliJ IDEA to make sure it works. You should see your program `exit with code 0` (normal exit). 
 In addition, in your local machine command line, go to your `[UCRNetID_lab6]` directory and type `mvn package` to make sure your project can generate a `.jar` file.
+   * Note: You do not need to download Scala SDK. Reload your `pom.xml` to download dependencies for scala.
 
-5. This Lab requires you to implement multiple functionalities: `count-all`, `time-filter`, and `avg-bytes-by-code`. Therefore, it is recommanded to `setup all configurations inadvance`. You can refer to [here](#intellij-configurations) for how to do this.
+6. This Lab requires you to implement multiple functionalities: `count-all`, `time-filter`, and `avg-bytes-by-code`. Therefore, it is recommanded to `setup all configurations inadvance`. You can refer to [here](#intellij-configurations) for how to do this.
 
 ---
 
