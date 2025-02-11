@@ -703,8 +703,7 @@ Hint: Add `2>/dev/null` to the end of each command to hide logging information f
 11. Click the `Add Configuration...` button next to the green hammer icon.
     ![Add configuration](images/idea-add-config.png)
 
-12. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 15 configurations.
-    ![Debug configuration](images/run-debug-config.png)
+12. You shall see `Application` folder in the left panel. Expand it, you shall see `App` and `AppSQL` two folders. Expand them, and you shall see all the 6 configurations (3 for App, and 3 for AppSQL).
 
 13. You can now select a configuration, but be sure to click the green triangle icon to run the current selected configuration.
     [Run config](images/run-config.png)
