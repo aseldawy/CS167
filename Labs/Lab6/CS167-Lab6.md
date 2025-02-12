@@ -610,9 +610,9 @@ In this part, we will run the part the computes the `avg-bytes-by-code` using bo
 
 ### I. Start an HDFS and Spark Clusters (5 minutes)
 
-1. Start an HDFS cluster with your group, refer to [Lab 3](../Lab1/CS167-Lab3.md). for instructions.
+1. Start an HDFS cluster with your group, refer to [Lab 3](../Lab3/CS167-Lab3.md). for instructions.
 
-2. Start a Spark cluster with your group, refer to [Lab 5](../Lab1/CS167-Lab5.md). for instructions.
+2. Start a Spark cluster with your group, refer to [Lab 5](../Lab5/CS167-Lab5.md). for instructions.
 
 3. Make the user folder in HDFS is initialized and contains the file `nasa_19950630.22-19950728.12_[UCRNet_ID].tsv`
 
