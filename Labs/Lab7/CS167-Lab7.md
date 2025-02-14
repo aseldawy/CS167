@@ -336,18 +336,8 @@ In this part, you will test the performance of MongoDB by building different typ
 
 ### Rubrics
 - Q/A: 14.5 points
-    - Q1, Q2, Q3, Q4: 0.5 points each 
-    - Q5: 1 point
-    - Q6, Q7, Q8, Q9: 0.5 points each
-    - Q10: 1 point
-    - Q11: 0.5 points
-    - Q12, Q13: 1 point each
-    - Q14, Q15, Q16: 0.5 points each
-    - Q17: 1 point
-    - Q18: 0.5 point
-    - Q19: 1 point
-    - Q20: 0.5 points
-    - Q21: 1 point
-    - Q22: 0.5 points
+    - Q1-Q25: 0.5 points for each
+    - Q26: 1 point
+    - Q27: 1 point
 
 - Proper Submission: 0.5 points
