@@ -74,7 +74,7 @@
     mongod -version
     ```
     The output should look something like the following:
-    ```json
+    ```text
     db version v8.0.4
     Build Info: {
         "version": "8.0.4",
@@ -136,7 +136,7 @@ In this part, you will work with the [`tweets.json`](tweets.json) file to better
 
 * ***(Q1) What is the schema of the file? Copy it to the README file and keep it for your reference.***  
 
-4. Leave `spark-shell` by tapping:
+4. Leave `spark-shell` by typing:
     ```shell
     :q
     ```
