@@ -181,7 +181,7 @@ For this part, you can use `generative AI tools` to help you get familiar with `
 * ***(Q7) What is the command that retrieves the results without the _id field?*** 
 
 6. Insert the following document into the collection.
-    ```json
+    ```javascript
     {id: Long('921633456941125634'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz2', followers_count: [2100, 5000], statuses_count: 55000}, hashtags: ['nature' ],lang: 'ja'}
     ```
 * ***(Q8) What is the command to insert the sample document? What is the result of running the command?*** 
@@ -191,7 +191,7 @@ For this part, you can use `generative AI tools` to help you get familiar with `
 
 7. Insert the following document into the collection.
 
-    ```json
+    ```javascript
     {id: Long('921633456941121354'), place: { country_code: 'JP', name: 'Japan', place_type: 'city' }, user: {user_name: 'xyz3', followers_count: {last_month: 550, this_month: 2200}, statuses_count: 112000}, hashtags: [ 'art', 'tour' ], lang: 'ja'
     }
     ```
@@ -203,7 +203,7 @@ For this part, you can use `generative AI tools` to help you get familiar with `
 
 * ***(Q12) Why did they appear at these specific locations?***
 
-    Check the [documentation of MongoDB](https://www.mongodb.com/docs/v6.2/reference/bson-type-comparison-order/) to help you answer this question.
+    Check the [documentation of MongoDB](https://www.mongodb.com/docs/manual/reference/bson-type-comparison-order/) to help you answer this question.
 
 9. Now go back to step 5, but this time lists the records sorted by followers_count in **ascending** order.
 * ***(Q13) Where did the two records appear in the ascending sort order? Explain your observation.***
