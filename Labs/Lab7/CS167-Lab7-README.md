@@ -108,5 +108,30 @@
     ```javascript
     // Replace here
     ```
+    
+* (Q23) Are there any existing indexes? Explain your answer.
+    ```text
+    // Replace here
+    ```
+    
+* (Q24) What's the running time of the second query? Comparing to Q23, it is faster or slower?
+    ```text
+    // Replace here
+    ```
+
+* (Q25) What do winningPlan and COLLSCAN mean?
+    ```text
+    // Replace here
+    ```
+
+* (Q26) What is the winningPlan? Did your query use the text index?
+    ```text
+    // Replace here
+    ```
+
+* (Q27) You may notice that the nReturned of your query does not match the regex query. Do some explornations and explain why.
+    ```text
+    // Replace here
+    ```
 
 * (Q22) What is the output of the command?
