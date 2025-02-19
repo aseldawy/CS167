@@ -109,6 +109,11 @@
     // Replace here
     ```
     
+* (Q22) What is the output of the command?
+    ```javascript
+    // Replace here
+    ```
+    
 * (Q23) Are there any existing indexes? Explain your answer.
     ```text
     // Replace here
@@ -134,4 +139,4 @@
     // Replace here
     ```
 
-* (Q22) What is the output of the command?
+
