@@ -604,7 +604,9 @@ This part will be done on your `cs167 server`.
 ## Rubric
 
 Q1, Q2, Q5, Q6, Q9, Q10, Q11, Q13, Q14, Q15: 0.5 point(s)
+
 Q3, Q4, Q7, Q8, Q12, Q17: 1 point(s)
+
 Q16: 2 point(s)
 
 Code compiles correctly: +1 point
