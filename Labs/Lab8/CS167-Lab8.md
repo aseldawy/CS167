@@ -555,7 +555,7 @@ This part will be done on your `cs167 server`.
 
 5. Select one person to run `PreprocessTweets` to generate `tweets.json` and `tweets.parquet`.
 
-* ***Q13. What's the total size of `tweets.json` and `tweets.parquet` in HDFS?*** 
+* ***Q13. What's the total size of `tweets.json` and `tweets.parquet` in HDFS?***
 
     *Note*: You can use the following command to evaluate the directory size in hdfs:
     ```shell
@@ -585,7 +585,7 @@ This part will be done on your `cs167 server`.
     | corr                  |                |             |                 |
     | top-hashtags          |       N/A      |             |                 |
 
-* ***Q16. Fill-in the table with the running of your code in your spark cluster.*** 
+* ***Q16. Fill-in the table with the running of your code in your spark cluster, and copy the table here.*** 
 
 * ***Q17. Does parquet provided you with the lowest running time for all tasks on 1M Tweets dataset? Explain why based on your results.***
 
@@ -603,11 +603,11 @@ This part will be done on your `cs167 server`.
 
 ## Rubric
 
-Q1-12: +12 points (+1 point for each question; a point is counted only if the corresponding part is correctly implemented)
+Q1, Q2, Q5, Q6, Q9, Q10, Q11, Q13, Q14, Q15: 0.5 point(s)
+Q3, Q4, Q7, Q8, Q12, Q17: 1 point(s)
+Q16: 2 point(s)
 
 Code compiles correctly: +1 point
-
-Full table of run-time by input format: +1 point
 
 Following submission instructions: +1 point
 

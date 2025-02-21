@@ -48,3 +48,22 @@
 * (Q12.1) What are the top 10 hashtags? Copy paste your output here.
 
 * (Q12.2) For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.
+
+* (Q13) What's the total size of `tweets.json` and `tweets.parquet` in HDFS?
+
+* (Q14) Copy the output to this question. Which one runs faster? Explain why.
+
+* (Q15) Do you see clear gap of running time? Explain your answer based on your results.
+
+* (Q16) Fill-in the table with the running of your code in your spark cluster, and copy the table here.
+
+    | Command               | Tweets_1m.json | tweets.json | tweets.parquet  |
+    |-----------------------|----------------|-------------|-----------------|
+    | top-country           |                |             |                 |
+    | top-lang              |                |             |                 |
+    | top-country-with-lang |                |             |                 |
+    | corr                  |                |             |                 |
+    | top-hashtags          |       N/A      |             |                 |
+
+* (Q17) Does parquet provided you with the lowest running time for all tasks on 1M Tweets dataset? Explain why based on your results.
+
