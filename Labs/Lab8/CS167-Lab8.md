@@ -601,6 +601,28 @@ This part will be done on your `cs167 server`.
 * Run the `corr` operation on the three files.
 * Run the `top-hashtags` operation on the two files: `tweets.json` and `tweets.parquet`.
 
+3. Similar to all labs, do not include any additional files such as the compiled code, input, or output files.
+
+    Submission file format:
+
+    ```shell
+    [UCRNetID]_lab6.{tar.gz | zip}
+      - src/
+      - pom.xml
+      - README.md
+      - run.sh
+    ```
+
+    Requirements:
+
+    * The archive file must be either `.tar.gz` or `.zip` format.
+    * The archive file name must be all lower case letters. It must be underscore '\_', not hyphen '-'.
+    * The folder `src` and three files `pom.xml`, `README.md` and `run.sh` must be the exact names.
+    * The folder `src` and three files `pom.xml`, `README.md` and `run.sh` must be directly in the root of the archive, do not put them inside any folder.
+    * Do not include any other files/folders, otherwise points will be deducted.
+
+    See how to create the archive file for submission at [here](../MakeArchive.md).
+
 ## Rubric
 
 Q1, Q2, Q5, Q6, Q9, Q10, Q11, Q13, Q14, Q15: 0.5 point(s)
