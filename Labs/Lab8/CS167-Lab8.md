@@ -12,8 +12,8 @@
 
 ## Note
 The instruction of Lab8 is based on `Scala`, but you are allowed to use Java if you prefer.
-Templates for `Java` locate at the end of this page.
-Whenever you implement an item, you can remove the word `TODO` but leave the comments to mamke it easier to refer to each part of the code.
+Templates for `Java` are located at the end of this page.
+Whenever you implement an item, you can remove the word `TODO` but leave the comments to make it easier to refer to each part of the code.
 
 ## Lab Work
 
