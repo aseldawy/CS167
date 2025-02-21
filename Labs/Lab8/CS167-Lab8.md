@@ -17,7 +17,7 @@ Whenever you implement an item, you can remove the word `TODO` but leave the com
 
 ## Lab Work
 
-### I. Project Setup (10 minutes) (In home)
+### I. Project Setup (10 minutes) - In Home
 This part will be done in your `local laptop`.
 
 1. Setup a new Scala project similar to [Lab 6](../Lab6/CS167-Lab6.md). You can use the following command:
@@ -89,7 +89,7 @@ This part will be done in your `local laptop`.
 
 ```
 
-### II. Initialize Spark Session (10 minutes) (In home)
+### II. Initialize Spark Session (10 minutes) - In Home
 This part will be done in your `local laptop`.
 
 In this Lab, you will accomplish two tasks: `Preprocess Tweets Dataset` and `Analyze Tweets Dataset`. For each of the them, you will write a `scala object class` to handle the corresponding task. Before starting this part, make sure you have downloaded [Tweets_1m.json.bz2](https://drive.google.com/file/d/10yx3_8U-GEF3BzcwejxGlMse0_olnN7o/view?usp=drive_link), and decompress it in your Lab 8 directory.  
@@ -261,7 +261,7 @@ In this Lab, you will accomplish two tasks: `Preprocess Tweets Dataset` and `Ana
     }
     ``` 
 
-### III. Data Pre-processing (40 minutes) (In home)
+### III. Data Pre-processing (20 minutes) - In Home
 
 This part will be done on your `local laptop`.
 
@@ -386,7 +386,7 @@ Note: You may consider `root` to be at nesting level 0, and `element` represents
 8. Finally, **comment that last line** (save to `csv` file) to avoid the error.
   This is the end of this part. Now, we have three different input files: `Tweets_100k.json` (original input), `tweets.json` (cleaned json folder) and `tweets.parquet` (cleaned column format). We will use all three in the next section to compare their performances.
 
-### III. Analyzing Data
+### III. Analyzing Data (40 minutes) - In Lab
 This part will be done in your `local laptop`.
 
 In this part, you will work on completing `AnalyzeTweets.scala` class. You will implement different SQL queries to support different analytical tasks.
@@ -396,7 +396,7 @@ There are two input parameters:
 
 Remember to add `VM Options` (refer to [here](#common-issues)) and put corresponding parameters when you run `AnalyzeTweets.scala` in `IntelliJ IDEA`. 
 
-#### B.1. Print the top 5 countries by number of tweets (20 minutes)
+#### B.1. Print the top 5 countries by number of tweets
 
 1. Run a SQL query on the tweets table, that first groups by the country_code and counts the rows for each country.
 You may use the following SQL template:
@@ -530,7 +530,7 @@ spark-submit --master "local[*]" --class edu.ucr.cs.cs167.[UCRNetID].AnalyzeTwee
 
 * ***Q12.2: For this operation, do you observe difference in performance when comparing the two different input files `tweets.json` and `tweets.parquet`? Explain the reason behind the difference.***
 
-### IV. Test on Spark Cluster - Group Activity
+### IV. Test on Spark Cluster (60 minutes) - In Lab Group Activity
 
 This part will be done on your `cs167 server`. 
 
@@ -591,7 +591,7 @@ This part will be done on your `cs167 server`.
 
     
 
-### V. Submission (30 minutes)
+### V. Submission (10 minutes)
 1. Add a `README` file with all your answers.
 2. Add a `run.sh` script that compiles your code and then runs the following set of operations in order.
 * Run the preprocessor on the `Tweets_1m.json` file.
