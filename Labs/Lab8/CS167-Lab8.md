@@ -267,7 +267,7 @@ This part will be done on your `local laptop`.
 
 
 In this part, you will complete the implementation of the `PreprocessTweets.scala` class. It takes an `original json file` as input, and produces a `cleaned` version in both `json` and `parquet` formats. 
-In this part, all codes snips are provided, and you just need to follow the instructions to fill corresponding `TODO` parts. You can take some time to understand the logic and answer the questions.
+In this part, all code snippets are provided, and you just need to follow the instructions to fill corresponding `TODO` parts. You can take some time to understand the logic and answer the questions.
 
 Download and decompress [Tweets_100k.json.bz2](https://drive.google.com/open?id=1Cn_E45y0kVXZZRlb7BE9n6F7pwhrcPvZ) to your lab8 project folder.
 To run your code in `IntelliJ IDEA`, remember to add `VM Options` (you can refer to [here](#common-issues)).
