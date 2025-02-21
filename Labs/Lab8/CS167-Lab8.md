@@ -184,7 +184,7 @@ In this Lab, you will accomplish two tasks: `Preprocess Tweets Dataset` and `Ana
 
         val spark = SparkSession
           .builder()
-          .appName("CS167 Lab7 - SQL")
+          .appName("CS167 Lab8 - SQL")
           .config(conf)
           .getOrCreate()
 
@@ -641,7 +641,7 @@ public class PreprocessTweets {
     System.out.println("Using Spark master '" + conf.get("spark.master") + "'");
 
     SparkSession spark = SparkSession.builder()
-        .appName("CS167 Lab7 - Preprocessor")
+        .appName("CS167 Lab8 - Preprocessor")
         .config(conf)
         .getOrCreate();
     spark.udf().register("getHashtagTexts", (UDF1<Object, List<String>>) PreprocessTweets::getHashtagTexts, DataTypes.createArrayType(DataTypes.StringType));
@@ -724,7 +724,7 @@ public class AnalayzeTweets {
 
     SparkSession spark = SparkSession
         .builder()
-        .appName("CS167 Lab7 - SQL")
+        .appName("CS167 Lab8 - SQL")
         .config(conf)
         .getOrCreate();
 
