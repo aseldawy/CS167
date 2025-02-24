@@ -103,8 +103,16 @@
     ```
 
 * (Q20) What is the output of the command?
+    ```javascript
+    // Replace here
+    ```
 
 * (Q21) What is your command for this query?
+    ```javascript
+    // Replace here
+    ```
+    
+* (Q22) What is the output of the command?
     ```javascript
     // Replace here
     ```
@@ -134,4 +142,4 @@
     // Replace here
     ```
 
-* (Q22) What is the output of the command?
+
