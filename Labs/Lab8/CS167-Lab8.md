@@ -585,7 +585,7 @@ This part will be done on your `cs167 server`.
     | corr                  |                |             |                 |
     | top-hashtags          |       N/A      |             |                 |
 
-* ***Q16. Fill-in the table with the running of your code in your spark cluster, and copy the table here.*** 
+* ***Q16. Fill-in the table with the running time of your code in your spark cluster, and copy the table here.*** 
 
 * ***Q17. Does parquet provided you with the lowest running time for all tasks on 1M Tweets dataset? Explain why based on your results.***
 
