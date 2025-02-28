@@ -162,7 +162,7 @@ In the report, include your own visualization of the 10k dataset and a date rang
 Include the date range that you used.
 
 ## Task 5: Discover Topic of the Week
-Given a start date, find the top-5 hot topics among all tweets for the next continous 7 days. Visulize the number of tweets across different countries.
+Given a start date, find the most hot top-5 topics among all tweets for the next continous 7 days for each country.
 
 Here is an overview of what you are expected to do.
 - Load the dataset named `tweets_clean` from the Task 1 in the Json format.
@@ -173,20 +173,18 @@ Here is an overview of what you are expected to do.
   - Parse the `created_at` attribute into a proper timestamp attribute. 
     For that use the SQL function `to_timestamp` with the format `EEE MMM dd HH:mm:ss Z yyyy`. (*Note:* this pattern format is not supported in the latest version (3.5.0) of Spark. You would need to add `.config("spark.sql.legacy.timeParserPolicy", "LEGACY"))` to the SparkSession to make this pattern support in your spark version)
   - Include a `WHERE` clause that tests if the tweets are is posted within *7 days* after the start date.
-  - Include a grouped aggregate statement to find top-5 topics among all tweets.
-  - Filter the tweets based on different countries.
-  - Find the *topic of the week* (top 1 topic for each country), and report its tweet count.
+  - For each country code, group tweets by their topics.
+  - Find the *topic of the week* (top 5 topics for each country), and report its tweet count.
 - Write the output as a CSV file named `TopicOfWeek`. You might want to first `coalesce(1)` the Dataframe to produce a single file. Below is a sample output for your reference.
 
   |Country|Topic-of-the-Week| # of tweets|
   |------------|-----|-----|
-  |    US      | Happy  |  123 |
-  |    JP     | Sad  |  456 |
+  |    US      | Happy  |  5 |
+  |    US      | Sad  |  4 |
+  |    US      | Cry  |  3 |
+  |    US      | Angry  |  2 |
+  |    US      | Well  |  1 |
   |...|...|...|
 
-- Load the file into a spreadsheet program, e.g., Excel, and draw the desired bar chart.
-- The output should look like the image above.
-
-In the report, include your own visualization of the 10k dataset and a date range of your choice.
-Include the date range that you used.
+In the report, select 3 weeks close to each other. Find the hot topics and discuss about your findings. Also include the start time that you used.
 
