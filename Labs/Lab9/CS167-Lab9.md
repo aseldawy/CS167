@@ -495,7 +495,7 @@ You will setup `Bease` in your virtual machine, and test your code in distribute
 Submission file format:
 
 ```console
-[UCRNetID]_lab10.{tar.gz | zip}
+[UCRNetID]_lab9.{tar.gz | zip}
   - src/
   - pom.xml
   - README.md
@@ -512,6 +512,16 @@ Requirements:
 See how to create the archive file for submission at [here](../MakeArchive.md).
 
 ---
+
+## Rubric
+
+Q1-Q5: +1 point
+Q6: +3 points
+Q7, Q8: +2 points
+
+Code works correctly: +1 point for each operation (4 points in total)
+
+Following submission instructions: +1 point
 
 ## Frequently Asked Questions
 
