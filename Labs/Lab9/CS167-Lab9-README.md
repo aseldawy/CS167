@@ -39,7 +39,7 @@
     | - | - |
     |  `Replace with the original size` | `Replace with the Parquet size` |
 
-* (Q6) (Bonus) Write down the SQL query(ies) that you can use to compute the ratios as described above. Briefly explain how your proposed solution works.
+* (Q6) Write down the SQL query(ies) that you can use to compute the ratios as described above. Briefly explain how your proposed solution works.
 
     ```SQL
     -- Enter the SQL query(ies) here
@@ -47,4 +47,16 @@
 
     ```text
     Use this space to explain how it works.
+    ```
+
+* (Q7) When you run the application, open the spark WebUI and find your task. What's the Job name and its corresponding description?
+
+    ```text
+    Put your job name and description here.
+    ```
+
+* (Q8) When you run the application, open the spark WebUI and find your task. Can you verify your code is processing file in parquet format? Explain why.
+
+    ```text
+    Put your answer here.
     ```

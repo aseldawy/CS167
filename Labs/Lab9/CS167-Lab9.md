@@ -482,7 +482,7 @@ You will setup `Bease` in your virtual machine, and test your code in distribute
     choropleth-map out_parquet happy choropleth-map_output
     ```
     
-* ***(Q8) When you run the application, open the spark WebUI and find your task. Can you verify your code is prcessing with parquet format? Explain why.***
+* ***(Q8) When you run the application, open the spark WebUI and find your task. Can you verify your code is processing file in parquet format? Explain why.***
 
 
 ### IX. Submission
