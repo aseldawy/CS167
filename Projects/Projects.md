@@ -45,8 +45,12 @@ In this task, you need to count the total number of crimes for each ZIP code and
 ## Task 3: Temporal analysis
 Given start and end dates, count the number of crimes for each crime type and plot as a bar chart.
 
-## Task 4: Arrest Prediction
+## Task 4: Spatio-Temporal Analysis
+Given a rectangle region and a time period, show all crimes cases happened within the given time and region. 
+
+## Task 5: Arrest Prediction
 Develop a predictive model to forecast whether a reported crime incident will result in an arrest.
+
 
 # [Project B: Bird Analysis](ProjectB.md)
 In this project, you will perform some analytical tasks on a dataset that represents bird observations.
@@ -69,7 +73,10 @@ all observations per ZIP Code and visualize the result as a choropleth map.
 ## Task 3: Temporal analysis
 Given a date range `[start, end]`, find the number of observations of each species and plot the result as a pie chart.
 
-## Task 4: Bird's Category Prediction
+## Task 4: Spatio-Temporal Analysis
+Given a rectangle region and a time period, show all locations of observed birds within the given time and region. 
+
+## Task 5: Bird's Category Prediction
 Use machine learning to predict the category of a bird sighting using features derived from the bird's common and scientific names.
 
 # [Project C: Wildfire analysis](ProjectC.md)
@@ -119,6 +126,9 @@ Then, it applies this model to all data to predict one topic for each tweet.
 
 ## Task 4: Temporal Analysis
 Given start and end dates, count the number of tweets for each country_code and plot as a bar chart.
+
+## Task 5: Discover Topic of the Week
+Given a start date, find the most hot top-5 topics among all tweets for the next continous 7 days for each country.
 
 # Rubric
 - 3% for the code part.
