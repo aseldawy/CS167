@@ -432,7 +432,7 @@ Instead, we can normalize the counts by the total number of tweets in each count
 * ***(Q6)[3pts] Write down the SQL query(ies) that you can use to compute the ratios as described above. Briefly explain how your proposed solution works.***
 
 ---
-### VIII. Run in Distributed Mode 
+### VIII. Run in Distributed Mode (Group Activity)
 
 This part will be done in your `cs167 server`.
 You will setup `Bease` in your virtual machine, and test your code in distributed mode to see its performance.
