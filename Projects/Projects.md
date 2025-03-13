@@ -9,7 +9,7 @@ We provided sample files for each task (except data preprocessing). You can use 
 
 All tasks (except the data preprocessing) can be implemented and tested on the given sample dataset.
 
-The `final submission` include the following:
+To finish your project, you need to prepare the following files:
 
 1. A `README` file with:
     - `group name` (e.g., Section-XX-Y),
@@ -22,7 +22,8 @@ The `final submission` include the following:
 5. A `two-minute video` describes what you did.
 6. A `single multiple choice question` with `exactly one correct answer`. The answer of the question should be included in the video.
 
-Please check the [rubric](#rubric) carefully before final submission.
+You can check the submission portal in Canvas for details.
+Please check the [rubric](#rubric) carefully before your final submission.
 
 In all projects, feel free to make any reasonable assumptions and document them in your report.
 You can use any of the systems we learned about this quarter.
