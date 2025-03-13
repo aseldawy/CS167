@@ -137,7 +137,7 @@ Given start and end dates, count the number of tweets for each country_code and 
 Given a start date, find the most hot top-5 topics among all tweets for the next continous 7 days for each country.
 
 # Rubric
-The final submissions will structured as follows:
+The final code submissions will structured as follows:
 ```console
 # XY is your section number (one of {21, 22, 23})
 # Z is your group number in your section (e.g., 1, 2, 3, ...)
@@ -153,7 +153,7 @@ ProjectSection-XY-Z.{tar.gz | zip}
   - Make sure that your code is indented and uses proper variable names. Include `comments` as-needed to understand your code.
   - Include a `README` file with your information.
   - Include `all source files` (i.e., `Scala` or `Java` source code) in the `src` folder and `no binary or data files`.
-  - Include a `script` (run.sh) that compiles and runs the all tasks in order (from task1 to task5).
+  - Include a `script` (run.sh) that compiles and runs the all tasks in order (from task1 to task5) on the `smallest input file`.
     * *Note*: If you adopted AsterixDB or MongoDB in your task, include the query in a comment and do not run it.
 - 1% for the `report` that includes:
   - A `title` for your project.
