@@ -137,17 +137,19 @@ Given start and end dates, count the number of tweets for each country_code and 
 Given a start date, find the most hot top-5 topics among all tweets for the next continous 7 days for each country.
 
 # Rubric
-The final code submissions will structured as follows:
+The final code submissions will contain `three separated files`. One submission for each group, and you need to submit the three files to Canvas (do not ). They are structured as follows:
 ```console
-# XY is your section number (one of {21, 22, 23})
-# Z is your group number in your section (e.g., 1, 2, 3, ...)
+Project-Section-XY-Z-report.pdf # file 1, your project report
 
-ProjectSection-XY-Z.{tar.gz | zip}
-  - src/  # a folder contains source codes. One for each task
-  - pom.xml # a pom.xml which can compile all tasks
-  - README.md
-  - run.sh  # a script can run your project tasks in order
+Project-Section-XY-Z-question.txt # file 2, your project question
+
+Project-Section-XY-Z.{tar.gz | zip} # file three, your code and run script
+|-- src/  # a folder contains source codes. One for each task
+|-- pom.xml # a pom.xml which can compile all tasks
+|-- README.md
+|-- run.sh  # a script can run your project tasks in order
 ```
+*Note*: XY is your section number (one of {21, 22, 23}). Z is your group number in your section (e.g., 1, 2, 3, ...)
 
 - 3% for the code part.
   - Make sure that your code is indented and uses proper variable names. Include `comments` as-needed to understand your code.
@@ -162,7 +164,7 @@ ProjectSection-XY-Z.{tar.gz | zip}
   - A `section for each task` that includes results asked by the instruction, e.g., visualizations or other comparisons.
 - 3% for the `video`.
   - The video can be `up-to` two minutes and a half (`150 seconds`). Points will be reduced if the video time exceeds the given limit.
-  - In the first 10-15 seconds, indicate which project you worked on, your group number, and the group members.
+  - In the first 10-15 seconds, indicate which project you worked on, your group name, and the group members.
     Make sure that all this information is written during that time.
   - In 10-15 seconds, give a very brief introduction to the project in your own words.
   - Include 30 seconds for each task where you very briefly describe what you did and how you did it. For example,
