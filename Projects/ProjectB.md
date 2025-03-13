@@ -163,7 +163,7 @@ Given a rectangle region and a time period, show all locations of observed birds
 
 Here is an overview of what you are expected to do.
 - Load the dataset in the Parquet format.
-  You can test on [this sample file](https://drive.google.com/open?id=1D7mCYyXjIV3kdQyg_G9zyIrSmQugvBwQk) until the first task is complete.
+  You can test on [this sample file](https://drive.google.com/open?id=1D7mCYyXjIV3kdQyg_G9zyIrSmQugvBwQ) until the first task is complete.
 - The start and end dates will be provided as command-line arguments in the format `MM/DD/YYYY`, e.g., `03/15/2018`.
 - The region will be specified by four command-line floating points: `x_min`, `y_min`, `x_max` and `y_max`.
 - Run an SQL query that does the following:                                                  
