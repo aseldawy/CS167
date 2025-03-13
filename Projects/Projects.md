@@ -135,7 +135,7 @@ Given a start date, find the most hot top-5 topics among all tweets for the next
   - Make sure that your code is indented and use proper variable names. Include comments as-needed to understand your code.
   - Include a README file with your information.
   - Include all source files and no binary or data files.
-  - Include a script that compiles and runs the three tasks in order.
+  - Include a script that compiles and runs the all tasks in order.
     If you use AsterixDB or MongoDB, include the query in a comment and do not run it.
 - 1% for the report that includes:
   - A title for your project.
