@@ -158,7 +158,7 @@ and plot the result as a line chart.
 
 Here is an overview of what you are expected to do.
 - Load the dataset in the Parquet format.
-  You can test on [this sample file]([https://drive.google.com/open?id=1DlgXB3lA_sHIgcvaQQd_RBQPHqzK959x](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing))
+  You can test on [this sample file](https://drive.google.com/file/d/1KGt9fYa7aGfxHCA8NYH7i5vjFZhndpP4/view?usp=sharing)
   until the first task is complete.
 - Since the name is not unique and is not present in the WildfireDB dataset, we cannot directly search by it.
 - To solve this issue, we first search for the unique GEOID of the county with that name in California.
