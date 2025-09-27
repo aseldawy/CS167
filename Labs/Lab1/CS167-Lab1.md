@@ -257,7 +257,10 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
 ### 5. Create WordCount Example
 
 1. Replace the code in your App.java file with the following code but leave the package line as-is.
-
+   ```bash
+     vim ~/cs167/workspace/${NETID}_lab1/src/main/java/edu/ucr/cs/cs167/${NETID}/App.java
+   ```
+   
     ```java
     import java.io.IOException;
     import java.util.StringTokenizer;
@@ -335,13 +338,13 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
 
 - Create a new text file named "input.txt" in the project root folder (same level as "src"), and add the following sample content to it.
 
-    ```bash
+    ```text
     cat > input.txt <<'EOF'
-if you cannot fly, then run
-if you cannot run, then walk
-if you cannot walk, then crawl
-but whatever you do you have to keep moving forward
-EOF
+    if you cannot fly, then run
+    if you cannot run, then walk
+    if you cannot walk, then crawl
+    but whatever you do you have to keep moving forward
+    EOF
     ```
 
 - Now specify "input.txt" and remove potential "output.txt" by `rm -rf output.txt`.
@@ -359,27 +362,28 @@ EOF
 
 - Try to run your program as we did earlier.
 
-  ```bash
-java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
-  ```
+   ```bash
+ java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
+    ```
 
-- ***(Q5) Does it run? Why or why not?***
+- ***(Q4) Does it run? Why or why not?***
 
 *Hint:* Report the error and explain in a few words what it means.
 
 - Try to run the program using the following command:
 
     ```bash
-    hadoop jar target/${NETID}_lab1-1.0-SNAPSHOT.jar \
-  edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
+    hadoop jar target/${NETID}_lab1-1.0-SNAPSHOT.jar \ edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
     
     ```
 and see the results
 ```bash
     ls -l output.txt
-cat output.txt/part-r-00000
+    cat output.txt/part-r-00000
     ```
 ---
+
+- ***(Q5) Does it run now? Why or why not?***
 
 ### 6. Prepare Your Submission
 
