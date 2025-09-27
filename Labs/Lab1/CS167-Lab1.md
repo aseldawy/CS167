@@ -103,7 +103,7 @@ EOF
 ```
 
 Reload the current environment
-    - Run command `source ~/.bash_profile` and `hash -r`.
+    - Run command `source ~/.bashrc` and `hash -r`.
 
 
 ### 3. Verify Installed Software
@@ -362,7 +362,7 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
 - Try to run your program as we did earlier.
 
    ```bash
- java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
+        java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
     ```
 
 - ***(Q4) Does it run? Why or why not?***
@@ -372,11 +372,12 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
 - Try to run the program using the following command:
 
     ```bash
-    hadoop jar target/${NETID}_lab1-1.0-SNAPSHOT.jar \ edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
+    hadoop jar target/${NETID}_lab1-1.0-SNAPSHOT.jar \
+    edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
     
     ```
 and see the results
-```bash
+    ```bash
     ls -l output.txt
     cat output.txt/part-r-00000
     ```
