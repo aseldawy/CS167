@@ -365,6 +365,7 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
         java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
     ```
 
+
 - ***(Q4) Does it run? Why or why not?***
 
 *Hint:* Report the error and explain in a few words what it means.
@@ -376,10 +377,11 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
     edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
     
     ```
-and see the results
+and see the results using
+
     ```bash
-    ls -l output.txt
-    cat output.txt/part-r-00000
+       ls -l output.txt
+       cat output.txt/part-r-00000
     ```
 ---
 
