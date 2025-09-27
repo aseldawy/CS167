@@ -97,7 +97,6 @@ cat >> ~/.bashrc <<EOF
 export JAVA_HOME="$JAVA_HOME"
 export MAVEN_HOME="$MAVEN_HOME"
 export HADOOP_HOME="$HADOOP_HOME"
-export HADOOP_LOG_DIR="$HADOOP_LOG_DIR"
 export PATH="\$JAVA_HOME/bin:\$MAVEN_HOME/bin:\$HADOOP_HOME/bin:\$HADOOP_HOME/sbin:\$PATH"
 ### END CS167 ENV ###
 EOF
@@ -260,7 +259,7 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
    ```bash
      vim ~/cs167/workspace/${NETID}_lab1/src/main/java/edu/ucr/cs/cs167/${NETID}/App.java
    ```
-   
+
     ```java
     import java.io.IOException;
     import java.util.StringTokenizer;
