@@ -89,15 +89,14 @@ In this part, you will configure some environment variables to make sure your pr
  Reload the current environment
     - Run command `source ~/.bash_profile` or `. ~/.bash_profile`.
     - Or, quit the terminal app and restart it.
-4. Verify the environment variables again
 
-    ```bash
+4. Verify the environment variables again, they should print three non-empty lines with the values you just set.
+  ```bash
     echo $JAVA_HOME
     echo $MAVEN_HOME
     echo $HADOOP_HOME
-    ```
+  ```  
 
-    They should print three non-empty lines with the values you just set.
 
 
 ### 3. Verify Installed Software
@@ -371,12 +370,12 @@ b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu
     edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
     ```
 and see the results using
-
-
-    ```bash
+  ```bash
        ls -l output.txt
        cat output.txt/part-r-00000
-    ```
+  ```
+
+
 ---
 
 - ***(Q5) Does it run now? Why or why not?***
