@@ -100,23 +100,6 @@ In this part, you will configure some environment variables to make sure your pr
     They should print three non-empty lines with the values you just set.
 
 
-3. Save the environmental variables
-
-```bash
-cat >> ~/.bashrc <<EOF
-### CS167 ENV ###
-export JAVA_HOME="$JAVA_HOME"
-export MAVEN_HOME="$MAVEN_HOME"
-export HADOOP_HOME="$HADOOP_HOME"
-export PATH="\$JAVA_HOME/bin:\$MAVEN_HOME/bin:\$HADOOP_HOME/bin:\$HADOOP_HOME/sbin:\$PATH"
-### END CS167 ENV ###
-EOF
-```
-
-Reload the current environment
-    - Run command `source ~/.bashrc` and `hash -r`.
-
-
 ### 3. Verify Installed Software
 
 #### JDK
