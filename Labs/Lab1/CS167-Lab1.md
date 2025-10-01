@@ -34,18 +34,32 @@ We will use JDK as our SDK to compile Java and Scala code in this course. The vi
 #### Apache Maven
 Apache Maven is a Java-based project management software. It makes it easier to compile and package your code.
 
-  1. Download the binary archive from [Maven download page](https://maven.apache.org/download.cgi).
+  1. Download the 3.9.6 binary archive from [Maven download page](https://maven.apache.org/download.cgi).
+  ```bash
+  export MVN_VER=3.9.6
+  wget "https://archive.apache.org/dist/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz" -O apache-maven-${MVN_VER}-bin.tar.gz
+  ```
   2. Extract it to the course directory. Use `wget <URL>` to download a file from command line. Use the command `tar -xvzf <filename>` to extract the `.tar.gz` file from command line.
-
+  ```bash
+    tar -xvzf apache-maven-${MVN_VER}-bin.tar.gz
+   ```
 #### Apache Hadoop
 Hadoop binaries will be used to run big-data systems.
 1. Download the binaries for Hadoop 3.3.6 from [Hadoop download page](https://hadoop.apache.org/releases.html).
+```bash
+  export HADOOP_VER=3.3.6
+ wget -O "hadoop-${HADOOP_VER}.tar.gz"   "https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VER}/hadoop-${HADOOP_VER}.tar.gz"   || wget -O "hadoop-${HADOOP_VER}.tar.gz"   "https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VER}/hadoop-${HADOOP_VER}.tar.gz"
+   ```
 2. Extract the compressed archive to the course directory.
+```bash
+    tar -xvzf "hadoop-${HADOOP_VER}.tar.gz"
+   ```
 
 ---
 
 ### 2. Set Environment Variables
 In this part, you will configure some environment variables to make sure your programs will run easily and correctly.
+
 
 1. To test if environment variables are set, run the following commands
 
@@ -56,13 +70,13 @@ In this part, you will configure some environment variables to make sure your pr
     ```
 
     They should print nothing or three empty lines. We will set them shortly.
-4. Edit or create the profile, run the following command
+2. Edit or create the profile, run the following command
 
     ```bash
     vi ~/.bash_profile
     ```
 
-5. Add the following lines into the profile, and save.
+3. Add the following lines into the profile, and save.
     - Linux
 
       ```bash
@@ -70,12 +84,12 @@ In this part, you will configure some environment variables to make sure your pr
       export MAVEN_HOME="$HOME/cs167/apache-maven-3.9.6"
       export HADOOP_HOME="$HOME/cs167/hadoop-3.3.6"
       
-      export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$HADOOP_HOME/bin:$PATH
+      export PATH="$JAVA_HOME/bin:$MAVEN_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH"
       ```
  Reload the current environment
     - Run command `source ~/.bash_profile` or `. ~/.bash_profile`.
     - Or, quit the terminal app and restart it.
-7. Verify the environment variables again
+4. Verify the environment variables again
 
     ```bash
     echo $JAVA_HOME
@@ -84,6 +98,23 @@ In this part, you will configure some environment variables to make sure your pr
     ```
 
     They should print three non-empty lines with the values you just set.
+
+
+3. Save the environmental variables
+
+```bash
+cat >> ~/.bashrc <<EOF
+### CS167 ENV ###
+export JAVA_HOME="$JAVA_HOME"
+export MAVEN_HOME="$MAVEN_HOME"
+export HADOOP_HOME="$HADOOP_HOME"
+export PATH="\$JAVA_HOME/bin:\$MAVEN_HOME/bin:\$HADOOP_HOME/bin:\$HADOOP_HOME/sbin:\$PATH"
+### END CS167 ENV ###
+EOF
+```
+
+Reload the current environment
+    - Run command `source ~/.bashrc` and `hash -r`.
 
 
 ### 3. Verify Installed Software
@@ -141,7 +172,7 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
 
 ### 4. Create an Empty Maven Project
 
-- Create a new directory "$HOME/cs167/workspace" or "C:\cs167\workspace" to place all your projects.
+- Create a new directory "$HOME/cs167/workspace" to place all your projects.
 
 - Open terminal, cd to workspace
   - Linux and macOS: `cd $HOME/cs167/workspace`
@@ -149,8 +180,16 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
 - Run the following command
 
   ```bash
-  # Replace [UCRNetID] with your UCR Net ID, not student ID.
-  mvn archetype:generate -DgroupId=edu.ucr.cs.cs167.[UCRNetID] -DartifactId=[UCRNetID]_lab1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+  NETID=[UCRNetID e.g. nancy132]
+  mvn -B archetype:generate \
+  -DgroupId=edu.ucr.cs.cs167.${NETID} \
+  -DartifactId=${NETID}_lab1 \
+  -Dpackage=edu.ucr.cs.cs167.${NETID} \
+  -DarchetypeGroupId=org.apache.maven.archetypes \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.4 \
+  -DinteractiveMode=false
+  -DinteractiveMode=false
   ```
 
 
@@ -166,10 +205,9 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
 - To run your newly created program, type
 
   ```bash
-  java -cp target/[UCRNetID]_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].App
+  java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
   ```
 
-  Replace `[UCRNetID]` with your UCR Net ID, not student ID.
 
 - ***(Q2) What do you see at the console output?***
 
@@ -220,12 +258,18 @@ This command was run using /Users/student/cs167/hadoop-3.3.6/share/hadoop/common
        ```bash
            mvn clean package
        ```
-
+     and run
+       ```bash
+        java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
+      ```
 ---
 
 ### 5. Create WordCount Example
 
 1. Replace the code in your App.java file with the following code but leave the package line as-is.
+   ```bash
+     vim ~/cs167/workspace/${NETID}_lab1/src/main/java/edu/ucr/cs/cs167/${NETID}/App.java
+   ```
 
     ```java
     import java.io.IOException;
@@ -297,31 +341,24 @@ a) Rebuild the project:
      ```bash
       mvn clean package 
     ```
-b) If you try to run with plain java -cp ... App, it will fail because the Hadoop runtime and job launcher are not on the classpath of the thin JAR:
-    java -cp target/[UCRNetID]_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].App
+b) Try to run with plain `java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App`,
 
 - ***(Q3) What do you see at the output?***
-
 *Hint:* It will fail with an error. Report this error.
 
 - Create a new text file named "input.txt" in the project root folder (same level as "src"), and add the following sample content to it.
 
     ```text
+    cat > input.txt <<'EOF'
     if you cannot fly, then run
     if you cannot run, then walk
     if you cannot walk, then crawl
     but whatever you do you have to keep moving forward
+    EOF
     ```
 
-- Now specify "input.txt" and "output.txt" as the input and output files to your program as follows.
+- Now specify "input.txt" and remove potential "output.txt" by `rm -rf output.txt`.
 
-    ![alt text](lab1_images/word_count_1.png)
-
-    Then
-
-    ![alt text](lab1_images/word_count_2.png)
-
-- ***(Q4) What is the output that you see at the console?***
 
   Note: We will later cover how MapReduce programs are executed in more details. This lab just ensures that you have the development environment setup.
 
@@ -335,22 +372,31 @@ b) If you try to run with plain java -cp ... App, it will fail because the Hadoo
 
 - Try to run your program as we did earlier.
 
-  ```bash
-  java -cp target/[UCRNetID]_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].App
-  ```
+   ```bash
+        java -cp "target/${NETID}_lab1-1.0-SNAPSHOT.jar"   edu.ucr.cs.cs167.$NETID.App
+    ```
 
-- ***(Q5) Does it run? Why or why not?***
+
+- ***(Q4) Does it run? Why or why not?***
 
 *Hint:* Report the error and explain in a few words what it means.
 
 - Try to run the program using the following command:
 
     ```bash
-    # Replace [UCRNetID] with your UCR Net ID, not student ID.
-    hadoop jar target/[UCRNetID]_lab1-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].App input.txt output.txt
+    hadoop jar target/${NETID}_lab1-1.0-SNAPSHOT.jar \
+    edu.ucr.cs.cs167.${NETID}.App input.txt output.txt
     ```
+and see the results using
 
+
+    ```bash
+       ls -l output.txt
+       cat output.txt/part-r-00000
+    ```
 ---
+
+- ***(Q5) Does it run now? Why or why not?***
 
 ### 6. Prepare Your Submission
 
