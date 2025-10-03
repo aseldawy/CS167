@@ -218,7 +218,7 @@ In this part, you need to write to HDFS from namenode and datanode.
 1. Make sure your `namenode` and `datanodes` are running on the `cs167` server.
     * *Note*: Nothing need to be done if you follow part1.
 
-2. On the `namenode` machine, run the following command to copy `AREAWATER_[UCRNetID].csv` from your local file system to HDFS:
+2. On the `namenode` machine, run the following command to copy `test.txt` from your local file system(cs167 remote machine, don't be confused) to HDFS:
 ```shell
 # Use sample text file like test.txt in Part I
 hdfs dfs -put test.txt
