@@ -27,16 +27,18 @@ Follow the instructions below. Answer any questions marked by ***(Q)*** and subm
 
 1. **Install JDK and IntelliJ (local laptop).**
    * Install **JDK 11 ** (or the course‑specified version) from `https://learn.microsoft.com/en-us/java/openjdk/download`.
+   * Install `apache-maven-3.9.11-bin.tar.gz` for MacOS and `apache-maven-3.9.11-bin.zip` for Windows from `https://maven.apache.org/download.cgi`
+   * Set Environment Vairables for java and mvn.
    * Install **IntelliJ IDEA Community**.
 2. **Verify locally.**
    * Run in a terminal:
      ```bash
      java -version
-     javac -version
+     mvn -version
      ```
    * Create and run a “Hello World” in IntelliJ.
 3. **Deliverables (screenshots in README):**
-   * Screenshot of `java -version` and `javac -version`.
+   * Screenshot of `java -version` and `\\mvn -version`.
    * Screenshot of IntelliJ running your Java program.
 
 > You will still build and run on the remote `cs167` servers later, but local testing is now required.
@@ -45,7 +47,7 @@ Follow the instructions below. Answer any questions marked by ***(Q)*** and subm
 
 ### I. Main Program (45 minutes) — In-home part
 
-> **Local-first note:** Do this **on your local machine first** (JDK + IntelliJ). You do **not** need a local Hadoop cluster or Maven CLI; IntelliJ can import a Maven project and download the Hadoop client libraries automatically. **You will develop the java program on you own laptop.** After it runs locally, upload the project or JAR to the **cs167 remote** machine.
+> **Local-first note:** Do this **on your local machine first** (JDK + IntelliJ). You do **not** need a local Hadoop cluster; IntelliJ can import a Maven project and download the Hadoop client libraries automatically. **You will develop the java program on you own laptop.** After it runs locally, upload the project or JAR to the **cs167 remote** machine.
 
 This part implements a Java program that **simulates HDFS split reading**.
 
