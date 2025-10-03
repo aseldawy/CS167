@@ -220,8 +220,8 @@ In this part, you need to write to HDFS from namenode and datanode.
 
 2. On the `namenode` machine, run the following command to copy `AREAWATER_[UCRNetID].csv` from your local file system to HDFS:
 ```shell
-# Replace [UCRNetID] with the netid of the student owning this namenode
-hdfs dfs -put AREAWATER_[UCRNetID].csv
+# Use sample text file like test.txt in Part I
+hdfs dfs -put test.txt
 ```
   * *Note*: If you get error message saying 'no such file or directory', create a directory in HDFS by using:
     ```shell
@@ -231,8 +231,8 @@ hdfs dfs -put AREAWATER_[UCRNetID].csv
 
 3. On the `namenode` machine, run the following command to find the block locations of the file you just uploaded:
 ```shell
-# Replace [UCRNetID] with the netid of student owning this the namenode
-hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
+# Use sample text file like test.txt in Part I
+hdfs fsck test.txt  -files -blocks -locations
 ```
 * ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
   * *Note* You can find the datanode ip/information by using the command:
