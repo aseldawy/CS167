@@ -249,7 +249,7 @@ hdfs fsck test.txt  -files -blocks -locations
   hdfs dfsadmin -report
   ```
 
-4. Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
+4(optional if you run multiple datenodes). Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
     * *Note*: you need to change [UCRNetID] to the netid of student owning this datanode.
 
 * ***(Q5)In a single-node HDFS cluster, if replication is set to 1, how many replicas of each block exist? Explain why no replicas can reside on other datanodes.***
