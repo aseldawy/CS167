@@ -312,6 +312,7 @@ Write a shell script named `run.sh`, which contains the commands you run the abo
   - pom.xml
   - README.md
   - run.sh
+  - [UCRNetID]_lab2-1.0-SNAPSHOT.ja
 ```
 
 **Requirements:**
