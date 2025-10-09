@@ -77,17 +77,26 @@ This part implements a Java program that **simulates HDFS split reading**.
   </dependency>
 </dependencies>
 ```
-3. Write a main function that takes exactly three command-line arguments; the first for the `input`(a string indicating the file), the second for `offset` (a long type integer indicating the position starts reading), and the third for `length` (a long type integer indicating the number of bytes to read).
+
+3. Client Configuration
+Configuration tells the client which filesystem to use and how to talk to it, follow `lab1` document to see how it's coded. Here is an example:
+```java
+Configuration conf = new Configuration();             
+Path inputPath = new Path(inputPathStr);
+FileSystem fs = inputPath.getFileSystem(conf); 
+```
+
+4. Write a main function that takes exactly three command-line arguments; the first for the `input`(a string indicating the file), the second for `offset` (a long type integer indicating the position starts reading), and the third for `length` (a long type integer indicating the number of bytes to read).
     * *Note*: You need to parse `offset` and `length` to long type integer, try to use [`Long.parseLong`](https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html#parseLong-java.lang.String-).
     * *Hint*: Try to use ChatGPT to create the main function above. We only need to parse the arguments but we will explain later how to use them.
 
-4. If the number of command line arguments is incorrect, use the following code to print the error message and exit.
+5. If the number of command line arguments is incorrect, use the following code to print the error message and exit.
   ```java
   System.err.println("Incorrect number of arguments! Expected three arguments.");
   System.exit(-1);
   ```
 
-5. Retrieve a `FileSystem` instance as done in the previous lab and then open `input` file using [org.apache.hadoop.fs.FSDataInputStream](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html). Use [`FSDataInputStream.seek`](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html#seek-long-) to find the start position. If `offset` is not 0, you need to skip to content until meet a newline character. Feel free to use the following helper function to read a line from the input stream.
+6. Retrieve a `FileSystem` instance as done in the previous lab and then open `input` file using [org.apache.hadoop.fs.FSDataInputStream](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html). Use [`FSDataInputStream.seek`](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html#seek-long-) to find the start position. If `offset` is not 0, you need to skip to content until meet a newline character. Feel free to use the following helper function to read a line from the input stream.
   ```Java
   public static String readLine(FSDataInputStream input) throws IOException {
     StringBuffer line = new StringBuffer();
@@ -101,7 +110,7 @@ This part implements a Java program that **simulates HDFS split reading**.
   }
   ```
 
-6. Use the function [`FSDataInputStream#getPos`](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html#getPos--)
+7. Use the function [`FSDataInputStream#getPos`](https://hadoop.apache.org/docs/r3.3.1/api/org/apache/hadoop/fs/FSDataInputStream.html#getPos--)
   to track the current position in the file. End the reading process when the position exceeds the `offset+length` as described in class.
   Pay attention to the special case that was discussed in class, i.e., when the line perfectly aligns with the end of the split.
   At the end, print the following statements to indicate the split length and the actual number of bytes read.
@@ -110,7 +119,7 @@ This part implements a Java program that **simulates HDFS split reading**.
   System.out.println("Actual bytes read: "+ (inputStream.getPos() - offset));
   ```
 
-7. To test your program, create a file called `test.txt` in your directory. Copy the following message to the file:
+8. To test your program, create a file called `test.txt` in your directory. Copy the following message to the file:
   ```text
   Hello!
   This is
@@ -124,7 +133,7 @@ This part implements a Java program that **simulates HDFS split reading**.
   expected length.
   ```
 
-8. Now, test your program with the following arguments in IntelliJ IDEA (You can refer to Lab1-note on how to set running arguments in IDEA):
+9. Now, test your program with the following arguments in IntelliJ IDEA (You can refer to Lab1-note on how to set running arguments in IDEA):
   ```text
   test.txt 0 4
   test.txt 3 4
@@ -132,12 +141,12 @@ This part implements a Java program that **simulates HDFS split reading**.
   ```
 * ***(Q1) Compare `bytesRead` and `length`, are they equal? Use one sentance to explain why.***
 
-9. Modify your code, so that it will output the number of lines containing string `200`. Using the function [`String#contains`] for that.
+10. Modify your code, so that it will output the number of lines containing string `200`. Using the function [`String#contains`] for that.
   Your output should be the same as the following format `numMatchingLines` is the number of lines contain string `200`:
   ```Java
   System.out.println("Number of matching lines: " + numMatchingLines);
   ```
-10. Pack your project into a `jar` file. Don't forget to edit `pom.xml` in your lab folder:
+11. Pack your project into a `jar` file. Don't forget to edit `pom.xml` in your lab folder:
 ```maven
   <!-- Replace [UCRNetID] with your UCRNetID -->
   <build>
@@ -218,10 +227,10 @@ In this part, you need to write to HDFS from namenode and datanode.
 1. Make sure your `namenode` and `datanodes` are running on the `cs167` server.
     * *Note*: Nothing need to be done if you follow part1.
 
-2. On the `namenode` machine, run the following command to copy `AREAWATER_[UCRNetID].csv` from your local file system to HDFS:
+2. On the `namenode` machine, run the following command to copy `test.txt` from your local file system(cs167 remote machine, don't be confused) to HDFS:
 ```shell
-# Replace [UCRNetID] with the netid of the student owning this namenode
-hdfs dfs -put AREAWATER_[UCRNetID].csv
+# Use sample text file like test.txt in Part I
+hdfs dfs -put test.txt
 ```
   * *Note*: If you get error message saying 'no such file or directory', create a directory in HDFS by using:
     ```shell
@@ -231,8 +240,8 @@ hdfs dfs -put AREAWATER_[UCRNetID].csv
 
 3. On the `namenode` machine, run the following command to find the block locations of the file you just uploaded:
 ```shell
-# Replace [UCRNetID] with the netid of student owning this the namenode
-hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
+# Use sample text file like test.txt in Part I
+hdfs fsck test.txt  -files -blocks -locations
 ```
 * ***(Q4) How many replicas are stored on the namenode? How many replicas are stored in the datanodes?***
   * *Note* You can find the datanode ip/information by using the command:
@@ -240,7 +249,7 @@ hdfs fsck AREAWATER_[UCRNetID].csv  -files -blocks -locations
   hdfs dfsadmin -report
   ```
 
-4. Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
+4(optional if you run multiple datenodes). Now, on each `datanode` machine, repeat step 2 and step 3 to upload the file to HDFS and observe the block replica distribution.
     * *Note*: you need to change [UCRNetID] to the netid of student owning this datanode.
 
 * ***(Q5)In a single-node HDFS cluster, if replication is set to 1, how many replicas of each block exist? Explain why no replicas can reside on other datanodes.***
@@ -303,6 +312,7 @@ Write a shell script named `run.sh`, which contains the commands you run the abo
   - pom.xml
   - README.md
   - run.sh
+  - [UCRNetID]_lab2-1.0-SNAPSHOT.jar
 ```
 
 **Requirements:**
