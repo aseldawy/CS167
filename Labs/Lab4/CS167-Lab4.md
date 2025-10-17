@@ -225,6 +225,47 @@ To run your MapReduce program in distributed mode, we will need to configure Had
 *Note:* YARN stands for Yet Another Resource Negotiator and is the default cluster manager that ships with Hadoop.
 1. Login to your CS167 machine.
 2. Among your group members that are present in lab, choose the node with the smallest number as the master node.
+a. Edit `$HADOOP_HOME/etc/hadoop/core-site.xml` to add the following properties inside the configuration tag:
+```xml
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://CS167-###:9000</value>
+  </property>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/home/cs167/hadoop/tmp</value>
+  </property>
+</configuration>  
+```
+   
+   * Note: Replace `CS167-###` with your master node hostname. This file should be identical across all machines.
+
+   b. Edit `$HADOOP_HOME/etc/hadoop/hdfs-site.xml` to add the following properties inside the configuration tag:
+```xml
+<configuration>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///home/cs167/hadoop/dfs/name</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:///home/cs167/hadoop/dfs/data</value>
+  </property>
+  <property>
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+</configuration>
+   
+```
+   
+   * Note: Replace `CS167-###` with your master node hostname. Set replication to 3 for a cluster with 4 datanodes. This file should be identical across all machines.
+
+   c. Create necessary directories on all nodes:
+```bash
+   mkdir -p /home/cs167/hadoop/dfs/name /home/cs167/hadoop/dfs/data
+```
 3. Configure Hadoop to run MapReduce programs with YARN. Edit the file `$HADOOP_HOME/etc/hadoop/mapred-site.xml` and add the following part.
 
     ```xml
