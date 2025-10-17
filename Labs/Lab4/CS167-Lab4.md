@@ -9,7 +9,7 @@
 
 ## Prerequisites
 
-* Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md).
+* Setup the development environment as explained in [Lab #1](../Lab1/CS167-Lab1.md), and install Hadoop 3.3.6.
 * Download two `tsv` files in [Lab3](../Lab3/CS167-Lab3.md)( [nasa_19950801.tsv](../Lab3/nasa_19950801.tsv), [nasa_19950630.22-19950728.12.tsv](../Lab3/nasa_19950630.22-19950728.12.tsv.gz)), and put them to your `cs167` virtual machine home directory (decompress if needed).
 * Remote-access in [remote-access](../../remote-access.md).
 
