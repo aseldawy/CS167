@@ -341,7 +341,7 @@ a. Edit `$HADOOP_HOME/etc/hadoop/core-site.xml` to add the following properties 
 13. Copy the file to your CS167 machine.
 14. Run your program by `yarn jar` command, and specify the class `Filter`:
     ```shell
-    yarn jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801.tsv filter_output_dir 200
+    yarn jar target/[UCRNetID]_lab4-1.0-SNAPSHOT.jar edu.ucr.cs.cs167.[UCRNetID].Filter nasa_19950801_[UCRNetID].tsv filter_output_dir 200
     ```
     *Note*: Since we didn't specify the `mainClass` in `pom.xml`, we need to manually specify which class to be run.
 
