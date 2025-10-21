@@ -230,7 +230,7 @@ a. Edit `$HADOOP_HOME/etc/hadoop/core-site.xml` to add the following properties 
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://CS167-###:9000</value>
+    <value>hdfs://class-###:9000</value>
   </property>
   <property>
     <name>hadoop.tmp.dir</name>
