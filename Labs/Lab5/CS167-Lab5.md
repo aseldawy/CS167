@@ -10,7 +10,7 @@
 
 ## Prerequisites
 
-* Setup the development environment as explained in [Lab 1](../Lab1/CS167-Lab1.md).
+* Setup the development environment as explained in [Lab 2](../Lab2/CS167-Lab2.md).
 <!-- * Download [Apache Spark 3.5.4](https://spark.apache.org/downloads.html). Choose the package type **Pre-built with user-provided Apache Hadoop**.
   * Direct link: [spark-3.5.4-bin-without-hadoop.tgz](https://dlcdn.apache.org/spark/spark-3.5.4/spark-3.5.4-bin-without-hadoop.tgz) -->
 * Download these two sample files [nasa_19950801.tsv](../Lab4/nasa_19950801.tsv), [nasa_19950630.22-19950728.12.tsv.gz](../Lab3/nasa_19950630.22-19950728.12.tsv.gz). Decompress the second file after download. These are the same files we used in previous Labs: [Lab 3](../Lab3/CS167-Lab3.md) and [Lab 4](../Lab4/CS167-Lab4.md).
@@ -21,15 +21,15 @@
 ### I. Project Setup (20 minutes) - In home
 This part will be done in your `local machine`.
 
-1. Create a new empty project using Maven for Lab 5. See [Lab 1](../Lab1/CS167-Lab1.md) for more details.
+1. Create a new empty project using Maven for Lab 5. See [Lab 2](../Lab/CS167-Lab2.md) for more details.
 2. Import your project into IntelliJ IDEA.
 3. Place the two sample files in your project home directory.
 4. In `pom.xml` add the following configuration.
 
     ```xml
     <properties>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
+      <maven.compiler.source>11</maven.compiler.source>
+      <maven.compiler.target>11</maven.compiler.target>
       <spark.version>3.5.4</spark.version>
     </properties>
 
@@ -98,7 +98,9 @@ In the followign part, we will configure Spark to run in distributed mode. Make 
 
 3. Download and extract Spark to your `$HOME/cs167` using the command below.
     ```shell
-    curl https://dlcdn.apache.org/spark/spark-3.5.4/spark-3.5.4-bin-without-hadoop.tgz | tar -xvz -C $HOME/cs167
+    curl -fL -o ~/cs167/spark-3.5.4-bin-without-hadoop.tgz \
+     https://archive.apache.org/dist/spark/spark-3.5.4/spark-3.5.4-bin-without-hadoop.tgz 
+    tar -xvzf spark-3.5.4-bin-without-hadoop.tgz -C ~/cs167
     ```
 4. Set the environment variables `$SPARK_HOME` and `$PATH` as follows:
     ```shell
@@ -324,7 +326,7 @@ In the next part, we will extend the program to use more Spark functions. We wil
     You can use the following command to count the total number of lines in the output files.
 
     ```bash
-    hdfs dfs -cat filter_output_[UCRNetID]/* | wc -l
+    hdfs dfs -cat spark_filter_output_[UCRNetID]/* | wc -l
     ```
 
     ***(Q6) For the previous command that counts the lines and saves the output, how many tasks in total were generated?***
