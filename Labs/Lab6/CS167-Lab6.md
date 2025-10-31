@@ -601,16 +601,22 @@ Note: For each of the following, you are free to use SQL queries directly or bui
     ```
 
 7. Convert to Parquet and compare size
-1) Write TSV → Parquet and re-register:
+1) Replace TODO 7 with the following code::
    ```scala
       if (args.contains("--pq")) {
+      // Convert to Parquet and re-register
       input.write.mode("overwrite").parquet("logs.parquet")
       spark.read.parquet("logs.parquet").createOrReplaceTempView("log_lines")
-}
+      println("Using Parquet format")
+      } else {
+      // Use TSV directly, previous TODO 7
+      input.createOrReplaceTempView("log_lines")
+      println("Using TSV format")
+      }
      ```
 
 
-2) Run the same three SQL tasks B1 B2 B3 with `--pq` in each argument and confirm identical results.
+2) Run the same three SQL tasks B1 B2 B3 with `--pq` in each argument's end and confirm identical results.
 
 * ***(Q3) Record sizes and report in README ane explain why?***
 ---
