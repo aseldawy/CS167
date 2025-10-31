@@ -507,24 +507,6 @@ Spark SQL is equipped with a CSV parser that can read semi-structured CSV files.
 
 This makes your table viewable by Spark SQL so you can run SQL queries on it.
 
-8. Convert to Parquet and compare size
-1) Write TSV → Parquet and re-register:
-   ```scala
-   // uses the DataFrame `input` created above
-      input.write.mode("overwrite").parquet("logs.parquet")
-      spark.read.parquet("logs.parquet").createOrReplaceTempView("log_lines")
-   ```
-
-
-2) Run the same three SQL tasks (`count-all`, `time-filter <from> <to>`, `avg-bytes-by-code`) and confirm identical results.
-
-* ***(Q3) Record sizes and report in README ane explain why?***
-   ```bash
-    du -sh <inputPath> logs.parquet/
-    # If using HDFS:
-    hdfs dfs -du -h <hdfs_input_path>
-    hdfs dfs -du -h <hdfs_parquet_dir>
-   ``` 
 
 ### IV. Query the Dataframe using Dataframe Operators (45 minutes) (In-lab)
 
@@ -618,7 +600,19 @@ Note: For each of the following, you are free to use SQL queries directly or bui
     ORDER BY response;
     ```
 
+7. Convert to Parquet and compare size
+1) Write TSV → Parquet and re-register:
+   ```scala
+      if (args.contains("--pq")) {
+      input.write.mode("overwrite").parquet("logs.parquet")
+      spark.read.parquet("logs.parquet").createOrReplaceTempView("log_lines")
+}
+     ```
 
+
+2) Run the same three SQL tasks B1 B2 B3 with `--pq` in each argument and confirm identical results.
+
+* ***(Q3) Record sizes and report in README ane explain why?***
 ---
 
 ## Part C. Running in Distributed Mode (In-lab Group Activity)
