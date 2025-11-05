@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-* Setup the development environment as explained in all previous labs.
+* Setup the development environment as explained in [Lab 1](../Lab1/CS167-Lab1.md).
 * Same as [Lab 5](../Lab5/CS167-Lab5.md), download these two sample files [nasa_19950801.tsv](../Lab4/nasa_19950801.tsv), [nasa_19950630.22-19950728.12.tsv.gz](../Lab3/nasa_19950630.22-19950728.12.tsv.gz). Decompress the second file after download. These are the same files we used in previous Labs: [Lab 3](../Lab3/CS167-Lab3.md) and [Lab 4](../Lab4/CS167-Lab4.md).
 * To add Scala language support to IntelliJ, you can install the [Scala plugin](https://plugins.jetbrains.com/plugin/1347-scala). Please check the [plugin management page](https://www.jetbrains.com/help/idea/managing-plugins.html) to see the details about installing and managing plugins in Intellij. Make sure you restart IntelliJ after installing the plugin.
 
@@ -507,6 +507,7 @@ Spark SQL is equipped with a CSV parser that can read semi-structured CSV files.
 
 This makes your table viewable by Spark SQL so you can run SQL queries on it.
 
+
 ### IV. Query the Dataframe using Dataframe Operators (45 minutes) (In-lab)
 
 In this part, we will run some relational operators through the Dataframe/SparkSQL API. The logic of these queries is similar to what we did in part A. This will allow you to compare and contrast the two APIs.
@@ -599,7 +600,25 @@ Note: For each of the following, you are free to use SQL queries directly or bui
     ORDER BY response;
     ```
 
+7. Convert to Parquet and compare size
+1) Replace TODO 7 with the following code::
+   ```scala
+      if (args.contains("--pq")) {
+      // Convert to Parquet and re-register
+      input.write.mode("overwrite").parquet("logs.parquet")
+      spark.read.parquet("logs.parquet").createOrReplaceTempView("log_lines")
+      println("Using Parquet format")
+      } else {
+      // Use TSV directly, previous TODO 7
+      input.createOrReplaceTempView("log_lines")
+      println("Using TSV format")
+      }
+     ```
 
+
+2) Run the same three SQL tasks B1 B2 B3 with `--pq` in each argument's end and confirm identical results.
+
+* ***(Q3) Record sizes and report in README ane explain why?***
 ---
 
 ## Part C. Running in Distributed Mode (In-lab Group Activity)
@@ -630,13 +649,13 @@ Note, you can add ` 2>/dev/null` at the end of your command to get clean output 
 2. While the program is still running, visit [http://localhost:4040](http://localhost:4040) in your web browser and answer the following questions.
 
 
-    * ***(Q3) How many jobs does your program have? List them here, and describe what each job is performing.***
+    * ***(Q4) How many jobs does your program have? List them here, and describe what each job is performing.***
 
-    * ***(Q4) How many stages does your program have? Why does it have two stages for the countByKey job?***
+    * ***(Q5) How many stages does your program have? Why does it have two stages for the countByKey job?***
 
-    * ***(Q5) What are the longest two stages? Why do you think they are the longest?***
+    * ***(Q6) What are the longest two stages? Why do you think they are the longest?***
 
-    * ***(Q6) Copy the output of the command including the code, and Avg(bytes) table, as well as the runtime.***
+    * ***(Q7) Copy the output of the command including the code, and Avg(bytes) table, as well as the runtime.***
 
 3. Run the Spark SQL version of the same program, you can use the following command:
 
@@ -649,11 +668,11 @@ The only difference between this command and the previous one is that we are usi
 
 4. While the program is still running, visit [http://localhost:4040](http://localhost:4040) in your web browser and answer the following questions.
 
-  * ***(Q7) How many jobs does your program have? List them here, and describe how they compare to the previous program***
+  * ***(Q8) How many jobs does your program have? List them here, and describe how they compare to the previous program***
     Note if you still have the command that shows the table and prints the schema you might see a different number. It is better to comment those lines. These lines are `input.show()` and `input.printSchema()`.
-  * ***(Q8) How many stages does your program have? How did the number of stages affect the run time? Is this program slower or faster?***
+  * ***(Q9) How many stages does your program have? How did the number of stages affect the run time? Is this program slower or faster?***
 
-  * ***(Q9) Visit this link [http://localhost:4040/SQL](http://localhost:4040/SQL), on that page click on the `collect at AppSQL`. Observe the graph which represents how your query was processed. Then, scroll to the end of bottom of the page, and click on `> Details`. You will notice two parts `+- == Final Plan ==` and `+- == Initial Plan ==`. Copy those plans here, and discuss. Which plan is longer and more complicated? Which plan do you think is more optimal? ***
+  * ***(Q10) Visit this link [http://localhost:4040/SQL](http://localhost:4040/SQL), on that page click on the `collect at AppSQL`. Observe the graph which represents how your query was processed. Then, scroll to the end of bottom of the page, and click on `> Details`. You will notice two parts `+- == Final Plan ==` and `+- == Initial Plan ==`. Copy those plans here, and discuss. Which plan is longer and more complicated? Which plan do you think is more optimal? ***
 
 
 This should help you get an idea about the benefits of Spark SQL compared to using the low level RDD API. With Spark SQL, the processer has information about your data like its schema, and can dynamically optimize your queries as it processes them, like detecting if your data is not distributed well across the worker nodes (skewed data). However, when using the RDD API, typically the program will follow the transformations and aggregations you provided. In our case, our implementation for computing the average was not optimal.
@@ -753,7 +772,7 @@ See how to create the archive file for submission at [here](../MakeArchive.md).
 ---
 
 ### Rubric
-- Q1-Q9: +9 points (+1 point for each questions)
+- Q1-Q10: +10 points (+1 point for each questions)
 - Code: +5 points
    - Part A: +0.5 points for each function logic
    - +1 point for Part A correctness
