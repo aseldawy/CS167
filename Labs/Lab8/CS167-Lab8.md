@@ -321,7 +321,7 @@ In this part, you will run the same pipeline on a cluster with your group.
 3. You can run your program using this command:
 
     ```bash
-    spark-submit --conf spark.default.parallelism=[CORES] --class edu.ucr.cs.cs167.[UCRNetID].App --master spark://[MASTER_NODE_HOSTNAME]:[PORT] [UCRNetID]_lab10-1.0-SNAPSHOT.jar sentiment.csv
+    spark-submit --conf spark.default.parallelism=[CORES] --class edu.ucr.cs.cs167.[UCRNetID].App --master spark://[MASTER_NODE_HOSTNAME]:[PORT] [UCRNetID]_lab8-1.0-SNAPSHOT.jar sentiment.csv
     ```
     Note: remember to change the parameters in the command to run your code. You can refer to the following table for details:
 
